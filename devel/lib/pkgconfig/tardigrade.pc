@@ -1,0 +1,8 @@
+prefix=/home/devin/wor_catkin_ws/devel
+
+Name: tardigrade
+Description: Description of tardigrade
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

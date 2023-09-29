@@ -1,0 +1,2 @@
+mvp_msgs:ros-keyboard:stonefish_mvp:tardigrade_pkg:world_of_stonefish
+-DCATKIN_DEVEL_PREFIX=/home/devin/wor_catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/devin/wor_catkin_ws/install -G Unix Makefiles
