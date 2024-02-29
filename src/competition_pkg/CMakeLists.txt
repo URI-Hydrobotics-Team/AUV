@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(competition)
+
+find_package(catkin REQUIRED COMPONENTS
+    world_of_stonefish
+)
+
+catkin_package()
