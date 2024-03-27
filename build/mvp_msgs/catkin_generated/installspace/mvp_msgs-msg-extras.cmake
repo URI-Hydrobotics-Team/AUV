@@ -1,0 +1,2 @@
+set(mvp_msgs_MESSAGE_FILES "msg/ControlMode.msg;msg/ControlModes.msg;msg/ControlProcess.msg;msg/DVL.msg;msg/DVLBeam.msg;msg/Float64Stamped.msg;msg/Float64StampedWithVariance.msg;msg/HelmState.msg;msg/HelmStates.msg;msg/MSISInfo.msg;msg/NMEA.msg;msg/PIDgains.msg;msg/Power.msg;msg/PwmSignal.msg;msg/StringStamped.msg;msg/VehicleStatus.msg")
+set(mvp_msgs_SERVICE_FILES "srv/ChangeState.srv;srv/GetControlMode.srv;srv/GetControlModes.srv;srv/GetState.srv;srv/GetStates.srv;srv/SetControlPoint.srv")
