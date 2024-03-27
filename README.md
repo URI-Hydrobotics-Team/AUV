@@ -1,7 +1,7 @@
 ### Follow to a "T"
-http://wiki.ros.org/noetic/Installation/Ubuntu
+[ROS Noetic Installation Tutorial](http://wiki.ros.org/noetic/Installation/Ubuntu)
 
-http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment
+[Ros Noetic Environment Installation and Configuration](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment)
 (I highly suggest doing the catkin version of the above tutorials - http://wiki.ros.org/catkin)
 
 ### Install the Stonefish simulator
@@ -33,13 +33,12 @@ git clone https://github.com/uri-ocean-robotics/stonefish
     ```
 
 ### Setup stonefish_mvp
-
-https://uri-ocean-robotics.github.io/stonefish_mvp/
+[Stonefish MVP](https://uri-ocean-robotics.github.io/stonefish_mvp/)
 
 ### Running A Package
 
-When running a package we use "roslaunch <\package name> <\launch file> packages have multiple node within them. Checkout src/prequal_pkg/launch/prequal_sim.launch and look for the <node> elements. 
+When running a package we use **"roslaunch \<package-name>  \<launch-file>"** packages have multiple node within them. Checkout [prequal_sim.launch](src/prequal_pkg/launch/prequal_sim.launch) and look for the <node> elements. 
 
-When we run a singular node though, we use "rosrun <\package name> <\launch file>, main difference is that your launch file will often be a python or cpp file (headers are also supported), your package name will usually be just the parent package of your package. For example; teleop-subscriber is built from src/prequal_pkg/teleop/teleop.py and is a child of the "prequal" package.
+When we run a singular node though, we use **"rosrun \<package-name> \<launch-file>"** main difference is that your launch file will often be a python or cpp file (headers are also supported), your package name will usually be just the parent package of your package. For example; teleop-subscriber is built from [teleop.py](src/prequal_pkg/teleop/teleop.py) and is a child of the "prequal" package.
 
 - Devin Hunsberger: dhunsberger@uri.edu
