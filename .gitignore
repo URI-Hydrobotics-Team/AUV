@@ -2,3 +2,8 @@
 /build/
 .vscode/
 .catkin_workspace
+/src/stonefish_mvp/
+/src/world_of_stonefish/
+/src/mvp_messages/
+/src/tardigrade_pkg/
+/src/competition_pkg/

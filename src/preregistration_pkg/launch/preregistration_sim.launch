@@ -13,7 +13,7 @@
 
     <arg name="robot_name" default="tardigrade"/>
 
-    <arg name="simulation_data" default="../src/preregistration_pkg/data"/>
+    <arg name="simulation_data" default="$(find preregistration_pkg)/data"/>
     <arg name="simulation_rate" default="500.0"/>
     <arg name="graphics_resolution_width" default="1200"/>
     <arg name="graphics_resolution_height" default="800"/>
