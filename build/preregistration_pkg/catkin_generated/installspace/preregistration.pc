@@ -1,8 +1,0 @@
-prefix=/home/devin/wor_catkin_ws/install
-
-Name: preregistration
-Description: Description of preregistration
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

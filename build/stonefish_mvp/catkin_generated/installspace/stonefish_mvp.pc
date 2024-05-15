@@ -1,8 +1,0 @@
-prefix=/home/devin/wor_catkin_ws/install
-
-Name: stonefish_mvp
-Description: Description of stonefish_mvp
-Version: 1.3.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib -lstonefish_mvp
-Requires: geometry_msgs nav_msgs sensor_msgs std_msgs std_srvs roscpp roslib tf tf_conversions message_runtime pcl_conversions pcl_ros image_transport controller_manager mvp_msgs rosgraph_msgs

@@ -1,8 +1,0 @@
-prefix=/home/devin/wor_catkin_ws/install
-
-Name: world_of_stonefish
-Description: Description of world_of_stonefish
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

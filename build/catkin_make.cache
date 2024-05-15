@@ -1,2 +1,0 @@
-mvp_msgs:prequal_pkg:stonefish_mvp
--DCATKIN_DEVEL_PREFIX=/home/devin/wor_catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/devin/wor_catkin_ws/install -G Unix Makefiles
