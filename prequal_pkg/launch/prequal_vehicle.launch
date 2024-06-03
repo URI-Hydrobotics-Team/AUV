@@ -11,13 +11,5 @@
 
     <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_pub" output="screen"/>
     <node pkg="prequal" type="teleop.py" name="teleop_sub" output="screen"/>
-    <!--
-    <node pkg="imu_bno055" ns="imu" name="imu-publisher" type="bno055_i2c_node" respawn="true" respawn_delay="2">
-        <param name="device" type="string" value="/dev/i2c-1"/>
-        <param name="address" type="int" value="40"/>
-        <param name="frame_id" type="string" value="imu"/>
-        <param name="is_sim" type="boolean" value="true"/>
-    </node>
-    -->
 
 </launch>

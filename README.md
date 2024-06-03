@@ -41,4 +41,49 @@ When running a package we use **"roslaunch \<package-name>  \<launch-file>"** pa
 
 When we run a singular node though, we use **"rosrun \<package-name> \<launch-file>"** main difference is that your launch file will often be a python or cpp file (headers are also supported), your package name will usually be just the parent package of your package. For example; teleop-subscriber is built from [teleop.py](src/prequal_pkg/teleop/teleop.py) and is a child of the "prequal" package.
 
+### Running The Prequal-Sim Package (as example)
+
+First make sure you have sourced your setup.sh file in the devel directory. Then access the directory and make sure you are within the catkin workspace. 
+
+Terminal A Code:
+```bash
+    $ source devel/setup.sh
+    $ roslaunch prequal prequal_sim.launch
+```
+
+To access something such as IMU data we need to run this in a seperate terminal. 
+
+Terminal B Code:
+```bash
+$ source devel/setup.sh
+$ rostopic echo /tardigrade/imu/stonefish/data
+```
+This will constantly print various kinematics data such as angular velocity, linear acceleration, orientation, and the like. 
+
+Example output:
+```bash
+header: 
+seq: 1444
+stamp: 
+    secs: 1717158619
+    nsecs: 440290000
+frame_id: "tardigrade/IMU"
+orientation: 
+x: -0.0077347295535119456
+y: -0.032189911206308534
+z: -0.2604228830489195
+w: 0.9649268913030419
+orientation_covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+angular_velocity: 
+x: -0.008469753045409978
+y: -0.10136860763581095
+z: 0.17333379974822147
+angular_velocity_covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+linear_acceleration: 
+x: 0.01051154741984005
+y: 0.002664739337900841
+z: 0.21141480818570924
+linear_acceleration_covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+---
+```
 - Devin Hunsberger: dhunsberger@uri.edu

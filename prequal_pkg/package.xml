@@ -13,6 +13,5 @@
   <depend>stonefish_mvp</depend>
   <depend>keyboard_control</depend>
   <depend>mvp_msgs</depend>
-  <depend>ros-imu-bno055</depend>
 
 </package>
