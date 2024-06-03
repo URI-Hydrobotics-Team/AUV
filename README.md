@@ -47,8 +47,8 @@ First make sure you have sourced your setup.sh file in the devel directory. Then
 
 Terminal A Code:
 ```bash
-    $ source devel/setup.sh
-    $ roslaunch prequal prequal_sim.launch
+$ source devel/setup.sh
+$ roslaunch prequal prequal_sim.launch
 ```
 
 To access something such as IMU data we need to run this in a seperate terminal. 
