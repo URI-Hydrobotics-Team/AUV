@@ -43,15 +43,15 @@ When we run a singular node though, we use **"rosrun \<package-name> \<launch-fi
 
 ### Source your setup.sh file
 
-First make sure you have sourced your setup.sh file in the devel directory. Check the current shell you are using, this will determine your optimal source file.
+First make sure you have a setup._ file in the devel directory. Check the current shell you are using, this will determine your optimal source file.
 
 ```bash
-echo $SHELL
+echo $SHELL #my output was /bin/bash so I will be sourcing the setup.bash file
 ```
 Based upon the output that will determine your source file.
 
 ```bash
-source devel/setup._
+source devel/setup._ #In my case setup.bash
 ```
 
 If you want this to hold "permanently" follow below.
