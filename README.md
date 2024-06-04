@@ -41,22 +41,39 @@ When running a package we use **"roslaunch \<package-name>  \<launch-file>"** pa
 
 When we run a singular node though, we use **"rosrun \<package-name> \<launch-file>"** main difference is that your launch file will often be a python or cpp file (headers are also supported), your package name will usually be just the parent package of your package. For example; teleop-subscriber is built from [teleop.py](src/prequal_pkg/teleop/teleop.py) and is a child of the "prequal" package.
 
-### Running The Prequal-Sim Package (as example)
+### Source your setup.sh file
 
 First make sure you have sourced your setup.sh file in the devel directory. Then access the directory and make sure you are within the catkin workspace. 
 
+```bash
+source devel/setup.sh
+```
+
+If you want this to hold permanently follow below.
+
+```bash
+nano ~/.bashrc
+```
+
+Then add below to the file and save.
+
+```bash
+source source /opt/ros/ros-noetic/setup.sh
+source /wor_catkin_ws/devel/setup.sh
+```
+
+### Running The Prequal-Sim Package (as example)
+
 Terminal A Code:
 ```bash
-$ source devel/setup.sh
-$ roslaunch prequal prequal_sim.launch
+roslaunch prequal prequal_sim.launch
 ```
 
 To access something such as IMU data we need to run this in a seperate terminal. 
 
 Terminal B Code:
 ```bash
-$ source devel/setup.sh
-$ rostopic echo /tardigrade/imu/stonefish/data
+rostopic echo /tardigrade/imu/stonefish/data
 ```
 This will constantly print various kinematics data such as angular velocity, linear acceleration, orientation, and the like. 
 

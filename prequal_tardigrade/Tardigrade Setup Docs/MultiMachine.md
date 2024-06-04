@@ -1,10 +1,9 @@
-Let's talk about MultiMachine
+#MultipleMachines: How we will communicate from between all of our control boards.
 
-What is MultiMachine?
+#What is MultiMachine?
 MultiMachines allows a user to utilize multiple "Slave" machines under 1 master machine as the controller. In our case the slaves will be: RaspberryPi4 with the name Tardigradeand the Nvidia Jetson Nano with the name ComputerVision. The master will be the surface computer. The RaspberryPi Pico is only connected to the Pi so it shouldn't have to be defined, (name will be ThrusterControl), 
 
-How will each system know what is what? 
-Lets start coding.
+#Setup: 
 
 On the Master (surface computer)
 
@@ -48,9 +47,9 @@ CONFIRM THIS IS POSSIBLE BELOW
 export ROS_MASTER_URI=http://2.2.2.2:11311
 export ROS_IP=4.4.4.4
 
-TODO:
+#TODO:
 - Add information in regards to running the nodes on separate machines. They will need separate launch files. 
 
-Sources: 
+#Sources: 
 - http://wiki.ros.org/ROS/Tutorials/MultipleMachines
 - https://github.com/husarion/static_docs_deprecated/blob/master/src/core2/tutorials/ros-tutorials/5-running-ros-on-multiple-machines.md
