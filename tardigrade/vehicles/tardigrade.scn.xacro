@@ -7,8 +7,8 @@
 -->
 <scenario xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:include filename = "$(find prequal)/metadata/looks.scn.xacro"/>
-    <xacro:include filename = "$(find prequal)/metadata/materials.scn.xacro"/>
+    <xacro:include filename = "$(find tardigrade)/metadata/looks.scn.xacro"/>
+    <xacro:include filename = "$(find tardigrade)/metadata/materials.scn.xacro"/>
 
 	<xacro:macro name = "tardigrade" params = "xyz rpy robot_name">
 	
@@ -138,6 +138,8 @@
 						<ros_publisher topic="/${robot_name}/imu/stonefish/data"/>
 					</sensor>
 
+                    
+
 					<sensor name="CameraFront" rate="10.0" type="camera">
 						<specs resolution_x="1920" resolution_y="1080" horizontal_fov="150"/>
 						<origin rpy="4.7124 0.0 -1.571" xyz="0.355749 0.0 -0.139725"/>
@@ -145,12 +147,16 @@
 						<ros_publisher topic="/${robot_name}/camera/stonefish/front/data"/>
 					</sensor>
 
+
+
 					<sensor name="CameraTop" rate="10.0" type="camera">
 						<specs resolution_x="640" resolution_y="480" horizontal_fov="180"/>
 						<origin rpy="4.7124 3.1416 -1.571" xyz="0.0 0.0 1.5"/>
 						<link name="Base"/>
 						<ros_publisher topic="/${robot_name}/camera/stonefish/top/data"/>
 					</sensor>
+
+
 			<world_transform rpy="${rpy}" xyz="${xyz}"/>
         </robot>
     </xacro:macro>

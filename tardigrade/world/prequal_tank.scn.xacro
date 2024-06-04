@@ -7,7 +7,7 @@
 <scenario xmlns:xacro="http://ros.org/wiki/xacro">
 
     <xacro:arg name="robot_name" default="tardigrade"/>
-    <xacro:include filename="$(find prequal)/vehicles/$(arg robot_name).scn.xacro"/>
+    <xacro:include filename="$(find tardigrade)/vehicles/$(arg robot_name).scn.xacro"/>
 
     <xacro:tardigrade robot_name="$(arg robot_name)" xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
 
@@ -33,11 +33,11 @@
 
     <static name="tank" type="model">
         <physical>
-            <mesh filename="$(find prequal)/data/objects/prequaltank.obj" scale="100.0"/>
+            <mesh filename="$(find tardigrade)/data/objects/prequaltank.obj" scale="100.0"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </physical>
         <visual>
-            <mesh filename="$(find prequal)/data/objects/prequaltank.obj" scale="100.0"/>
+            <mesh filename="$(find tardigrade)/data/objects/prequaltank.obj" scale="100.0"/>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </visual>
         <material name="Rock"/>

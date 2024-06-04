@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>prequal</name>
+  <name>tardigrade</name>
   <version>0.0.0</version>
-  <description>The preregistration sim package</description>
+  <description>The onboard package, as in this is directly installed onto the Tardigrade robot.</description>
 
   <maintainer email="dhunsberger@uri.edu">Devin Hunsberger</maintainer>
   <author email="dhunsberger@uri.edu">Devin Hunsberger</author>
