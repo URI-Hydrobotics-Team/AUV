@@ -43,23 +43,27 @@ When we run a singular node though, we use **"rosrun \<package-name> \<launch-fi
 
 ### Source your setup.sh file
 
-First make sure you have sourced your setup.sh file in the devel directory. Then access the directory and make sure you are within the catkin workspace. 
+First make sure you have sourced your setup.sh file in the devel directory. Check the current shell you are using, this will determine your optimal source file.
 
 ```bash
-source devel/setup.sh
+echo $SHELL
+```
+Based upon the output that will determine your source file.
+
+```bash
+source devel/setup._
 ```
 
-If you want this to hold permanently follow below.
+If you want this to hold "permanently" follow below.
 
 ```bash
-nano ~/.bashrc
+sudo nano ~/.bashrc
 ```
 
-Then add below to the file and save.
+Then add below to the end of the file and save.
 
 ```bash
-source source /opt/ros/ros-noetic/setup.sh
-source /wor_catkin_ws/devel/setup.sh
+source /absolute_path/devel/setup.__ #The one inside your catkin workspace
 ```
 
 ### Running The Prequal-Sim Package (as example)
