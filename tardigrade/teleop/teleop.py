@@ -21,8 +21,8 @@ class Move:
         ang_z = msg.angular.z #u = rotate left, o = rotate right
         depth = msg.linear.z #t = rise, b = dive
 
-        self.pub_bow_port_heave.publish(depth / 1.28)
-        self.pub_bow_starboard_heave.publish(depth / 1.28)
+        self.pub_bow_port_heave.publish(depth / 1.75)
+        self.pub_bow_starboard_heave.publish(depth / 1.75)
         self.pub_stern_heave.publish(depth)
 
         self.pub_yaw.publish(-ang_z / 5)
