@@ -131,31 +131,40 @@
 						<ros_subscriber topic = "/${robot_name}/control/thruster/starboard_surge"/>
 					</actuator>
 					
-					<sensor name="IMU" type="imu" rate="20.0">
+					<sensor name="IMU" type="imu" rate="10.0">
 						<link name="Base"/>
 						<origin rpy = "0.0 0.0 0.0" xyz = "0.0 0.0 0.0"/>
 						<noise angle="0.0 0.0 0.0" angular_velocity="0.0" yaw_drift="0.0" linear_acceleration="0.0"/>
 						<ros_publisher topic="/${robot_name}/imu/stonefish/data"/>
 					</sensor>
 
-                    
-
-					<sensor name="CameraFront" rate="10.0" type="camera">
+					<sensor name="CameraFront" rate="1.0" type="camera">
 						<specs resolution_x="1920" resolution_y="1080" horizontal_fov="150"/>
-						<origin rpy="4.7124 0.0 -1.571" xyz="0.355749 0.0 -0.139725"/>
+						<origin rpy="1.5708 0.0 1.5708" xyz="0.355749 0.0 -0.139725"/>
 						<link name="Base"/>
 						<ros_publisher topic="/${robot_name}/camera/stonefish/front/data"/>
 					</sensor>
 
-
-
-					<sensor name="CameraTop" rate="10.0" type="camera">
-						<specs resolution_x="640" resolution_y="480" horizontal_fov="180"/>
-						<origin rpy="4.7124 3.1416 -1.571" xyz="0.0 0.0 1.5"/>
+					<sensor name="CameraTop" rate="1.0" type="camera">
+						<specs resolution_x="1080" resolution_y="1080" horizontal_fov="175"/>
+						<origin rpy="0.0 3.14159 1.5708" xyz="0.0 0.0 -0.1"/>
 						<link name="Base"/>
 						<ros_publisher topic="/${robot_name}/camera/stonefish/top/data"/>
 					</sensor>
 
+                    <light name="spotlightA">
+                        <specs radius="0.1" cone_angle="30.0" illuminance="2000.0"/>
+                        <color temperature="5600.0"/>
+                        <origin rpy="4.7124 0.0 -1.571" xyz="0.355749 0.25 -0.139725"/>
+                        <link name="Base"/>
+                    </light>
+
+                    <light name="spotlightB">
+                        <specs radius="0.1" cone_angle="30.0" illuminance="2000.0"/>
+                        <color temperature="5600.0"/>
+                        <origin rpy="4.7124 0.0 -1.571" xyz="0.355749 -0.25 -0.139725"/>
+                        <link name="Base"/>
+                    </light>
 
 			<world_transform rpy="${rpy}" xyz="${xyz}"/>
         </robot>

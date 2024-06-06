@@ -107,4 +107,5 @@ z: 0.21141480818570924
 linear_acceleration_covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 ---
 ```
+
 - Devin Hunsberger: dhunsberger@uri.edu

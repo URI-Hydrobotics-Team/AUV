@@ -11,15 +11,17 @@
 <scenario>
     <looks>
         <look name="black" gray="0.05" roughness="0.2"/>
+        <look name="orange" rgb="1.0 0.35 0.0" roughness="0.2"/>
         <look name="yellow" rgb="1.0 0.9 0.0" roughness="0.3"/>
         <look name="blue" rgb="0.1 0.1 0.9" roughness="0.3"/>
         <look name="red" rgb="0.9 0.1 0.1" roughness="0.3"/>
         <look name="gray" gray="0.5" roughness="0.4" metalness="0.5"/>
         <look name="tank" rgb="0.9 0.9 0.9" roughness="0.9"/>
-        <look name="ice" rgb="0.31 0.34 0.35" roughness="0.9"/>
         <look name="duct" gray="0.1" roughness="0.4" metalness="0.5"/>
-        <look name="manipulator" rgb="0.2 0.15 0.1" roughness="0.6" metalness="0.8"/>
-        <look name="ee" rgb="0.59 0.56 0.51" roughness="0.6" metalness="0.8"/>
         <look name="green" rgb="0.0 1.0 0.0" roughness="0.5" metalness="0.1"/>
+        <look name="white" gray="0.95" roughness="0.2"/>
+        <look name="buoy" gray="0.1" roughness="0.1" texture="$(find tardigrade)/data/BuoyTexture.jpg"/>
+        <look name="gate" gray="0.1" roughness="0.1" texture="$(find tardigrade)/data/GateTexture.jpg"/>
+        <look name="path" gray="0.1" roughness="0.1" texture="$(find tardigrade)/data/PathTexture.jpg"/>
     </looks>
 </scenario>
