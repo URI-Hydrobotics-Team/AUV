@@ -36,10 +36,9 @@ git clone https://github.com/uri-ocean-robotics/stonefish
 [Stonefish MVP](https://uri-ocean-robotics.github.io/stonefish_mvp/)
 
 ```bash
-git clone --single-branch --branch noetic-devel https://github.com/uri-ocean-robotics/mvp_msgs
-git clone --single-branch --branch noetic-devel https://github.com/uri-ocean-robotics/mvp_control
-git clone --single-branch --branch noetic-devel https://github.com/uri-ocean-robotics/mvp_mission
-git clone --single-branch --branch main https://github.com/GSO-soslab/world_of_stonefish.git
+git clone https://github.com/uri-ocean-robotics/mvp_msgs --single-branch noetic-devel
+git clone https://github.com/uri-ocean-robotics/mvp_control --single-branch noetic-devel
+git clone https://github.com/uri-ocean-robotics/mvp_mission --single-branch noetic-devel
 ```
 
 ```bash
