@@ -22,7 +22,7 @@ git clone https://github.com/uri-ocean-robotics/stonefish
         5. Save file.
     * **Freetype library** (libfreetype6-dev)
 
-- Build and install the stonefish
+- Build and install the stonefish simulator
     ```bash
     cd stonefish
     mkdir build
@@ -32,8 +32,19 @@ git clone https://github.com/uri-ocean-robotics/stonefish
     sudo make install
     ```
 
-### Setup stonefish_mvp
+### Setup stonefish_mvp & other mvp packages
 [Stonefish MVP](https://uri-ocean-robotics.github.io/stonefish_mvp/)
+
+```bash
+git clone --single-branch --branch noetic-devel https://github.com/uri-ocean-robotics/mvp_msgs
+git clone --single-branch --branch noetic-devel https://github.com/uri-ocean-robotics/mvp_control
+git clone --single-branch --branch noetic-devel https://github.com/uri-ocean-robotics/mvp_mission
+git clone --single-branch --branch main https://github.com/GSO-soslab/world_of_stonefish.git
+```
+
+```bash
+rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
+```
 
 ### Running A Package
 

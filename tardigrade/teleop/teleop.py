@@ -19,10 +19,10 @@ class Move:
         lin_x = msg.linear.x #i = forward , "," = back, k = stop all inputs
         lin_y = msg.linear.y #j = left, l = right 
         ang_z = msg.angular.z #u = rotate left, o = rotate right
-        depth = msg.linear.z #t = rise, b = dive
-
-        self.pub_bow_port_heave.publish(depth / 1.75)
-        self.pub_bow_starboard_heave.publish(depth / 1.75)
+        depth = msg.linear.z #t = rise, h = hold, b = dive
+        #Hold does not work at this time.
+        self.pub_bow_port_heave.publish(depth * 0.597526042)
+        self.pub_bow_starboard_heave.publish(depth * 0.597526042)
         self.pub_stern_heave.publish(depth)
 
         self.pub_yaw.publish(-ang_z / 5)

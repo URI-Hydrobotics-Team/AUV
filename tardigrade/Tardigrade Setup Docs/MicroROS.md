@@ -21,6 +21,7 @@ git clone --recurse-submodules https://github.com/raspberrypi/pico-sdk.git
 Add the Pico-SDK directry location to your master CMakeLists.txt file. This is usually not recommended but 1, I hate having a dependency be based off of an IDE config and 2 the location should be standardized so here's your new standardization.
 
 '''bash
+Waiting to test this
 
 '''
 

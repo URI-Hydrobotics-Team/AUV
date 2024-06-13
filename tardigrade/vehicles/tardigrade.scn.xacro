@@ -138,14 +138,14 @@
 						<ros_publisher topic="/${robot_name}/imu/stonefish/data"/>
 					</sensor>
 
-					<sensor name="CameraFront" rate="1.0" type="camera">
+					<sensor name="CameraFront" rate="10.0" type="camera">
 						<specs resolution_x="1920" resolution_y="1080" horizontal_fov="150"/>
 						<origin rpy="1.5708 0.0 1.5708" xyz="0.38 0.0 -0.15"/>
 						<link name="Base"/>
 						<ros_publisher topic="/${robot_name}/camera/stonefish/front/data"/>
 					</sensor>
 
-					<sensor name="CameraTop" rate="1.0" type="camera">
+					<sensor name="CameraTop" rate="5.0" type="camera">
 						<specs resolution_x="640" resolution_y="640" horizontal_fov="179"/>
 						<origin rpy="0.0 3.14159 1.5708" xyz="0.0 0.0 -0.15"/>
 						<link name="Base"/>
