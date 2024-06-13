@@ -118,4 +118,38 @@ linear_acceleration_covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 ---
 ```
 
+### Alternatively you can use RQT to launch everything.
+
+```bash
+rqt
+```
+
+Very similar to steps followed in [CameraAccess.md](src/tardigrade/Tardigrade Setup Docs/CameraAccess.md), you can utilize RQT's launch option to launch the sim or robot.
+
+# Accessing the Tardigrade (through a Router) and starting Autonomous
+
+### Connect Via Router
+
+Getting access to the tardigrade can in some cases be difficult for new users. Our setup will go like this. Surface laptop -> Ethernet -> Netgear Router -> 2.4Ghz Wifi -> Tardigrade. 
+
+Steps:
+- Power on the router
+- Connect surface PC to router via ethernet.
+- Power on tardigrade
+- Wait and pray for a new device connection to the network.
+- SSH
+
+### Connect Over LAN Ethernet
+
+This, depending on your situation can be far easier or far more difficult. In my case it was difficult to determine the source of the problem but easy to fix. Make sure that when plugging into the Pi you set your IPv4 from Automatic to "Shared With Other __" devices/computers/whatever. Otherwise steps are basically the same:
+
+- Power on the Pi
+- Plug Ethernet into Surface laptop
+- Wait and pray the connection occurs
+- SSH
+
+## Troubleshooting
+
+I suggest accessing the router by using it's local IP (generally 192.168.0.1 or 192.168.1.1) in our case it's actually routerlogin.net due to it being a netgear router. And then checking the "Connected Devices" list. There you will see your laptop and hopefully the tardigrade. Use the IP listed next the Tardigrade in the list to SSH into. You shoud hopefully now have access to the Tardigrade for launching. I also HIGHLY suggest you SSH via VSCode it just makes things alot easier and you get a file explorer and text editor rather than just a terminal, you can also setup a SSH config so it's easy as pressing 2 buttons to SSH back into the Tardigrade.
+
 - Devin Hunsberger: dhunsberger@uri.edu
