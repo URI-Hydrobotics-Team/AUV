@@ -1,7 +1,7 @@
 #MultipleMachines: How we will communicate from between all of our control boards.
 
 #What is MultiMachine?
-MultiMachines allows a user to utilize multiple "Slave" machines under 1 master machine as the controller. In our case the slaves will be: RaspberryPi4 with the name Tardigradeand the Nvidia Jetson Nano with the name ComputerVision. The master will be the surface computer. The RaspberryPi Pico is only connected to the Pi so it shouldn't have to be defined, (name will be ThrusterControl), 
+MultiMachines allows a user to utilize multiple "Slave" machines under 1 master machine as the controller. In our case the slaves will be: RaspberryPi4 with the name Tardigrade and the Nvidia Jetson Nano with the name ComputerVision. The master will be the surface computer. The RaspberryPi Pico is only connected to the Pi so it shouldn't have to be defined, (name will be ThrusterControl), 
 
 #Setup: 
 
