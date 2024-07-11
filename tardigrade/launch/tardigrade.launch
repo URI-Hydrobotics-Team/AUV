@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-    This file is part of the URI Hydrobotics Prequal software.
+    This file is part of the URI Hydrobotics RoboSub2024 software.
 
     Author: Devin Hunsberger
     Email: dhunsberger@uri.edu
@@ -8,4 +8,7 @@
 -->
 <launch>
     <arg name="robot_name" default="tardigrade"/>
+
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_pub" output="screen"/>
+    <node pkg="tardigrade" type="teleop.py" name="teleop_sub" output="screen"/>
 </launch>

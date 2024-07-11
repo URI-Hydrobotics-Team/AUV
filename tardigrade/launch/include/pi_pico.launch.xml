@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+    This file is part of RACE2 AUV project.
+
+    Author: Farhang Naderi
+    Email: farhang.naderi@uri.edu;farhang.nba@gmail.com
+    Year: 2024
+
+    Copyright (C) 2022-2024 Smart Ocean Systems Laboratory
+-->
+<launch>
+
+  <arg name="robot_name" default="tardigrade"/>
+
+  <node ns="$(arg robot_name)" pkg="pico_driver_uart" type="pico_driver_uart_node" 
+        name="pico_driver_uart_node">
+
+      <rosparam command="load" file="$(find tardigrade)/config/pi_pico.yaml"/>
+  </node>
+
+</launch>

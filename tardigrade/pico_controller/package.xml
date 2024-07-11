@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>pico_control</name>
+  <version>0.0.0</version>
+  <description>The pico_controller package runs onboard the tardigrade.</description>
+
+  <maintainer email="dhunsberger@uri.edu">Devin Hunsberger</maintainer>
+  <author email="dhunsberger@uri.edu">Devin Hunsberger</author>
+
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>serial</depend>
+  <depend>struct</depend>
+
+</package>

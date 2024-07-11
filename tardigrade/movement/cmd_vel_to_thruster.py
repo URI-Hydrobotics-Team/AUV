@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
+
+"""
+Subscribes to the /cmd_vel topic (which is published to via the /teleop_pub (part of teleop_twist_keyboard)) and then publishes the thruster "power" to each thruster (/tardigrade/control/thruster/*)
+"""
 import rospy
-from std_msgs.msg import Float64
 from geometry_msgs.msg import Twist
-from sensor_msgs.msg import Joy
+from std_msgs.msg import Float64
 
 class Move:
     def __init__(self) -> None:
@@ -18,18 +21,21 @@ class Move:
     def propel(self, msg):
         lin_x = msg.linear.x #i = forward , "," = back, k = stop all inputs
         lin_y = msg.linear.y #j = left, l = right 
+        lin_z = msg.linear.z #t = rise, b = dive
         ang_z = msg.angular.z #u = rotate left, o = rotate right
-        depth = msg.linear.z #t = rise, h = hold, b = dive
-        #Hold does not work at this time.
-        self.pub_bow_port_heave.publish(depth * 0.597526042)
-        self.pub_bow_starboard_heave.publish(depth * 0.597526042)
-        self.pub_stern_heave.publish(depth)
+        ang_x = msg.angular.x #y = roll left, n = roll right
+        ang_y = msg.angular.y #r = pitch down, v = pitch up.
+
+        self.pub_bow_port_heave.publish(lin_z * 0.597526042)
+        self.pub_bow_starboard_heave.publish(lin_z * 0.597526042)
+        self.pub_stern_heave.publish(lin_z)
 
         self.pub_yaw.publish(-ang_z / 5)
         self.pub_port_surge.publish(lin_x)
         self.pub_starboard_surge.publish(lin_x)
 
 if __name__ == "__main__":
-    rospy.init_node("teleop_to_thruster_wamv")
+    rospy.init_node("cmd_vel_to_thruster")
     Move()
     rospy.spin()
+    

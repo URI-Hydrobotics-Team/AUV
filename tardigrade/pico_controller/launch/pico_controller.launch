@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+    This file is part of the URI Hydrobotics RoboSub2024 software.
+
+    Author: Devin Hunsberger
+    Email: dhunsberger@uri.edu
+    Year: 2024
+-->
+<launch>
+  <node pkg="pico_controller" type="pico_controller_node" type="pico_thruster_controller.py" name="thruster_control" output="screen"/>
+</launch>

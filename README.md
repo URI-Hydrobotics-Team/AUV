@@ -1,10 +1,12 @@
+# Tutorial for the Use of Installation, Setup, and Running
+
 ### Follow to a "T"
 [ROS Noetic Installation Tutorial](http://wiki.ros.org/noetic/Installation/Ubuntu)
 
 [Ros Noetic Environment Installation and Configuration](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment)
 (I highly suggest doing the catkin version of the above tutorials - http://wiki.ros.org/catkin)
 
-### Install the Stonefish simulator
+## Install the Stonefish simulator
 - We use [Stonefish](https://stonefish.readthedocs.io/en/latest/install.html) Simulator. You can clone it from [here](https://github.com/uri-ocean-robotics/stonefish), a fork from the [original_repo](https://github.com/patrykcieslak/stonefish).
 
 - Download the stonefish simulator **to another location outside your ROS workspace (in your "home" folder is acceptable)**
@@ -32,7 +34,7 @@ git clone https://github.com/uri-ocean-robotics/stonefish
     sudo make install
     ```
 
-### Setup stonefish_mvp & other mvp packages
+## Setup stonefish_mvp & other mvp packages
 [Stonefish MVP](https://uri-ocean-robotics.github.io/stonefish_mvp/)
 
 ```bash
@@ -46,13 +48,11 @@ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
 ```
 
 ### Running A Package
-
 When running a package we use **"roslaunch \<package-name>  \<launch-file>"** packages have multiple nodes within them. Checkout [prequal_sim.launch](src/prequal_pkg/launch/prequal_sim.launch) and look for the \<node> elements. 
 
 When we run a singular node though, we use **"rosrun \<package-name> \<launch-file>"** main difference is that your launch file will often be a python or cpp file (headers are also supported), your package name will usually be just the parent package of your package. For example; teleop-subscriber is built from [teleop.py](src/prequal_pkg/teleop/teleop.py) and is a child of the "prequal" package.
 
 ### Source your setup.sh file
-
 First make sure you have a setup._ file in the devel directory. Check the current shell you are using, this will determine your optimal source file.
 
 ```bash
@@ -76,8 +76,7 @@ Then add below to the end of the file and save.
 source /absolute_path/devel/setup.__ #The one inside your catkin workspace
 ```
 
-### Running The Prequal-Sim Package (as example)
-
+# Running The Prequal-Sim Package (as example)
 Terminal A Code:
 ```bash
 roslaunch prequal prequal_sim.launch
@@ -119,7 +118,6 @@ linear_acceleration_covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 ```
 
 ### Alternatively you can use RQT to launch everything.
-
 ```bash
 rqt
 ```
@@ -128,8 +126,7 @@ Very similar to steps followed in [CameraAccess.md](src/tardigrade/Tardigrade Se
 
 # Accessing the Tardigrade (through a Router) and starting Autonomous
 
-### Connect Via Router
-
+## Connect Via Router
 Getting access to the tardigrade can in some cases be difficult for new users. Our setup will go like this. Surface laptop -> Ethernet -> Netgear Router -> 2.4Ghz Wifi -> Tardigrade. 
 
 Steps:
@@ -139,8 +136,7 @@ Steps:
 - Wait and pray for a new device connection to the network.
 - SSH
 
-### Connect Over LAN Ethernet
-
+## Connect Over LAN Ethernet
 This, depending on your situation can be far easier or far more difficult. In my case it was difficult to determine the source of the problem but easy to fix. Make sure that when plugging into the Pi you set your IPv4 from Automatic to "Shared With Other __" devices/computers/whatever. Otherwise steps are basically the same:
 
 - Power on the Pi
@@ -149,7 +145,6 @@ This, depending on your situation can be far easier or far more difficult. In my
 - SSH
 
 ## Troubleshooting
-
 I suggest accessing the router by using it's local IP (generally 192.168.0.1 or 192.168.1.1) in our case it's actually routerlogin.net due to it being a netgear router. And then checking the "Connected Devices" list. There you will see your laptop and hopefully the tardigrade. Use the IP listed next the Tardigrade in the list to SSH into. You shoud hopefully now have access to the Tardigrade for launching. I also HIGHLY suggest you SSH via VSCode it just makes things alot easier and you get a file explorer and text editor rather than just a terminal, you can also setup a SSH config so it's easy as pressing 2 buttons to SSH back into the Tardigrade.
 
 - Devin Hunsberger: dhunsberger@uri.edu
