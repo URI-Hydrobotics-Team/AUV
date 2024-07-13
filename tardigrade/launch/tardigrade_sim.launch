@@ -34,6 +34,8 @@
             command="$(find xacro)/xacro robot_name:=$(arg robot_name) '$(find tardigrade)/world/$(arg scenario).scn.xacro'"/>
     </node>
 
-    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_pub" output="screen"/>
-    <node pkg="tardigrade" type="teleop.py" name="teleop_sub" output="screen"/>
+    <!--<node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_pub" output="screen"/>-->
+    <node pkg="teleop_twist_joy" type="teleop_twist_joy.py" name="teleop_pub" output="screen"/>
+    
+    <node pkg="tardigrade" type="cmd_vel_to_thruster.py" name="cmd_vel_to_thruster" output="screen"/>
 </launch>

@@ -10,5 +10,4 @@
     <arg name="robot_name" default="tardigrade"/>
 
     <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_pub" output="screen"/>
-    <node pkg="tardigrade" type="teleop.py" name="teleop_sub" output="screen"/>
 </launch>
