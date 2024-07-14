@@ -8,7 +8,13 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
 )
 
-catkin_package()
+catkin_package( CATKIN_DEPENDS
+  rospy
+  geometry_msgs
+  std_msgs
+  serial
+  struct
+)
 
 catkin_install_python(PROGRAMS src/pico_thruster_controller.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

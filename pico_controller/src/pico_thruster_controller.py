@@ -15,7 +15,12 @@ import serial
 import struct
 
 class ThrusterController:
-    def __init__(self, serial_port: str = '/dev/ttyUSB0', baud_rate: int = 115200):
+    def __init__(self):
+        rospy.init_node('ThrusterController')
+        self.is_sim = rospy.get_param('~is_sim')
+        serial_port = rospy.get_param('~port')
+        baud_rate = rospy.get_param('~baudrate')
+
         self.INITIALIZE_MICROSECS = 1500.0
         
         self.bow_port_heave = self.INITIALIZE_MICROSECS
@@ -37,7 +42,8 @@ class ThrusterController:
         self.thruster_vals = [self.bow_port_heave, self.bow_starboard_heave, self.stern_heave, self.yaw, self.port_surge, self.starboard_surge]
 
         # Initialize serial connection
-        self.ser = serial.Serial(serial_port, baud_rate)
+        if not self.is_sim:
+            self.ser = serial.Serial(serial_port, baud_rate)
 
     def twist_to_pwm(self, twist_msg):
         #Twist messages and stonefish utilize a -1 -> 1 for speed control, in the case of stonefish these values are 
@@ -78,8 +84,10 @@ class ThrusterController:
         self.update_thrusters()
 
     def initialize_thrusters(self):
-        bytestring_command = struct.pack(f'<{len('Init')}s', 'Init'.encode())
-        self.ser.write(bytestring_command)
+        message = 'Init'
+        bytestring_command = struct.pack(f'<{len(message)}s', message.encode())
+        if not self.is_sim:
+            self.ser.write(bytestring_command)
 
     def update_thrusters(self):
         #Update our array.
@@ -93,7 +101,8 @@ class ThrusterController:
         message += ','.join(message_vals) 
         
         bytestring_command = struct.pack(f'<{len(message)}s', message.encode())
-        self.ser.write(bytestring_command)
+        if not self.is_sim:
+            self.ser.write(bytestring_command)
 
 
 if __name__ == "__main__":

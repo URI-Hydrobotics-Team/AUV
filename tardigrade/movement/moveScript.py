@@ -15,7 +15,7 @@ def build_twist_message(linear_x, linear_y, linear_z, angular_x, angular_y, angu
     return twist_msg
 
 # move the robot forward, stop for a sec, turn right, stop for a sec, then move forward, then stop
-def move():
+def QuickAuto():
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
     #move forward
