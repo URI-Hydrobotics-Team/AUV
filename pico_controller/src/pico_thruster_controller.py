@@ -51,8 +51,8 @@ class ThrusterController:
         #a 2nd degree best fit line, get a pretty good estimate of our PWM signal. 
 
         #We have 2 separate 2nd degree best fit lines as forward and backward thrust/RPMs don't necessarily match.
-        twist_mag = float(twist_msg) * 3000 #Ratio to our max RPM
-        if twist_msg > 0:
+        twist_mag = twist_msg.data * 3000 #Ratio to our max RPM
+        if twist_msg.data > 0:
             #Forwards twist mag is positive
             return round(1515 + (0.0576 * twist_mag) + (0.0000179 * (twist_mag ** 2)), 1)
         else:
