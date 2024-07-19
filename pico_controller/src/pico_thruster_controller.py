@@ -100,9 +100,10 @@ class ThrusterController:
         message = 'PWM,'
         message += ','.join(message_vals) 
         
-        bytestring_command = struct.pack(f'<{len(message)}s', message.encode())
+        #bytestring_command = struct.pack(f'<{len(message)}s', message.encode())
+        
         if not self.is_sim:
-            self.ser.write(bytestring_command)
+            self.ser.write(message)
 
 
 if __name__ == "__main__":
