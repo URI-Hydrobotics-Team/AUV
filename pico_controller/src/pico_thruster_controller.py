@@ -97,7 +97,7 @@ class ThrusterController:
         message_vals = list(map(str, self.thruster_vals))
 
         #And append to the PWM tag.
-        message = 'PWM '
+        message = 'PWM,'
         message += ','.join(message_vals) 
         
         bytestring_command = struct.pack(f'<{len(message)}s', message.encode())

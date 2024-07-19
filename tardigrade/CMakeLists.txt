@@ -9,6 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package()
 
-catkin_install_python(PROGRAMS scripts/cmd_vel_to_thruster.py scripts/dirty_auto.py
+catkin_install_python(PROGRAMS scripts/cmd_vel_to_thruster.py scripts/auto.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

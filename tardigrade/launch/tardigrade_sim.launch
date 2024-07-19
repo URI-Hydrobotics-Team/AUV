@@ -16,7 +16,7 @@
     <arg name="simulation_data" default="$(find tardigrade)/data"/>
     <arg name="simulation_rate" default="200.0"/>
     <arg name="graphics_resolution_width" default="1920"/>
-    <arg name="graphics_resolution_height" default="1080"/>
+    <arg name="graphics_resolution_height" default="1070"/>
     <arg name="graphics_quality" default="low"/>
 
     <arg name = "is_sim" default = "true"/>
@@ -40,7 +40,6 @@
     <node pkg = "teleop_twist_joy" type = "teleop_node" name = "teleop_joy"/>
     
     <node pkg="tardigrade" type="cmd_vel_to_thruster.py" name="cmd_vel_to_thruster"/>
-    <node pkg="tardigrade" type="dirty_auto.py" name="dirty_auto"/>
 
     <include file = "$(find pico_controller)/launch/pico_controller.launch">
         <arg name = "is_sim" value = "$(arg is_sim)"/>

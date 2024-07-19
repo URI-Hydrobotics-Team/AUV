@@ -1,14 +1,13 @@
 #! /usr/bin/env python
-import serial
 import time
 from servo import Servo
 import struct
+import sys
 
 MIN_MICROSECS = 1100.0
 MAX_MICROSECS = 1900.0
 STOP_MICROSECS = 1500.0
 INITIALIZE_MICROSECS = 1500.0
-PORT = serial.Serial('/dev/ttyACM0', 115200)
 
 
 ### Thruster Setup ###
@@ -40,12 +39,15 @@ def update_thruster_vals(thruster_pwms):
 
 while True:
     #Example Bytestring: PWM 1500.0,1500.0,1500.0,1500.1500.0,1500.0 or Initialize
-    bytestring_command = PORT.readline()
+    bytestring_command = sys.stdin.readline()
+    print(bytestring_command)
 
-    unpacked_command = struct.unpack(f'<{len(bytestring_command)}s', bytestring_command)[0].decode()
+    #unpacked_command = struct.unpack(f'<{len(bytestring_command)}s', bytestring_command)[0].decode()
 
     #parse into array to check the command
-    words = unpacked_command.split()
+    unpacked_command = bytestring_command.strip()
+    words = unpacked_command.split(',')
+    print(words)
 
     if unpacked_command.startswith("PWM"):
         print("Submitting PWMs to Thrusters\n")
@@ -55,10 +57,8 @@ while True:
             initialize_thrusters()
         
         thruster_values = words[1:]
+        thruster_values = [float(i) for i in thruster_values]
         
-        #thruster values stil has commas, need to remove them
-        thruster_values = [float(value.replace(',', '') for value in thruster_values)]
-
         if thruster_values != PWMs: #submitted PWMs are changed, update thruster array.
             PWMs = thruster_values
             update_thruster_vals(PWMs)
@@ -71,3 +71,4 @@ while True:
         print("Invalid command.")
 
     
+
