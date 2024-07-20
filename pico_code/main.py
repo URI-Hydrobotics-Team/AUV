@@ -1,14 +1,12 @@
 #! /usr/bin/env python
-import serial
 import time
 from servo import Servo
-import struct
+import sys
 
 MIN_MICROSECS = 1100.0
 MAX_MICROSECS = 1900.0
 STOP_MICROSECS = 1500.0
 INITIALIZE_MICROSECS = 1500.0
-PORT = serial.Serial('/dev/ttyACM0', 115200)
 
 
 ### Thruster Setup ###
@@ -25,10 +23,10 @@ PWMs = []
 
 def initialize_thrusters():
     for thruster in thrusters:
-        #Initialize each thruster with 1 second intervals.
+        #Initialize each thruster with 2 second intervals.
         print('Initializing Thruster:', thruster)
         thruster.write_us(INITIALIZE_MICROSECS)
-        time.sleep(1)
+        time.sleep(2)
 
 def update_thruster_vals(thruster_pwms):
     BPH.write_us(thruster_pwms[0])
@@ -39,13 +37,13 @@ def update_thruster_vals(thruster_pwms):
     SS.write_us(thruster_pwms[5])
 
 while True:
-    #Example Bytestring: PWM 1500.0,1500.0,1500.0,1500.1500.0,1500.0 or Initialize
-    bytestring_command = PORT.readline()
+    #Example Bytestring: PWM,1500.0,1500.0,1500.0,1500.1500.0,1500.0 or Init
+    bytestring_command = sys.stdin.readline()
 
-    unpacked_command = struct.unpack(f'<{len(bytestring_command)}s', bytestring_command)[0].decode()
+    unpacked_command = bytestring_command.decode('ascii')
 
     #parse into array to check the command
-    words = unpacked_command.split()
+    words = unpacked_command.split(',')
 
     if unpacked_command.startswith("PWM"):
         print("Submitting PWMs to Thrusters\n")
@@ -56,12 +54,9 @@ while True:
         
         thruster_values = words[1:]
         
-        #thruster values stil has commas, need to remove them
-        thruster_values = [float(value.replace(',', '') for value in thruster_values)]
-
-        if thruster_values != PWMs: #submitted PWMs are changed, update thruster array.
-            PWMs = thruster_values
-            update_thruster_vals(PWMs)
+        thruster_values = list(map(float, thruster_values))
+        
+        update_thruster_vals(thruster_values)
 
     elif unpacked_command.startswith("Init"):
         print("Initializing Thrusters\n")
@@ -71,3 +66,5 @@ while True:
         print("Invalid command.")
 
     
+
+

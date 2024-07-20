@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>pico_control</name>
+  <name>pico_controller</name>
   <version>0.0.0</version>
   <description>The pico_controller package runs onboard the tardigrade.</description>
 

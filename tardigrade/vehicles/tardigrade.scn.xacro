@@ -140,31 +140,37 @@
 
 					<sensor name="CameraFront" rate="10.0" type="camera">
 						<specs resolution_x="1920" resolution_y="1080" horizontal_fov="150"/>
-						<origin rpy="1.5708 0.0 1.5708" xyz="0.38 0.0 -0.15"/>
+						<origin rpy="1.5708 0.0 1.5708" xyz="0.38 0.0 -0.11"/>
 						<link name="Base"/>
-						<ros_publisher topic="/${robot_name}/camera/stonefish/front/data"/>
+						<ros_publisher topic="/${robot_name}/camera/front/data"/>
 					</sensor>
 
 					<sensor name="CameraTop" rate="5.0" type="camera">
 						<specs resolution_x="640" resolution_y="640" horizontal_fov="179"/>
-						<origin rpy="0.0 3.14159 1.5708" xyz="0.0 0.0 -0.15"/>
+						<origin rpy="0.0 3.14159 1.5708" xyz="0.0 0.0 -0.11"/>
 						<link name="Base"/>
-						<ros_publisher topic="/${robot_name}/camera/stonefish/top/data"/>
+						<ros_publisher topic="/${robot_name}/camera/top/data"/>
 					</sensor>
 
-                    <light name="spotlightA">
-                        <specs radius="0.1" cone_angle="30.0" illuminance="2000.0"/>
-                        <color temperature="5600.0"/>
-                        <origin rpy="4.7124 0.0 -1.571" xyz="0.355749 0.25 -0.139725"/>
+                    <sensor name="FFEchosounder" rate="1.0" type="multibeam">
+                        <specs fov="30.0" steps="1"/>
+                        <range distance_min="0.5" distance_max="30.0"/>
+                        <noise distance="0.1"/>
+                        <history samples="1"/>
+						<origin rpy="0.0 0.0 0.0" xyz="0.38 0.0 -0.11"/>
                         <link name="Base"/>
-                    </light>
+                        <ros_publisher topic="/${robot_name}/echosounder/front/data"/>
+                    </sensor>
 
-                    <light name="spotlightB">
-                        <specs radius="0.1" cone_angle="30.0" illuminance="2000.0"/>
-                        <color temperature="5600.0"/>
-                        <origin rpy="4.7124 0.0 -1.571" xyz="0.355749 -0.25 -0.139725"/>
+                    <sensor name="DFEchosounder" rate="1.0" type="multibeam">
+                        <specs fov="30.0" steps="1"/>
+                        <range distance_min="0.5" distance_max="30.0"/>
+                        <noise distance="0.1"/>
+                        <history samples="1"/>
+						<origin rpy="0.0 4.7124 0.0" xyz="0.0 0.0 0.11"/>
                         <link name="Base"/>
-                    </light>
+                        <ros_publisher topic="/${robot_name}/echosounder/down/data"/>
+                    </sensor>
 
 			<world_transform rpy="${rpy}" xyz="${xyz}"/>
         </robot>

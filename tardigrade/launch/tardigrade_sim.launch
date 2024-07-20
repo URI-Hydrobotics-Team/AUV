@@ -14,10 +14,12 @@
     <arg name="robot_name" default="tardigrade"/>
 
     <arg name="simulation_data" default="$(find tardigrade)/data"/>
-    <arg name="simulation_rate" default="500.0"/>
+    <arg name="simulation_rate" default="200.0"/>
     <arg name="graphics_resolution_width" default="1920"/>
     <arg name="graphics_resolution_height" default="1080"/>
     <arg name="graphics_quality" default="low"/>
+
+    <arg name = "is_sim" default = "true"/>
 
     <node
         name="stonefish_simulator"
@@ -34,8 +36,12 @@
             command="$(find xacro)/xacro robot_name:=$(arg robot_name) '$(find tardigrade)/world/$(arg scenario).scn.xacro'"/>
     </node>
 
-    <!--<node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_pub" output="screen"/>-->
-    <node pkg="teleop_twist_joy" type="teleop_twist_joy.py" name="teleop_pub" output="screen"/>
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_keyboard" output="screen"/>
+    <node pkg = "teleop_twist_joy" type = "teleop_node" name = "teleop_joy"/>
     
-    <node pkg="tardigrade" type="cmd_vel_to_thruster.py" name="cmd_vel_to_thruster" output="screen"/>
+    <node pkg="tardigrade" type="cmd_vel_to_thruster.py" name="cmd_vel_to_thruster"/>
+
+    <include file = "$(find pico_controller)/launch/pico_controller.launch">
+        <arg name = "is_sim" value = "$(arg is_sim)"/>
+    </include>
 </launch>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>sensors</name>
+  <version>0.0.0</version>
+  <description>The onboard package for defining, calibrating, and controlling sensors</description>
+
+  <maintainer email="dhunsberger@uri.edu">Devin Hunsberger</maintainer>
+  <author email="dhunsberger@uri.edu">Devin Hunsberger</author>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>stonefish_mvp</depend>
+
+</package>
