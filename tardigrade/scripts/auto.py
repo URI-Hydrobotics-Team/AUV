@@ -14,20 +14,15 @@ def make_twist(lin_x, lin_y, lin_z, ang_x, ang_y, ang_z):
     twist.angular.z = ang_z
     return twist
 
-def auto():
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
-    rospy.init_node('auto', anonymous = True)
-
-    while not rospy.is_shutdown():
-        forward = make_twist(0.5, 0.0, 0.0, 0.0, 0.0, 0.0)
-        dive = make_twist(0.0, 0.0, -0.5, 0.0, 0.0, 0.0)
-        pub.publish(forward)
-        rospy.sleep(2)
-
-        pub.publish(dive)
-        rospy.sleep(2)
-
 if __name__ == '__main__':
-    auto()
+    pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
+
+    forward = make_twist(0.5, 0.0, 0.0, 0.0, 0.0, 0.0)
+    dive = make_twist(0.0, 0.0, -0.5, 0.0, 0.0, 0.0)
+    pub.publish(forward)
+    rospy.sleep(2)
+
+    pub.publish(dive)
+    rospy.sleep(2)
     rospy.spin()
 
