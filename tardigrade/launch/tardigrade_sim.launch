@@ -16,7 +16,7 @@
     <arg name="simulation_data" default="$(find tardigrade)/data"/>
     <arg name="simulation_rate" default="200.0"/>
     <arg name="graphics_resolution_width" default="1920"/>
-    <arg name="graphics_resolution_height" default="1080"/>
+    <arg name="graphics_resolution_height" default="1070"/>
     <arg name="graphics_quality" default="low"/>
 
     <arg name = "is_sim" default = "true"/>
