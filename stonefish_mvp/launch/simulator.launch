@@ -1,0 +1,15 @@
+<launch>
+    <arg name="simulation_data" default=""/> <!-- path to the data directory -->
+    <arg name="simulation_rate" default="500"/> <!-- number of simulation steps per second -->
+    <arg name="graphics_resolution" default="1920 1080"/> <!-- resolution of the simulation window -->
+    <arg name="graphics_quality" default="low"/> <!-- low, medium or high -->
+
+    <node
+        name="stonefish_simulator"
+        pkg="stonefish_mvp"
+        type="parsed_simulator"
+        args="$(arg simulation_data) $(arg simulation_rate) $(arg graphics_resolution) $(arg graphics_quality)"
+        output="screen">
+
+    </node>
+</launch>

@@ -8,6 +8,8 @@ MAX_MICROSECS = 1900.0
 STOP_MICROSECS = 1500.0
 INITIALIZE_MICROSECS = 1500.0
 
+#OLD PICO CONTROLLER, PRIMARY ISSUES: Utilizing standard input requires an EOF flag to pass the wait block, something which can
+#only be done using a keyboard. Alternatives are utilizing the TX-RX UART pins then using Serial, or... using MVP's custom Pico drivers.
 
 ### Thruster Setup ###
 BPH = Servo(pin_id = 16, min_us = MIN_MICROSECS, max_us = MAX_MICROSECS) #Front-Left-Angular-Vertical
