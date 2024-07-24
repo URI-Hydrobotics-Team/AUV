@@ -65,9 +65,9 @@ void ArgParser::parse(int argc, char* argv[]) {
 
     if(quality == "low")
     {
-        argOptions.renderSettings.shadows = sf::RenderQuality::DISABLED;
+        argOptions.renderSettings.shadows = sf::RenderQuality::LOW;
         argOptions.renderSettings.ao = sf::RenderQuality::DISABLED;
-        argOptions.renderSettings.atmosphere = sf::RenderQuality::DISABLED;
+        argOptions.renderSettings.atmosphere = sf::RenderQuality::LOW;
         argOptions.renderSettings.ocean = sf::RenderQuality::LOW;
         argOptions.renderSettings.aa = sf::RenderQuality::LOW;
         argOptions.renderSettings.ssr = sf::RenderQuality::DISABLED;

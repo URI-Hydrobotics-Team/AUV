@@ -2,7 +2,7 @@
 
 ## Description
 
-This package serves as the onboard-side of the pico microcontroller for sending thruster messages over serial UART.
+This package serves as the onboard-side of the pico microcontroller for sending thruster messages over serial UART. 
 
 ### Associated Node(s)
 
