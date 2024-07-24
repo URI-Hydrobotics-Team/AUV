@@ -16,7 +16,7 @@ def make_twist(lin_x, lin_y, lin_z, ang_x, ang_y, ang_z):
 
 if __name__ == '__main__':
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
-
+    rospy.init_node('auto')
     forward = make_twist(0.5, 0.0, 0.0, 0.0, 0.0, 0.0)
     dive = make_twist(0.0, 0.0, -0.5, 0.0, 0.0, 0.0)
     pub.publish(forward)
