@@ -85,7 +85,7 @@ class ThrusterController:
         self.update_thrusters()
 
     def initialize_thrusters(self):
-        message = 'Init\r\n'
+        message = 'PWM,1500.0,1500.0,1500.0,1500.0,1500.0,1500.0\n'
         bytestring_command = bytes(message, 'utf-8') #it may instead support ascii, 
         if not self.is_sim:
             self.ser.write(bytestring_command)
@@ -101,7 +101,7 @@ class ThrusterController:
         message = 'PWM,'
         message += ','.join(message_vals) 
         rospy.loginfo(message)
-        message += '\r\n'
+        message += '\n'
         bytestring_command = bytes(message, 'utf-8')
         
         if not self.is_sim:
