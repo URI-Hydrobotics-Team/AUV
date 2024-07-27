@@ -8,7 +8,7 @@ MAX_MICROSECS = 1900
 STOP_MICROSECS = 1500
 INITIALIZE_MICROSECS = 1500
 
-LED = Pin(25, machine.Pin.OUT)
+LED = Pin(25, Pin.OUT)
 
 ### Thruster Setup ###
 BPH = PWM(Pin(16), 60) #Front-Left-Angular-Vertical

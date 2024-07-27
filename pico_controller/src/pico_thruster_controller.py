@@ -19,8 +19,11 @@ class ThrusterController:
         self.is_sim = rospy.get_param('~is_sim')
         serial_port = rospy.get_param('~port')
         baud_rate = rospy.get_param('~baudrate')
+        print(self.is_sim)
+        print(serial_port)
+        print(baud_rate)
 
-        self.INITIALIZE_MICROSECS = 1500.0
+        self.INITIALIZE_MICROSECS = 1500
         
         self.bow_port_heave = self.INITIALIZE_MICROSECS
         self.bow_starboard_heave = self.INITIALIZE_MICROSECS
@@ -55,10 +58,10 @@ class ThrusterController:
             return 1500
         elif twist_msg.data > 0:
             #Forwards twist mag is positive
-            return round(1515 + (0.0576 * twist_mag) + (0.0000179 * (twist_mag ** 2)), 1)
+            return round(1515 + (0.0576 * twist_mag) + (0.0000179 * (twist_mag ** 2)))
         else:
             #Backwards twist_mag is negative
-            return round(1483 + (0.0498 * twist_mag) - (0.0000206 * (twist_mag ** 2)), 1)
+            return round(1483 + (0.0498 * twist_mag) - (0.0000206 * (twist_mag ** 2)))
 
     def bow_port_heave_callback(self, msg):
         self.bow_port_heave = self.twist_to_pwm(msg)
@@ -85,16 +88,17 @@ class ThrusterController:
         self.update_thrusters()
 
     def initialize_thrusters(self):
-        message = 'PWM,1500.0,1500.0,1500.0,1500.0,1500.0,1500.0\n'
-        bytestring_command = bytes(message, 'utf-8') #it may instead support ascii, 
+        message = 'PWM,1500,1500,1500,1500,1500,1500\n'
+        bytestring_command = bytes(message, 'ascii')
         if not self.is_sim:
+            print('Writing:', bytestring_command)
             self.ser.write(bytestring_command)
 
     def update_thrusters(self):
         #Update our array.
         self.thruster_vals = [self.bow_port_heave, self.bow_starboard_heave, self.stern_heave, self.yaw, self.port_surge, self.starboard_surge]
 
-        #Convert float to strings
+        #Convert ints to strings
         message_vals = list(map(str, self.thruster_vals))
 
         #And append to the PWM tag.
@@ -102,9 +106,10 @@ class ThrusterController:
         message += ','.join(message_vals) 
         rospy.loginfo(message)
         message += '\n'
-        bytestring_command = bytes(message, 'utf-8')
+        bytestring_command = bytes(message, 'ascii')
         
         if not self.is_sim:
+            print('Writing:', bytestring_command)
             self.ser.write(bytestring_command)
 
 
