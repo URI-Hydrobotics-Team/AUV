@@ -4,14 +4,17 @@
 
 This package serves as the overall sensor controller, calibrator, etc. 
 
+## Devices
+
 ### Accelerometer - BNO055
+
 
 
 ### Gyroscope - BNO055
 
 ### Magnometer - BNO055
 
-### Echosounders - BlueRobotics Ping1D
+### Echosounders (Front and Bottom Facing) - BlueRobotics Ping1D
 
 ## Associated Node(s)
 

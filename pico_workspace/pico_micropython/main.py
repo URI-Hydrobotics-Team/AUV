@@ -8,8 +8,6 @@ MAX_MICROSECS = 1900
 STOP_MICROSECS = 1500
 INITIALIZE_MICROSECS = 1500
 
-LED = Pin(25, Pin.OUT)
-
 ### Thruster Setup ###
 BPH = PWM(Pin(16), 60) #Front-Left-Angular-Vertical
 BSH = PWM(Pin(20), 60) #Front-Right-Angular-Vertical
@@ -40,13 +38,10 @@ while True:
     #Example Bytestring: PWM,1500.0,1500.0,1500.0,1500.1500.0,1500.0
     bytestring_command = sys.stdin.readline().strip()
 
-    unpacked_command = bytestring_command.decode('ascii')
-
     #parse into array to check the command
-    words = unpacked_command.split(',')
+    words = bytestring_command.split(',')
 
-    if unpacked_command.startswith("PWM"):
-        LED.high()
+    if bytestring_command.startswith("PWM"):
         print("Submitting PWMs to Thrusters")
         print('PWM Values:', words)
         
@@ -60,6 +55,5 @@ while True:
         
         update_thruster_vals(thruster_values)    
     else:
-        LED.low()
-        print("Invalid command:", unpacked_command)
+        print("Invalid command:", bytestring_command)
 

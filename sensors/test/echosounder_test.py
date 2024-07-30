@@ -7,7 +7,7 @@ frontPing = Ping1D()
 bottomPing = Ping1D()
 
 frontPing.connect_serial("/dev/ttyUSB1", 115200)
-bottomPing.connect_serial("/dev/ttyUSB1", 115200)
+bottomPing.connect_serial("/dev/ttyUSB2", 115200)
 
 if frontPing.initialize() is False:
     print("Failed to initialize front facing echosounder!")

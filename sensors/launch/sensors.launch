@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+    This file is part of the URI Hydrobotics RoboSub2024 software.
+
+    Author: Devin Hunsberger
+    Email: dhunsberger@uri.edu
+    Year: 2024
+-->
+<launch>
+    <node pkg="echosounder" type="echosounder.py" name="echosounder" output="screen"></node>
+
+    <include file = "include/bno055.launch">
+        <arg name = "node_name" value = "front_echosounder"/>
+        <arg name = "port" value = "/dev/ttyAMA0"/>
+    </include>
+
+    <include file = "include/echosounder.launch">
+        <arg name = "node_name" value = "down_echosounder"/>
+        <arg name = "port" value = "/dev/ttyAMA1"/>
+    </include>
+</launch>
+

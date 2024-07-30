@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+    This file is part of the URI Hydrobotics RoboSub2024 software.
+
+    Author: Devin Hunsberger
+    Email: dhunsberger@uri.edu
+    Year: 2024
+-->
+<launch>
+    <node pkg="bno055" type="bno055.py" name="bno055" output="screen">
+        <param name = "pin" value = "$(arg port)" type = "str"/>
+        <param name = "baudrate" value = "$(arg baudrate)" type = "int"/>
+    </node>
+</launch>
