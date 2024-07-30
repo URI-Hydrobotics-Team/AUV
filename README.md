@@ -1,6 +1,6 @@
 # Tutorial for the Use of Installation, Setup, and Running
 
-I also suggest you checkout the [Tardigrade Setup Docs](/src/Tardigrade%20Setup%20Docs/), each package also has it's own README, just check each directory, this will give you a description of it's ROS utilization or purpose. 
+I also suggest you checkout the [Tardigrade Setup Docs](/Tardigrade%20Setup%20Docs/), each package also has it's own README, just check each directory, this will give you a description of it's ROS utilization or purpose. 
 
 ### Follow to a "T"
 [ROS Noetic Installation Tutorial](http://wiki.ros.org/noetic/Installation/Ubuntu)
@@ -50,9 +50,9 @@ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
 ```
 
 ### Running A Package
-When running a package we use **"roslaunch \<package-name>  \<launch-file>"** packages have multiple nodes within them. Checkout [prequal_sim.launch](src/prequal_pkg/launch/prequal_sim.launch) and look for the \<node> elements. 
+When running a package we use **"roslaunch \<package-name>  \<launch-file>"** packages have multiple nodes within them. Checkout [tardigrade_sim.launch](/tardigrade/launch/tardigrade_sim.launch) and look for the \<node> elements. 
 
-When we run a singular node though, we use **"rosrun \<package-name> \<launch-file>"** main difference is that your launch file will often be a python or cpp file (headers are also supported), your package name will usually be just the parent package of your package. For example; teleop-subscriber is built from [teleop.py](src/prequal_pkg/teleop/teleop.py) and is a child of the "prequal" package.
+When we run a singular node though, we use **"rosrun \<package-name> \<launch-file>"** main difference is that your launch file will often be a python or cpp file (headers are also supported), your package name will usually be just the parent package of your package. For example; cmd_vel_to_thruster is built from [cmd_vel_to_thruster.py](/tardigrade/scripts/cmd_vel_to_thruster.py) and is a child of the "tardigrade" package.
 
 ### Source your setup.sh file
 First make sure you have a setup._ file in the devel directory. Check the current shell you are using, this will determine your optimal source file.
@@ -78,10 +78,10 @@ Then add below to the end of the file and save. (I don't remember if this will h
 source /absolute_path/devel/setup.__ #The one inside your catkin workspace
 ```
 
-# Running The Prequal-Sim Package (as example)
+# Running The Tardigrade-Sim Package (as example)
 Terminal A Code:
 ```bash
-roslaunch prequal prequal_sim.launch
+roslaunch tardigrade tardigrade_sim.launch
 ```
 
 To access something such as IMU data we should run this in a seperate terminal. 
@@ -120,7 +120,7 @@ linear_acceleration:
 ```
 
 
-Very similar to steps followed in [CameraAccess.md](src/tardigrade/Tardigrade Setup Docs/CameraAccess.md), you can utilize RQT's launch option to launch separate nodes and packages, for example auto.py located in the scripts section. 
+Very similar to steps followed in [CameraAccess.md](/tardigrade/Tardigrade Setup Docs/CameraAccess.md), you can utilize RQT's launch option to launch separate nodes and packages, for example auto.py located in the scripts section. 
 
 # Accessing the Tardigrade (through a Router) and starting Autonomous
 
