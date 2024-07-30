@@ -1,5 +1,7 @@
 # Tutorial for the Use of Installation, Setup, and Running
 
+I also suggest you checkout the [Tardigrade Setup Docs](/src/Tardigrade%20Setup%20Docs/), each package also has it's own README, just check each directory, this will give you a description of it's ROS utilization or purpose. 
+
 ### Follow to a "T"
 [ROS Noetic Installation Tutorial](http://wiki.ros.org/noetic/Installation/Ubuntu)
 
