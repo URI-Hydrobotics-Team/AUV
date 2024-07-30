@@ -1,4 +1,4 @@
-### Seeing Camera Feed (Simulator)
+# Seeing Camera Feed (Simulator)
 
 There's an amazing tool called rqt_image_view. RQt being Ros Qt, Qt is a UI library that can be made using either python or alternatively via it's own independent software. We will likely be using RQT for designing our surface control system. rqt_image_view takes the already independent library ImageView and places directly into the RQT framework. 
 
