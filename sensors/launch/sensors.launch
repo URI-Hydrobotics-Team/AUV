@@ -7,16 +7,18 @@
     Year: 2024
 -->
 <launch>
-    <node pkg="echosounder" type="echosounder.py" name="echosounder" output="screen"></node>
-
-    <include file = "include/bno055.launch">
+    <!--Runs on the Raspberry Pi's USB ports, we search for the serial number just incase rather than just using the COM port-->
+    <include file = "include/echosounder.launch">
         <arg name = "node_name" value = "front_echosounder"/>
-        <arg name = "port" value = "/dev/ttyAMA0"/>
+        <arg name = "serial_number" value = ""/>
     </include>
 
     <include file = "include/echosounder.launch">
         <arg name = "node_name" value = "down_echosounder"/>
-        <arg name = "port" value = "/dev/ttyAMA1"/>
+        <arg name = "serial_number" value = ""/> 
     </include>
+
+    <!--Runs over TX RX UART channel-->
+    <include file = "include/bno055.launch"></include>
 </launch>
 

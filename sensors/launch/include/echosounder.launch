@@ -7,13 +7,13 @@
     Year: 2024
 -->
 <launch>
-    <arg name = "port"  default = "/dev/ttyAMA0"/>
+    <arg name = "serial_number"  default = ""/>
     <arg name = "baudrate" default = "9600"/>
     <arg name = "node_name" default = ""/>
     <arg name = "mode" default = "distance"/>
 
-    <node pkg="echosounder" type="echosounder.py" name="echosounder" output="screen">
-        <param name = "port" value = "$(arg uart-channel)" type = "str"/>
+    <node pkg="echosounder" type="ping1dechosounder.py" name="echosounder" output="screen">
+        <param name = "serial_number" value = "$(arg serial_number)" type = "int"/>
         <param name = "baudrate" value = "$(arg baudrate)" type = "int"/>
         <param name = "node_name" value = "$(arg node_name" type = "str"/>
         <param name = "mode" value = "$(arg mode" type = "str"/>

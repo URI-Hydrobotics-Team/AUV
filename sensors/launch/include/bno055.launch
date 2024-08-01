@@ -7,8 +7,9 @@
     Year: 2024
 -->
 <launch>
+    <arg name = "baudrate" default = "115200"/>
+
     <node pkg="bno055" type="bno055.py" name="bno055" output="screen">
-        <param name = "pin" value = "$(arg port)" type = "str"/>
         <param name = "baudrate" value = "$(arg baudrate)" type = "int"/>
     </node>
 </launch>
