@@ -1,10 +1,5 @@
-from serial.tools import list_ports_linux
+import serial.tools.list_ports as port
 
-"""
-Script for finding our Echosounder's serial numbers, simply run, pull the serial numbers, then apply them to the echosounders.launch file.
-"""
-
-device_list = list_ports_linux.comports()
-for device in device_list:
-    if (device.serial_number != None ):
-        print(device.serial_number)
+portlist = list(port.comports())
+for p in portlist:
+    print(p)

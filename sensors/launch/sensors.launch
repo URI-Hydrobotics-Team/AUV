@@ -11,11 +11,13 @@
     <include file = "include/echosounder.launch">
         <arg name = "node_name" value = "front_echosounder"/>
         <arg name = "serial_number" value = ""/>
+        <arg name = "port" value = "/dev/ttyUSB0"/>
     </include>
 
     <include file = "include/echosounder.launch">
         <arg name = "node_name" value = "down_echosounder"/>
         <arg name = "serial_number" value = ""/> 
+        <arg name = "port" value = "/dev/ttyUSB1"/>
     </include>
 
     <!--Runs over TX RX UART channel-->

@@ -23,7 +23,6 @@
             <sun azimuth="50.0" elevation="50.0"/>
         </atmosphere>
     </environment>
-    <!--
     <static name="tank" type="model">
         <physical>
             <mesh filename="$(find tardigrade)/data/objects/tank.obj" scale="1.0"/>
@@ -78,6 +77,4 @@
         <look name="orange"/>
         <world_transform xyz="0.0 0.0 2.5" rpy="0.0 0.0 0.0"/>
     </static>
-    -->
-    -->
 </scenario>

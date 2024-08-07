@@ -17,6 +17,10 @@ class Ping1dEchosounder:
         node_name = rospy.get_param('~node_name')
         mode = rospy.get_param('~mode') #Defines the running mode of the Ping1d, either distance or profile
 
+        baud_rate = 9600
+        serial_number = "DP05HWQ9"
+        
+
         usb_list = list_ports_linux.comports()
 
         for usb in usb_list:
@@ -26,7 +30,8 @@ class Ping1dEchosounder:
                 print('Could not find echosounder with serial number:', serial_number)
 
 
-
+if __name__ == "__main__":
+    echosounder = Ping1dEchosounder()
         
             
             

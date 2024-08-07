@@ -1,10 +1,11 @@
 import logging
 import sys
 import time
+import os
 
 from Adafruit_BNO055 import BNO055
 
-bno = BNO055.BNO055(serial_port='/dev/serial0', rst=18)
+bno = BNO055.BNO055(serial_port='/dev/serial0')
 
 if len(sys.argv) == 2 and sys.argv[1].lower() == '-v':
     logging.basicConfig(level=logging.DEBUG)
@@ -39,10 +40,13 @@ while True:
     bno_sys, gyro, accel, magno = bno.get_calibration_status()
     if runonce:
         print("Calibrating BNO055")
+        print("Alternatively, take IMU out and do the calibration, just make sure IMU orientation matches that of the calibration, or offset it in the driver code.")
         print("First, to calibrate the gyro place the robot flat on the floor, use plywood or other objects to keep her horizontal.")
         print("Next, to calibrate the magnometer, move the tardigrade in a figure 8 continously till calibrated.")
-        print("The accelerometer reguires putting the tardigrade in the 6 directions of a cube, this is safest when done in water.")
+        print("The accelerometer reguires putting the tardigrade in the 6 directions of the faces of a cube, this is safest when done in water.")
         print("Finally, wait for the system to calibrate, this should happen shortly after the rest of the sensors are complete.")
+
+        print("NOTE: This should also be done when geographic location has significantly changed.")
 
     if (bno_sys == 3):
         print("System Calibrated!")
@@ -72,5 +76,7 @@ while True:
         False
 
     runonce = False
+    time.sleep(2)
+    os.system('cls')
     
 print("Check the calibrations directory for the calibration, it should then be called upon startup of the BNO055")

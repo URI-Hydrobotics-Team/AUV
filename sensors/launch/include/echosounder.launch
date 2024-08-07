@@ -8,6 +8,7 @@
 -->
 <launch>
     <arg name = "serial_number"  default = ""/>
+    <arg name = "port"  default = ""/>
     <arg name = "baudrate" default = "9600"/>
     <arg name = "node_name" default = ""/>
     <arg name = "mode" default = "distance"/>
