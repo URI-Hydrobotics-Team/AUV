@@ -9,11 +9,17 @@ import numpy as np
 class CameraAuto:
     def __init__(self):
         # Initialize the ROS node
-        rospy.init_node('camera_processor', anonymous=True)
+        rospy.init_node('houghline_test')
+        rate = rospy.Rate(5)
 
-        # Create a CvBridge object
-        self.bridge = CvBridge()
+    def callback():
+        
+    
+                
 
-        # Subscribe to the camera feed topic
-        self.image_sub = rospy.Subscriber('/tardigrade/camera/front/data/image_color', Image, self.callback)
+if __name__ == "__main__":
+    camera = CameraAuto()
+
+    rospy.Subscriber('/tardigrade/camera/front/data/image_color', Image, camera.callback)
+    rospy.spin()
 

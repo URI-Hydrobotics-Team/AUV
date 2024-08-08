@@ -34,6 +34,8 @@ def update_thruster_vals(thruster_pwms):
     PS.duty_ns(thruster_pwms[4] * 1000)
     SS.duty_ns(thruster_pwms[5] * 1000)
 
+initialize_thrusters()
+
 while True:
     #Example Bytestring: PWM,1500.0,1500.0,1500.0,1500.1500.0,1500.0
     bytestring_command = sys.stdin.readline().strip()

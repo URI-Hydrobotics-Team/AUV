@@ -5,30 +5,19 @@
     Author: Devin Hunsberger
     Email: dhunsberger@uri.edu
     Year: 2024
-
-    DON'T RUN THIS YET, NOT CONFIRMED
 -->
 <launch>
     <arg name = "is_sim" default = "true"/>
     <arg name = "port"  default = "/dev/ttyACM0"/>
     <arg name = "baudrate" default = "115200"/>
-    
-    <arg name = "test_forward" default = "'{{linear:{x:0.5,y:0,z:0}},{angular:{x:0,y:0,z:0}}} -r 3'"/>
-    <arg name = "test_backward" default = "'{{linear:{x:-0.5,y:0,z:0}},{angular:{x:0,y:0,z:0}}} -r 3'"/>
-    <arg name = "test_surface" default = "'{{linear:{x:0,y:0,z:0.5}},{angular:{x:0,y:0,z:0}}} -r 3'"/>
-    <arg name = "test_dive" default = "'{{linear:{x:0,y:0,z:-0.5}},{angular:{x:0,y:0,z:0}}} -r 3'"/>
-    <arg name = "test_left" default = "'{{linear:{x:0,y:0,z:0}},{angular:{x:0,y:0.5,z:0}}} -r 3'"/>
-    <arg name = "test_right" default = "'{{linear:{x:0,y:0,z:0}},{angular:{x:0,y:-0.5,z:0}}} -r 3'"/>
 
 
     <node pkg = "tardigrade" type = "cmd_vel_to_thruster.py" name = "cmd_vel_to_thruster"/>
-
-    <node pkg="rostopic" type= "rostopic" name="rostopic" args="pub {/cmd_vel }"/>
 
     <include file = "$(find pico_controller)/launch/pico_controller.launch">
         <arg name = "is_sim" value = "$(arg is_sim)"/>
         <arg name = "port" value = "$(arg port)"/>
     </include>
 
-
+    <node pkg = "tardigrade" type = "test_thrusters.py" name = "test_thrusters"/>
 </launch>

@@ -3,26 +3,7 @@
 import rospy
 from std_msgs.msg import Float64
 from geometry_msgs.msg import Twist
+import cv2
 
-def make_twist(lin_x, lin_y, lin_z, ang_x, ang_y, ang_z):
-    twist = Twist()
-    twist.linear.x = lin_x
-    twist.linear.y = lin_y
-    twist.linear.z = lin_z
-    twist.angular.x = ang_x
-    twist.angular.y = ang_y
-    twist.angular.z = ang_z
-    return twist
-
-if __name__ == '__main__':
-    pub = rospy.Publisher('/cmd_vel', Twist, queue_size = 10)
-    rospy.init_node('auto')
-    forward = make_twist(0.5, 0.0, 0.0, 0.0, 0.0, 0.0)
-    dive = make_twist(0.0, 0.0, -0.5, 0.0, 0.0, 0.0)
-    pub.publish(forward)
-    rospy.sleep(2)
-
-    pub.publish(dive)
-    rospy.sleep(2)
-    rospy.spin()
-
+def main():
+    
