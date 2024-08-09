@@ -19,9 +19,6 @@ class ThrusterController:
         self.is_sim = rospy.get_param('~is_sim')
         serial_port = rospy.get_param('~port')
         baud_rate = rospy.get_param('~baudrate')
-        print(self.is_sim)
-        print(serial_port)
-        print(baud_rate)
 
         self.INITIALIZE_MICROSECS = 1500
         
@@ -91,7 +88,6 @@ class ThrusterController:
         message = 'PWM,1500,1500,1500,1500,1500,1500\n'
         bytestring_command = bytes(message, 'ascii')
         if not self.is_sim:
-            print('Writing:', bytestring_command)
             self.ser.write(bytestring_command)
 
     def update_thrusters(self):
@@ -104,13 +100,13 @@ class ThrusterController:
         #And append to the PWM tag.
         message = 'PWM,'
         message += ','.join(message_vals) 
-        rospy.loginfo(message)
         message += '\n'
         bytestring_command = bytes(message, 'ascii')
         
         if not self.is_sim:
-            print('Writing:', bytestring_command)
             self.ser.write(bytestring_command)
+        
+        rospy.sleep()
 
 
 if __name__ == "__main__":
@@ -123,5 +119,5 @@ if __name__ == "__main__":
     rospy.Subscriber("/tardigrade/control/thruster/yaw", Float64, thrustercontroller.yaw_callback)
     rospy.Subscriber("/tardigrade/control/thruster/port_surge", Float64, thrustercontroller.port_surge_callback)
     rospy.Subscriber("/tardigrade/control/thruster/starboard_surge", Float64, thrustercontroller.starboard_surge_callback)
-
+    
     rospy.spin()

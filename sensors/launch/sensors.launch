@@ -8,19 +8,19 @@
 -->
 <launch>
     <!--Runs on the Raspberry Pi's USB ports, we search for the serial number just incase rather than just using the COM port-->
-    <include file = "include/echosounder.launch">
-        <arg name = "node_name" value = "front_echosounder"/>
+    <include file = "$(find sensors)/launch/echosounder.launch">
+        <arg name = "name" value = "front_echosounder"/>
         <arg name = "serial_number" value = ""/>
         <arg name = "port" value = "/dev/ttyUSB0"/>
     </include>
 
-    <include file = "include/echosounder.launch">
-        <arg name = "node_name" value = "down_echosounder"/>
+    <include file = "$(find sensors)/launch/echosounder.launch">
+        <arg name = "name" value = "down_echosounder"/>
         <arg name = "serial_number" value = ""/> 
         <arg name = "port" value = "/dev/ttyUSB1"/>
     </include>
 
     <!--Runs over TX RX UART channel-->
-    <include file = "include/bno055.launch"></include>
+    <include file = "$(find sensors)/launch/bno055.launch"></include>
 </launch>
 
