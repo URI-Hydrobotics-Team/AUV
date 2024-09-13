@@ -9,7 +9,7 @@
 <launch>
     <arg name = "baudrate" default = "115200"/>
 
-    <node pkg="sensors" type="bno055.py" name="bno055" output="screen">
+    <node pkg="sensors" type="bno055_publisher.py" name="bno055" output="screen">
         <param name = "baudrate" value = "$(arg baudrate)" type = "int"/>
     </node>
 </launch>

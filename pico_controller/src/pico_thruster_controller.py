@@ -89,25 +89,33 @@ class ThrusterController:
         bytestring_command = bytes(message, 'ascii')
         if not self.is_sim:
             self.ser.write(bytestring_command)
+            self.ser.flush()
 
     def update_thrusters(self):
         #Update our array.
         self.thruster_vals = [self.bow_port_heave, self.bow_starboard_heave, self.stern_heave, self.yaw, self.port_surge, self.starboard_surge]
 
         #Convert ints to strings
-        message_vals = list(map(str, self.thruster_vals))
+        #message_vals = list(map(str, self.thruster_vals))
 
         #And append to the PWM tag.
+        """
         message = 'PWM,'
         message += ','.join(message_vals) 
         message += '\n'
         bytestring_command = bytes(message, 'ascii')
-        
-        if not self.is_sim:
-            self.ser.write(bytestring_command)
-        
-        rospy.sleep()
+        """
+        message_vals = [str(val) for val in self.thruster_vals]
+        message = f'PWM,{",".join(message_vals)}\n'
+        bytestring_command = message.encode('ascii')
 
+        if not self.is_sim:
+            try:
+                self.ser.write(bytestring_command)
+                self.ser.flush()
+            except serial.SerialException as e:
+                rospy.logerr(f"Serial communication error: {e}")
+        
 
 if __name__ == "__main__":
     thrustercontroller = ThrusterController()

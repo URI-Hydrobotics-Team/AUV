@@ -8,6 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package()
 
-catkin_install_python(PROGRAMS src/camera_publisher.py src/echosounder.py src/bno055.py
+catkin_install_python(PROGRAMS src/camera_publisher.py src/echosounder_publisher.py src/bno055_publisher.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

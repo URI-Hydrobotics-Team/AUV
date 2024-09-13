@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<!--
+    Author: Devin Hunsberger
+    Email: dhunsberger@uri.edu
+    Year: 2023
+    Copyright (C) 2022 Smart Ocean Systems Laboratory
+-->
+<scenario xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:include filename = "$(find tardigrade)/metadata/looks.scn.xacro"/>
+    <xacro:include filename = "$(find tardigrade)/metadata/materials.scn.xacro"/>
+
+	<xacro:macro name = "tardigrade" params = "xyz rpy robot_name">
+	
+	<!--Shell Generator-->
+		<robot name = "${robot_name}" fixed = "false" self_collisions = "false">
+			
+			<base_link name = "Vehicle" type = "compound" physics = "submerged">
+				
+				<external_part name="Hull" type = "model" physics = "submerged" bouyant = "false">
+					<physical>
+						<mesh filename = "parts/tardigrade_reduced.obj" scale = "0.001"/>
+						<origin rpy = "4.7124 0.0 -1.571" xyz = "0.0 0.0 0.0"/>
+					</physical>
+					<visual>
+						<mesh filename = "parts/tardigrade_reduced.obj" scale = "0.001"/>
+						<origin rpy="4.7124 0.0 -1.571" xyz = "0.0 0.0 0.0"/>
+					</visual>
+					<material name = "Vehicle"/>
+					<look name = "black"/>
+					<mass value = "30"/>
+					<inertia xyz = "0.0 0.0 0.0"/>
+					<compound_transform rpy = "0.0 0.0 0.0" xyz = "0.0 0.0 0.0"/>
+					<cg xyz = "0.0 0.0 0.0" rpy = "0.0 0.0 0.0"/>
+				</external_part>
+				
+                <!--
+				<external_part name = "Foam" type = "cylinder" physics = "surface" bouyant = "true">
+					<dimensions radius = "0.1" height = "0.1"/>
+					<origin xyz = "-0.2 0.0 0.0" rpy = "0.0 0.0 0.0"/>
+					<material name = "Foam"/>
+					<mass value = "1.5"/>
+					<look name = "grey"/>
+					<compound_transform rpy = "0.0 0.0 0.0" xyz = "0.0 0.0 0.0"/>
+				</external_part>
+				-->
+                
+				</base_link>
+					
+					<link name = "Base" type = "box" physics = "submerged">
+						<dimensions xyz = "0.01 0.01 0.01"/>
+						<origin xyz = "0.0 0.0 0.0" rpy = "0.0 0.0 0.0"/>
+						<material name = "Neutral"/>
+						<look name = "blue"/>
+					</link>
+
+					<joint name = "Joint1" type = "fixed">
+						<parent name = "Vehicle"/>
+						<child name = "Base"/>
+						<origin xyz = "0.0 0.0 0.0" rpy = "0.0 0.0 0.0"/>
+						<axis xyz = "0.0 0.0 0.0"/>
+					</joint>
+
+					<actuator name = "BowPortHeave" type = "thruster">
+						<link name = "Base"/>
+						<origin rpy = "0.0 1.571 0.0" xyz = "0.197 0.0996 0.0"/> 
+						<specs thrust_coeff="0.4315" thrust_coeff_backward="0.3404" torque_coeff="0.01" max_rpm="3000.0"/> 
+						<propeller diameter = "0.1" right = "true">
+							<mesh filename = "parts/thruster.obj" scale = "1.0"/>
+							<material name = "Neutral"/>
+							<look name = "blue"/>
+						</propeller>
+						<ros_subscriber topic = "/${robot_name}/control/thruster/bow_port_heave"/>
+					</actuator>
+
+					<actuator name = "BowStarboardHeave" type = "thruster">
+						<link name = "Base"/>
+						<origin rpy = "0.0 1.571 0.0" xyz = "0.197 -0.0996 0.0"/> 
+						<specs thrust_coeff="0.4315" thrust_coeff_backward="0.3404" torque_coeff="0.01" max_rpm="3000.0"/> 
+						<propeller diameter = "0.1" right = "true">
+							<mesh filename = "parts/thruster.obj" scale = "1.0"/>
+							<material name = "Neutral"/>
+							<look name = "blue"/>
+						</propeller>
+						<ros_subscriber topic = "/${robot_name}/control/thruster/bow_starboard_heave"/>
+					</actuator>		
+
+					<actuator name = "SternHeave" type = "thruster">
+						<link name = "Base"/>
+						<origin rpy = "0.0 1.571 0.0" xyz = "-0.22945 0.0 0.0"/> 
+						<specs thrust_coeff="0.4315" thrust_coeff_backward="0.3404" torque_coeff="0.01" max_rpm="3000.0"/> 
+						<propeller diameter = "0.1" right = "true">
+							<mesh filename = "parts/thruster.obj" scale = "1.0"/>
+							<material name = "Neutral"/>
+							<look name = "blue"/>
+						</propeller>
+						<ros_subscriber topic = "/${robot_name}/control/thruster/stern_heave"/>
+					</actuator>		
+            
+					<actuator name = "Yaw" type = "thruster">
+						<link name = "Base"/>
+						<origin rpy = "0.0 0.0 1.571" xyz = "0.3048 -0.0045 0.0"/> 
+						<specs thrust_coeff="0.4315" thrust_coeff_backward="0.3404" torque_coeff="0.01" max_rpm="3000.0"/> 
+						<propeller diameter = "0.1" right = "true">
+							<mesh filename = "parts/thruster.obj" scale = "1.0"/>
+							<material name = "Neutral"/>
+							<look name = "blue"/>
+						</propeller>
+						<ros_subscriber topic = "/${robot_name}/control/thruster/yaw"/>
+					</actuator>
+
+					<actuator name = "PortSurge" type = "thruster">
+						<link name = "Base"/>
+						<origin rpy = "0.0 0.0 -0.5236" xyz = "-0.3048 -0.1318 0.0"/> 
+						<specs thrust_coeff="0.4315" thrust_coeff_backward="0.3404" torque_coeff="0.01" max_rpm="3000.0"/> 
+						<propeller diameter = "0.1" right = "true">
+							<mesh filename = "parts/thruster.obj" scale = "1.0"/>
+							<material name = "Neutral"/>
+							<look name = "blue"/>
+						</propeller>
+						<ros_subscriber topic = "/${robot_name}/control/thruster/port_surge"/>
+					</actuator>
+					
+					<actuator name = "StarboardSurge" type = "thruster">
+						<link name = "Base"/>
+						<origin rpy = "0.0 0.0 0.5236" xyz = "-0.3048 0.1318 0.0"/> 
+						<specs thrust_coeff="0.4315" thrust_coeff_backward="0.3404" torque_coeff="0.01" max_rpm="3000.0"/> 
+						<propeller diameter = "0.1" right = "true">
+							<mesh filename = "parts/thruster.obj" scale = "1.0"/>
+							<material name = "Neutral"/>
+							<look name = "blue"/>
+						</propeller>
+						<ros_subscriber topic = "/${robot_name}/control/thruster/starboard_surge"/>
+					</actuator>
+					
+					<sensor name="IMU" type="imu" rate="10.0">
+						<link name="Base"/>
+						<origin rpy = "0.0 0.0 0.0" xyz = "0.0 0.0 0.0"/>
+						<noise angle="0.0 0.0 0.0" angular_velocity="0.0" yaw_drift="0.0" linear_acceleration="0.0"/>
+						<ros_publisher topic="/${robot_name}/IMU/stonefish/data"/>
+					</sensor>
+
+					<sensor name="CameraFront" rate="10.0" type="camera">
+						<specs resolution_x="1920" resolution_y="1080" horizontal_fov="82"/>
+						<origin rpy="1.5708 0.0 1.5708" xyz="0.36 0.0 -0.09"/>
+						<link name="Base"/>
+						<ros_publisher topic="/${robot_name}/camera/front/data"/>
+					</sensor>
+                    <!--
+					<sensor name="CameraTop" rate="5.0" type="camera">
+						<specs resolution_x="640" resolution_y="640" horizontal_fov="179"/>
+						<origin rpy="0.0 3.14159 1.5708" xyz="0.0 0.0 -0.11"/>
+						<link name="Base"/>
+						<ros_publisher topic="/${robot_name}/camera/top/data"/>
+					</sensor>
+                    -->
+                    <sensor name="front_echosounder" type="fls">
+                        <specs beams="1" bins="200" horizontal_fov="30.0" vertical_fov="30.0"/>
+                        <settings range_min="0.5" range_max="30.0" gain="1.1"/>
+                        <display colormap="hot"/>
+                        <noise multiplicative="0.01" additive="0.02"/>
+						<origin rpy="0.0 -4.7124 0.0" xyz="0.36 0.0 0.09"/>
+                        <link name="Base"/>
+                        <ros_publisher topic="/${robot_name}/echosounder/front/data"/>
+                    </sensor>
+
+                    <sensor name="down_echosounder" type="fls">
+                        <specs beams="1" bins="200" horizontal_fov="30.0" vertical_fov="30.0"/>
+                        <settings range_min="0.5" range_max="30.0" gain="1.1"/>
+                        <display colormap="hot"/>
+                        <noise multiplicative="0.01" additive="0.02"/>
+						<origin rpy="0.0 0.0 0.0" xyz="0.28 0.0 0.09"/>
+                        <link name="Base"/>
+                        <ros_publisher topic="/${robot_name}/echosounder/down/data"/>
+                    </sensor>
+
+			<world_transform rpy="${rpy}" xyz="${xyz}"/>
+        </robot>
+    </xacro:macro>
+</scenario>

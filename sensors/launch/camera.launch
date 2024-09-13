@@ -7,5 +7,13 @@
     Year: 2024
 -->
 <launch>
-    <node pkg="sensors" type="camera_publisher.py" name="camera" output="screen"></node>
+    <arg name="name" default="front"/>
+    <arg name="width" default="1920"/>
+    <arg name="height" default="1080"/>
+    <arg name="tty_port" default="/dev/ttyUSB0"/>
+
+    <node pkg="sensors" type="camera_publisher.py" name="$(arg name)" output="screen">
+        <param name = "name" value = "$(arg name)"/>
+        <param name = "tty_port" value = "$(arg tty_port)"/>
+    </node>
 </launch>

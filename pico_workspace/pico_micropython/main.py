@@ -58,4 +58,4 @@ while True:
         update_thruster_vals(thruster_values)    
     else:
         print("Invalid command:", bytestring_command)
-
+    time.sleep(0.1)

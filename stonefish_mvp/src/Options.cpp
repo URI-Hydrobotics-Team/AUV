@@ -65,7 +65,7 @@ void ArgParser::parse(int argc, char* argv[]) {
 
     if(quality == "low")
     {
-        argOptions.renderSettings.shadows = sf::RenderQuality::LOW;
+        argOptions.renderSettings.shadows = sf::RenderQuality::DISABLED;
         argOptions.renderSettings.ao = sf::RenderQuality::DISABLED;
         argOptions.renderSettings.atmosphere = sf::RenderQuality::LOW;
         argOptions.renderSettings.ocean = sf::RenderQuality::LOW;
@@ -74,12 +74,12 @@ void ArgParser::parse(int argc, char* argv[]) {
     }
     else if(quality == "high")
     {
-        argOptions.renderSettings.shadows = sf::RenderQuality::HIGH;
+        argOptions.renderSettings.shadows = sf::RenderQuality::DISABLED;
         argOptions.renderSettings.ao = sf::RenderQuality::HIGH;
         argOptions.renderSettings.atmosphere = sf::RenderQuality::HIGH;
         argOptions.renderSettings.ocean = sf::RenderQuality::HIGH;
         argOptions.renderSettings.aa = sf::RenderQuality::HIGH;
-        argOptions.renderSettings.ssr = sf::RenderQuality::HIGH;
+        argOptions.renderSettings.ssr = sf::RenderQuality::DISABLED;
     }
     else // "medium"
     {
@@ -92,7 +92,7 @@ void ArgParser::parse(int argc, char* argv[]) {
     }
 
     argOptions.helperSettings.showFluidDynamics = false;
-    argOptions.helperSettings.showCoordSys = false;
+    argOptions.helperSettings.showCoordSys = true;
     argOptions.helperSettings.showBulletDebugInfo = false;
     argOptions.helperSettings.showSensors = false;
     argOptions.helperSettings.showActuators = false;
