@@ -1,6 +1,0 @@
-<launch>
-    <!-- Node to subscribe to image topics -->
-    <node name="image_subscriber" pkg="external" type="surface_viewer.py" output="screen">
-        <!-- You can add parameters here if needed -->
-    </node>
-</launch>
