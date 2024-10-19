@@ -7,12 +7,19 @@
     <img src="img/hydro.jpg" width = 200 height = 200>
 </p>
 
+[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+
 <p>
     Hello, and welcome to the URI Hydrobotics AUV codebase. Below will have some technical documentation, description of this here ol' repository and some other important things you should read before 
 </p>
 
-<details markdown="1">
-    <summary>Table of Contents</summary>
+<details>
+
+&nbsp; &nbsp; &nbsp; &nbsp;[Installation](#Installation)</br>
+&nbsp; &nbsp; &nbsp; &nbsp;[Requirements](/utils/requirements.txt)</br>
+
+
 </details>
 
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+
+# Installation
