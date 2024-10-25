@@ -1,3 +1,7 @@
+"""
+blah blah blah I'm a module docstring.
+"""
+
 class TestClass:
     """
     A simple class to demonstrate arithmetic operations for testing linting tools.
