@@ -2,7 +2,7 @@
 blah blah blah I'm a module docstring.
 """
 
-class TestClass:
+class AClass:
     """
     A simple class to demonstrate arithmetic operations for testing linting tools.
     """
