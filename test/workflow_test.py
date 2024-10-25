@@ -61,7 +61,7 @@ class AClass:
 
 # Example instantiation and usage
 if __name__ == "__main__":
-    test_instance = TestClass(5)
+    test_instance = AClass(5)
     print(test_instance.increment_value())
     print(test_instance.multiply_value(2))
     print(test_instance.divide_value(1))
