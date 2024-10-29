@@ -14,7 +14,6 @@ class AClass:
         Parameters:
             value (int or float): The initial value to store in the instance.
         """
-        __test__ = False
         #Stupid requirement because it's stupid and a requirement if the word Test is at the start of your class.
         self.value = value
 
