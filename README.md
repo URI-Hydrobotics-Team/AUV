@@ -8,6 +8,9 @@
 </p>
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+<a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
+</a>
 
 <p>
     Hello, and welcome to the URI Hydrobotics AUV codebase. Below will have some technical documentation, description of this here ol' repository and some other important things you should read before 
