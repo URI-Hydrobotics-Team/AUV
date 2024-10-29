@@ -1,6 +1,0 @@
-[submodule "sensors/src/ping-python"]
-	path = sensors/src/ping-python
-	url = https://github.com/bluerobotics/ping-python.git
-[submodule "sensors/src/ms5837-python"]
-	path = sensors/src/ms5837-python
-	url = https://github.com/bluerobotics/ms5837-python.git
