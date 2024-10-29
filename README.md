@@ -16,13 +16,28 @@
     Hello, and welcome to the URI Hydrobotics AUV codebase. Below will have some technical documentation, description of this here ol' repository and some other important things you should read before 
 </p>
 
-<details>
-
-&nbsp; &nbsp; &nbsp; &nbsp;[Installation](#Installation)</br>
-&nbsp; &nbsp; &nbsp; &nbsp;[Requirements](/utils/requirements.txt)</br>
-
-
-</details>
-
+<center>
+    <br> 
+    [![Sponsorship Button]][empty]
+</center>
 
 # Installation
+
+# Requirements
+
+# History
+<center>
+    <figure>
+        <img src="img/tardigrade_render.png" width="600" height="600">
+        <figcaption>This is the Tardigrade V1, our first concept AUV for the RoboSub competition to compete in the Summer of 2024.</figcaptions>
+    </figure>
+    <br> 
+    [![TDR Button]][empty]
+</center>
+
+
+[Sponsorship Button]: https://img.shields.io/badge/Consider_Sponsoring_Us-37a779?style=for-the-badge
+[TDR Button]: https://img.shields.io/badge/Checkout_Our_Technical_Design_Report-37a779?style=for-the-badge
+[TDR]: img/2024_tdr.pdf
+[SponsorFile]: img/2024_sponsorsheet.pdf
+[empty]: #
