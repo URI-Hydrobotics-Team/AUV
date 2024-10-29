@@ -17,8 +17,10 @@
 </p>
 
 <center>
-    <br> 
-    [![Sponsorship Button]][empty]
+<br>  
+
+[![Sponsorship Button]][SponsorFile]
+
 </center>
 
 # Installation
@@ -31,8 +33,10 @@
         <img src="img/tardigrade_render.png" width="600" height="600">
         <figcaption>This is the Tardigrade V1, our first concept AUV for the RoboSub competition to compete in the Summer of 2024.</figcaptions>
     </figure>
-    <br> 
-    [![TDR Button]][empty]
+    
+<br> 
+    
+[![TDR Button]][TDR]
 </center>
 
 
