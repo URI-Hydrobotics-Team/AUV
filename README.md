@@ -8,7 +8,7 @@
 </p>
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
-<a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE">
+<a href="https://github.com/URI-Hydrobotics-Team/AUV/blob/main/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
 </a>
 
