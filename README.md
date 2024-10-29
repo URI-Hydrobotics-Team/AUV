@@ -40,8 +40,8 @@
 </center>
 
 
-[Sponsorship Button]: https://img.shields.io/badge/Consider_Sponsoring_Us-37a779?style=for-the-badge
-[TDR Button]: https://img.shields.io/badge/Checkout_Our_Technical_Design_Report-37a779?style=for-the-badge
+[Sponsorship Button]: https://img.shields.io/badge/Consider_Sponsoring_Us-8ac0e2?style=for-the-badge
+[TDR Button]: https://img.shields.io/badge/Checkout_Our_Technical_Design_Report-8ac0e2?style=for-the-badge
 [TDR]: img/2024_tdr.pdf
 [SponsorFile]: img/2024_sponsorsheet.pdf
 [empty]: #
