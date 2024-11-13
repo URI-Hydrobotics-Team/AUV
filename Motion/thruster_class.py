@@ -24,19 +24,22 @@ class Thruster:
 
         Args:
           name: Defines the name of the instance.
+          min_pwm: Defines thruster's minimum pwm value.
+          stop_pwm: Defines thruster's stop pwm value.
+          max_pwm: Defines thruster's maximum pwm value.
         """
-        self._STOP_PWM = stop_pwm
-        self._MIN_PWM = min_pwm
-        self._MAX_PWM = max_pwm
+        self._STOP_PWM = stop_pwm  # pylint: disable=invalid-name
+        self._MIN_PWM = min_pwm  # pylint: disable=invalid-name
+        self._MAX_PWM = max_pwm  # pylint: disable=invalid-name
         self.pwm = self._STOP_PWM
         self.name = name
-        self.inititlaized = False
+        self.initialized = False
 
     def initialize_thruster(self):
         """Initialize the thruster."""
 
         self.update(self._STOP_PWM)
-        self.inititlaized = True
+        self.initialized = True
 
     def update(self, pwm):
         """Update the thruster based on the new pwm value.
@@ -46,33 +49,49 @@ class Thruster:
         """
 
         # Make sure thruster is initialized before updating new pwm value.
-        if pwm != self._STOP_PWM and self.inititlaized is False:
+        if pwm != self._STOP_PWM and self.initialized is False:
             print(f'{self.name} received pwm: {pwm} before receiving intialization pwm')
         else:
             self.pwm = pwm
-            self.inititlaized = True
+            self.initialized = True
 
     def stop_thruster(self):
-        """Stop the thruster"""
+        """Stop the thruster."""
 
         self.update(self._STOP_PWM)
 
     def get_max(self):
-        """Get the max pwm value"""
+        """Get the max pwm value.
+
+        Returns:
+            An integer representing the thruster's maximum pwm value.
+        """
 
         return self._MAX_PWM
 
     def get_min(self):
-        """Get the minimum pwm value"""
+        """Get the minimum pwm value.
+
+        Returns:
+            An integer representing the thruster's minimum pwm value.
+        """
 
         return self._MIN_PWM
 
     def get_pwm(self):
-        """Get the current pwm value"""
+        """Get the current pwm value.
+
+        Returns:
+            An integer representing the thruster's current pwm value.
+        """
 
         return self.pwm
 
     def is_initialized(self):
-        """Check if thruster is initialized"""
+        """Check if thruster is initialized.
 
-        return self.inititlaized
+        Returns:
+            A boolean value representing the thruster's initialization status.
+        """
+
+        return self.initialized
