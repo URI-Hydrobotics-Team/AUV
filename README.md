@@ -8,18 +8,39 @@
 </p>
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+<a href="https://github.com/URI-Hydrobotics-Team/AUV/blob/main/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
+</a>
 
 <p>
     Hello, and welcome to the URI Hydrobotics AUV codebase. Below will have some technical documentation, description of this here ol' repository and some other important things you should read before 
 </p>
 
-<details>
-
-&nbsp; &nbsp; &nbsp; &nbsp;[Installation](#Installation)</br>
-&nbsp; &nbsp; &nbsp; &nbsp;[Requirements](/utils/requirements.txt)</br>
-
-
-</details>
-
+<p align="center">
+    <br>
+    <a href="img/2024_sponsorsheet.pdf">
+        <img src="https://img.shields.io/badge/Consider_Sponsoring_Us-8ac0e2?style=for-the-badge">
+    </a>
+</p>
 
 # Installation
+
+# Requirements
+
+# History
+<p align="center">
+    <img src="img/tardigrade_render.png" width="600" height="600">
+    <br>
+    This is the Tardigrade V1, our first concept AUV for the RoboSub competition to compete in the Summer of 2024.
+    <br>
+    <a href="img/2024_tdr.pdf">
+        <img src="https://img.shields.io/badge/Checkout_Our_Technical_Design_Report-8ac0e2?style=for-the-badge">
+    </a>
+</p>
+
+
+[Sponsorship Button]: https://img.shields.io/badge/Consider_Sponsoring_Us-8ac0e2?style=for-the-badge
+[TDR Button]: https://img.shields.io/badge/Checkout_Our_Technical_Design_Report-8ac0e2?style=for-the-badge
+[TDR]: img/2024_tdr.pdf
+[SponsorFile]: img/2024_sponsorsheet.pdf
+[empty]: #
