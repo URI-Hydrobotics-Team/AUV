@@ -1,0 +1,9 @@
+[submodule "sensors/Adafruit_BNO055"]
+	path = sensors/Adafruit_BNO055
+	url = https://github.com/adafruit/Adafruit_BNO055
+[submodule "sensors/ms5837"]
+	path = sensors/ms5837
+	url = https://github.com/bluerobotics/BlueRobotics_MS5837_Library
+[submodule "sensors/ping-cpp"]
+	path = sensors/ping-cpp
+	url = https://github.com/bluerobotics/ping-cpp
