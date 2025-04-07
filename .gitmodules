@@ -7,3 +7,6 @@
 [submodule "sensors/ping-cpp"]
 	path = sensors/ping-cpp
 	url = https://github.com/bluerobotics/ping-cpp
+[submodule "sensors/SOS-Leak-Sensor"]
+	path = sensors/SOS-Leak-Sensor
+	url = https://github.com/bluerobotics/SOS-Leak-Sensor
