@@ -9,7 +9,7 @@ Inputs recieved from sensors connected to the Pi directly and the microcontrolle
 Input from other sources such as the deckbox will be recieved via a socket.
 
 ## Socket Structure
-All sockets used for communication are of the stream type (TCP) and use the internet doman.
+All sockets used for communication are connectionless, of the datagram type (UDP), and use the internet doman.
 
 ### Terminology
 Broadcaster: a server program that broadcasts data over a socket (e.g.) 
