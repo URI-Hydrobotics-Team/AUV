@@ -2,8 +2,10 @@
 A program that listens to broadcasting sockets and logs data. Acts as a blackbox and is useful for debugging purposes.
 
 ## Overview
+Socket connections are defined in "connections.h". This program will call functions that check for connections on these sockets. The program then logs these raw messages to a file while also decoding them in order to provide message statistics.
 
 ### Data to log
+
 
 ### Logging format
 

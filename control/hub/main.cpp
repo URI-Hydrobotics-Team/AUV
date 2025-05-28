@@ -10,6 +10,8 @@
 #include <arpa/inet.h>
 #include <time.h>
 
+
+#include "connections.h"
 #include "config.h"
 
 std::string mode, arg1, arg2; //arguments
@@ -19,15 +21,11 @@ char status_string[256];
 	while other sources (sensors, pico, etc.) are in the works, this program will primaraly handle transmitting status data
 
 */
-
-/* socket definitions */
-struct sockaddr_in my_addr, remote_addr;
-int port, fd, i, slen=sizeof(remote_addr);
-char *server = "127.0.0.1";	/* change this to use a different server */
 char tx_buffer[256];
 
 
 
+clock_t stopwatch;	
 
 
 void printHelp(){
@@ -73,36 +71,45 @@ void sendStatus(){
 
 }
 
-void socketInit(){
-	port = std::stoi(arg1);
-	if ((fd=socket(AF_INET, SOCK_DGRAM, 0))==-1){
-		printf("socket created\n");
-	}
-	/* bind it to all local addresses and pick any port number */
 
-	memset((char *)&my_addr, 0, sizeof(my_addr));
-	my_addr.sin_family = AF_INET;
-	my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	my_addr.sin_port = htons(0);
+void resetClock(){
 
-	if (bind(fd, (struct sockaddr *)&my_addr, sizeof(my_addr)) < 0) {
-		std::cout << "bind failed\n";
-	}       
+	stopwatch = clock();
+} 
 
+double returnTimeStamp(){
 
-	memset((char *) &remote_addr, 0, sizeof(remote_addr));
-	remote_addr.sin_family = AF_INET;
-	remote_addr.sin_port = htons(port);
-	if (inet_aton(server, &remote_addr.sin_addr)==0) {
-		fprintf(stderr, "inet_aton() failed\n");
-		exit(1);
-	}
-
-	sendStatus();
+	clock_t t = clock() - stopwatch;
+	
+	return ((double)t)/CLOCKS_PER_SEC;
 
 }
 
+void mainLoop(){
+	//setup port for outputSocket
+	port = std::stoi(arg1); 
+	outputSocketInit();
 
+	
+	resetClock();
+	while (1){
+		/* we call this "the loop" */
+		/* code */
+		
+		if (returnTimeStamp() > STATUS_INTERVAL){
+			resetClock();
+			//updateStatus();
+			sendStatus(); //defualts to sending every 100ms 
+		}
+		
+		
+	}	
+
+
+
+
+
+}
 
 
 
@@ -125,7 +132,7 @@ int main(int argc, char *argv[]){
 
 
 	if (mode == "run"){
-		socketInit();
+		mainLoop();
 		
 	}
 

@@ -10,7 +10,13 @@ Input from other sources such as the deckbox will be recieved via a socket.
 
 ## Socket Structure
 All sockets used for communication are connectionless, of the datagram type (UDP), and use the internet doman.
-
+Each message is a chracter string starting with the character '!'. Then a 3 character ID is next (e.g. "!HUB") which is used to designate the sender. Then a ' ' character is appened along with another 3 characters for message TYPE. FInally another space is appended along with the contents of the message. Messages can be up to 256 bytes long.
+### Example Messages (for demonstration purposes)
+!HUB ERR failed to initialize sensors
+!HUB ALR leak detected
+!LOG ALR large log size
+!DBX CMD thrust vect 20,40,60
+In practice, these messages are likely going to be heavily abreviated in order to save message space
 ### Terminology
 Broadcaster: a server program that broadcasts data over a socket (e.g.) 
 
