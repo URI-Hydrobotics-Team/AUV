@@ -43,13 +43,17 @@ void printHelp(){
 
 void updateStatus(){
 
-	//update status string
+	/*
+		update status string
+		currently very crude
+		a proper messaging format is in the works
+	*/
 	time_t rawTime = time(NULL);
 	char *time_str = ctime(&rawTime);
 	time_str[strlen(time_str) - 1] = '\0'; //add terminating character
-	strncpy(status_string, "!MSG from HUB ", 14);
+	strncpy(status_string, "!HUB message avaliable", strlen("!HUB message avaliable"));
 
-	strncpy(status_string, time_str, sizeof(time_str));
+	//strncpy(status_string, time_str, sizeof(time_str));
 
 	status_string[strlen(status_string) - 1] = '\0'; //add terminating character
 	std::cout << "status string: " << status_string << '\n';
