@@ -1,1 +1,1 @@
-g++ main.cpp -o logger
+g++ main.cpp -o auv-log
