@@ -16,12 +16,14 @@
 
 std::string mode, arg1, arg2; //arguments
 char status_string[256];
+
+auv_tx_socket outputSocket;
+
 /*
 	Initial implementation:
 	while other sources (sensors, pico, etc.) are in the works, this program will primaraly handle transmitting status data
 
 */
-char tx_buffer[256];
 
 
 
@@ -62,12 +64,7 @@ void updateStatus(){
 void sendStatus(){
 	std::cout << "sending status\n";
 	updateStatus();
-	strncpy(tx_buffer, status_string, sizeof(status_string));
-
-	//sprintf(buf, "This is packet %d", i);
-	if (sendto(fd, tx_buffer, strlen(tx_buffer), 0, (struct sockaddr *)&remote_addr, slen) == -1){
-		perror("sendto");
-	}
+	outputSocket.transmit(status_string);
 
 }
 
@@ -87,8 +84,8 @@ double returnTimeStamp(){
 
 void mainLoop(){
 	//setup port for outputSocket
-	port = std::stoi(arg1); 
-	outputSocketInit();
+	outputSocket.init(std::stoi(arg1)); 
+
 
 	
 	resetClock();
@@ -137,6 +134,6 @@ int main(int argc, char *argv[]){
 	}
 
 
-	close(fd);
+	outputSocket.closefd();
 	return 0;
 }
