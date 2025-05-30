@@ -22,23 +22,30 @@ Broadcaster: a server program that broadcasts data over a socket (e.g.)
 
 
 ## Input and Output
-### Input
 Data enters the "hub" from "sources" (sensors, etc.). Input can be gathered from GPIO, sockets, etc.
+
+### Sources
+Driver code avliable under AUV/sensors
+- IMU (BNO055)
+- Leak Sensor (BlueRobotics SOS Leak Sensor)
+- Digital Pressure Sensor (MS5837)
+- Single-Beam Sonar (Ping 1D)
+- DVL (not confirmed)
 
 ### Output
 Data leaves the hub via sockets and serial. This data includes values recieved from sources and a "status" message that sent in an interval over a socket to alert other recievers of that the hub an therefore the AUV's onboard computer is avaliable
 
 
 ## TODO
-Implement IMU driver<br>
-Implement microcontroller driver<br>
-Implement leak sensor driver<br>
+- Implement IMU driver
+- Implement microcontroller driver
+- Implement leak sensor driver
 
 
 ## Compilation
-### Dependicies
-wiringpi<br>
-adafruit sensor library<br>
+### Dependecies
+- wiringpi>
+- adafruit sensor library
 
 ## Usage and Integration
 
