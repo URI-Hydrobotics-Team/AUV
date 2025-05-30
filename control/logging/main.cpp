@@ -17,7 +17,7 @@ time_t rawtime;
 struct tm * timeinfo;
 std::string time_str;
 
-
+log_file logFile;
 
 
 /*function declerations */
@@ -48,23 +48,36 @@ void log(){
 	time(&rawtime);
   	timeinfo = localtime(&rawtime);
   	time_str =  asctime(timeinfo);	
-	time_str_file = makeFileName(time_str);
-	initLogFile(); //create file
-
+	logFile.setTimeStr(time_str);
+	logFile.init();
 
 	std::cout << "AUV logger version: " << version_string << "\n";
 	std::cout << "Logger started at " << time_str << "\n";
 
-	std::cout << "Writing file: '" << working_file << "'\n"; 
-/*
+	std::cout << "Writing file: '" << logFile.getName() << "'\n"; 
+	
+	/* test log */
+
+
+
+	logFile.log("test");
+	logFile.log("test");
+	logFile.log("test");
+	
+
 	auv_rx_socket hubSocket;
 	hubSocket.init("127.0.0.1", 8100); // setup hub socket
+	std::string hub_socket_str;
 	while (1){	
-		hubSocket.rec(1); // rec. data from hub socket
+		hub_socket_str = hubSocket.rec(0); 
+		logFile.log(hub_socket_str); // rec. data from hub socket
+
+
 		//loop for testing
 	}
-*/
-	//do other things
+
+
+
 
 	
 }
@@ -103,7 +116,8 @@ int main(int argc, char *argv[]){
 		
 
 	}
-
+	
+	//logFile.endLog();
 
 	return 0;
 }

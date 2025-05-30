@@ -28,7 +28,17 @@ Data enters the "hub" from "sources" (sensors, etc.). Input can be gathered from
 ### Output
 Data leaves the hub via sockets and serial. This data includes values recieved from sources and a "status" message that sent in an interval over a socket to alert other recievers of that the hub an therefore the AUV's onboard computer is avaliable
 
+
+## TODO
+Implement IMU driver<br>
+Implement microcontroller driver<br>
+Implement leak sensor driver<br>
+
+
 ## Compilation
+### Dependicies
+wiringpi<br>
+adafruit sensor library<br>
 
 ## Usage and Integration
 
