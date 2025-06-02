@@ -9,8 +9,8 @@ Outputs include:<br>
 - Magnetic Field Strength Vector (20Hz)
 - Linear Acceleration Vector (100Hz)
 - Gravity Vector (100Hz)
-- Temperature (1Hz)
-The BNO055 collects these measurments, processes them, and makes them avaliable over an I2C interface<b>
+- Temperature (1Hz)<br>
+The BNO055 collects these measurments, processes them, and makes them avaliable over an I2C interface<br>
 
 ### Our Setup
 We will use BNO055 as our AUV's IMU. It will interface directly with the AUV's onboard computer (Rasp. Pi) over GPIO.<br>
