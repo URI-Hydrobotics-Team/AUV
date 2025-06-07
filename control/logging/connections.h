@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <netdb.h> 
 #include <fcntl.h> //include fentanyl
 
@@ -54,7 +55,7 @@ class auv_rx_socket{
 
 
 
-	void init(char *host, int port){
+	void init(const char *host, int port, const char *group){
 		/* Initialize a socket */
 		fd = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -62,11 +63,25 @@ class auv_rx_socket{
 		int flags = fcntl(fd, F_GETFL, 0);
 		fcntl(fd, F_SETFL, flags | O_NONBLOCK);
 
+		/* enable multicast */
+		int reuse = 1;
+    		if (setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, (const char*)&reuse, sizeof(reuse)) < 0){
+        		perror("setsockopt(SO_REUSEPORT) failed");
+		}
+    		if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (const char*)&reuse, sizeof(reuse)) < 0){
+        		perror("setsockopt(SO_REUSEADDR) failed");
+		}
+		struct ip_mreq mreq;
+   		mreq.imr_multiaddr.s_addr = inet_addr(group);
+    		mreq.imr_interface.s_addr = inet_addr(host);
+    		if (setsockopt(fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*) &mreq, sizeof(mreq)) < 0){
+        		perror("failed to seup multicastt");
+    		}
+
+
 		memset((char *)&my_addr, 0, sizeof(my_addr));
 		my_addr.sin_family = AF_INET;
-		//my_addr.sin_addr.s_addr = htonl(std::stoi(host));
-		//TODO allow user to select ip
-		my_addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+		my_addr.sin_addr.s_addr = inet_addr(host);
 		my_addr.sin_port = htons(port);
 		if (bind(fd, (struct sockaddr *)&my_addr, sizeof(my_addr)) < 0) {
 			//std::cout << "bind to " << host ":" << port << "failed\n";

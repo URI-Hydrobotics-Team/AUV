@@ -5,4 +5,4 @@ std::string version_string = "alpha 0";
 /* connections */
 #define AUVHUBIP "127.0.0.1"
 #define AUVHUBPORT 8100
-
+#define AUVHUBGROUP "224.0.0.10"

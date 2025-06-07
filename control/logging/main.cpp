@@ -7,11 +7,6 @@
 #include "files.h"
 
 
-
-/* AUV HUB */
-char *auv_hub_ip = AUVHUBIP;
-int auv_hub_port = AUVHUBPORT;
-
 /* time */
 time_t rawtime;
 struct tm * timeinfo;
@@ -66,7 +61,7 @@ void log(){
 	
 
 	auv_rx_socket hubSocket;
-	hubSocket.init("127.0.0.1", 8100); // setup hub socket
+	hubSocket.init(AUVHUBIP, AUVHUBPORT, AUVHUBGROUP); // setup hub socket
 	std::string hub_socket_str;
 	while (1){	
 		hub_socket_str = hubSocket.rec(0); 
@@ -81,14 +76,6 @@ void log(){
 
 	
 }
-
-
-
-
-
-
-
-
 
 
 

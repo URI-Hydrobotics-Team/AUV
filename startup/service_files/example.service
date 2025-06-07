@@ -1,0 +1,10 @@
+[Unit]
+Description=exa,ple
+After=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/bash /root/.scripts/script.sh with args
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

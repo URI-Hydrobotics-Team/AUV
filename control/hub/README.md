@@ -36,6 +36,18 @@ Driver code avliable under AUV/sensors
 Data leaves the hub via sockets and serial. This data includes values recieved from sources and a "status" message that sent in an interval over a socket to alert other recievers of that the hub an therefore the AUV's onboard computer is avaliable
 
 
+## Summary
+A summary of the typical operations managed my this program include:<br>
+- Recieving sensor input from driver programs<br>
+- Broadcasting periodic data such as the AUV's status on an interval<b>
+- Broadacasting "continous" data such a location and velocity on a more often interval<br>
+- Broadcasting emergancy messages such as if a leak has occured when needed<br>
+- Recieving commands and controller input from the deckbox<br>
+- Translating controller input into velocity vectors<br>
+- Receiving input from PID loops<br>
+ 
+
+
 ## TODO
 - Implement IMU driver
 - Implement microcontroller driver

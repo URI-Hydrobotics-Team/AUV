@@ -13,6 +13,7 @@
 
 #include "connections.h"
 #include "config.h"
+#include "sensors.h"
 
 std::string mode, arg1, arg2; //arguments
 char status_string[256];
@@ -39,6 +40,15 @@ void printHelp(){
 	std::cout << "\trun: <port>\n";	
 
 }
+
+void sendLeakAlert(){
+
+	outputSocket.transmit("!ALR Leak Detected");
+
+}
+
+
+
 
 
 void updateStatus(){
@@ -84,7 +94,7 @@ double returnTimeStamp(){
 
 void mainLoop(){
 	//setup port for outputSocket
-	outputSocket.init(std::stoi(arg1)); 
+	outputSocket.init(std::stoi(arg1), MULTICASTGROUP); 
 
 
 	
