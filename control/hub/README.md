@@ -1,4 +1,4 @@
-# AUV hub
+# AUV-hub
 A program that runs on the Raspberry Pi and interfaces with sensors and the microcontroller.
 
 
@@ -25,7 +25,7 @@ Broadcaster: a server program that broadcasts data over a socket (e.g.)
 Data enters the "hub" from "sources" (sensors, etc.). Input can be gathered from GPIO, sockets, etc.
 
 ### Sources
-Driver code avliable under AUV/sensors
+Driver code avaliable under AUV/sensors
 - IMU (BNO055)
 - Leak Sensor (BlueRobotics SOS Leak Sensor)
 - Digital Pressure Sensor (MS5837)
@@ -35,11 +35,17 @@ Driver code avliable under AUV/sensors
 ### Output
 Data leaves the hub via sockets and serial. This data includes values recieved from sources and a "status" message that sent in an interval over a socket to alert other recievers of that the hub an therefore the AUV's onboard computer is avaliable
 
+### Other Devices
+The Hub manages communications with devices such as:<br>
+- Thrusters
+- Claw Motor Driver
+- Torpedo Launcher
+
 
 ## Summary
 A summary of the typical operations managed my this program include:<br>
 - Recieving sensor input from driver programs<br>
-- Broadcasting periodic data such as the AUV's status on an interval<b>
+- Broadcasting periodic data such as the AUV's status on an interval<br>
 - Broadacasting "continous" data such a location and velocity on a more often interval<br>
 - Broadcasting emergancy messages such as if a leak has occured when needed<br>
 - Recieving commands and controller input from the deckbox<br>
