@@ -22,7 +22,6 @@ auv_rx_socket input_hub, input_deckbox;
 
 void initDevices(){
 
-
 	input_hub.init(HUB_IP, HUB_PORT_RX, MULTICASTGROUP); // setup hub socket
 	input_deckbox.init(DECKBOX_IP, DECKBOX_PORT_RX, MULTICASTGROUP);
 }
@@ -64,7 +63,7 @@ void log(){
 	std::cout << "Writing file: '" << logFile.getName() << "'\n"; 
 	
 	initDevices();
-
+	std::cout << "Initalized Devices\n"; // without this there is a seg. fault, I have no idea why
 	/* test log */
 
 
@@ -75,15 +74,24 @@ void log(){
 	
 	
 	std::string hub_socket_str;
-	while (1){	
-		hub_socket_str = input_hub.rec(0); 
-		logFile.log(hub_socket_str); // rec. data from hub socket
-
-
+	std::string deckbox_socket_str;
+	
+	while (1){
+	
+		/* HUB */
+		if (input_hub.probe() > 0){
+			hub_socket_str = input_hub.rec(0); 
+			logFile.log(hub_socket_str); // rec. data from hub socket
+		}
+		/* DeckBox */
+		if (input_deckbox.probe() > 0){
+			deckbox_socket_str = input_deckbox.rec(0); 
+			logFile.log(deckbox_socket_str); // rec. data from deckbox socket
+		}
 		//loop for testing
 	}
 
-
+	
 
 
 	

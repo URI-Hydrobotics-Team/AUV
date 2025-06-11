@@ -1,17 +1,13 @@
-#include <iostream>
-#include <string>
+#include <cstring>
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h> 
 #include <fcntl.h> //include fentanyl
-
+#include <poll.h>
 
 
 /*
@@ -53,6 +49,25 @@ class auv_rx_socket{
 		return rx_buffer;
 	}
 
+	int probe(){
+
+		/* poll a socket and check for data */
+		struct pollfd fds[1];
+    		fds[0].fd = fd;
+    		fds[0].events = POLLIN;	
+		int ret = poll(fds, 1, 10); //almost instant timeout
+		 
+		return ret;
+		/* 
+		Return Values:
+			failure		< 0
+			no data		= 0
+			data avaliable	> 0
+			
+		 */
+
+	
+	}
 
 
 	void init(const char *host, int port, const char *group){

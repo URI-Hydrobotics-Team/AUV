@@ -53,7 +53,7 @@ void printHelp(){
 	std::cout << "\t\tauv-hub <mode> <arguments>\n"; 
 	
 	std::cout << "\tModes: help, run\n";
-	std::cout << "\trun: <port>\n";	
+	std::cout << "\trun:\n";	
 
 }
 

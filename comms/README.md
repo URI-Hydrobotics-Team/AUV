@@ -20,17 +20,17 @@ Creating a child process may be more efficent but is more difficult to implement
 To avoid the complication of UDP multicast, we will just use seperate ports for each connection, this is easy and pratical as we don't have a ton of connections to manage.
 
 ### AUV HUB
-	TX to Deckbox (8100)<br>
-	TX to logging (8101)<br>
-	RX from Deckbox (8200)<br>
+	TX to Deckbox (8100)
+	TX to logging (8101)
+	RX from Deckbox (8200)
 ### Deckbox
-	RX from AUV HUB (8100)<br>
-	TX to logging (8103)<br>
-	TX to AUV HUB (8200)<br>
+	RX from AUV HUB (8100)
+	TX to logging (8103)
+	TX to AUV HUB (8200)
 
 ### Logging
-	RX from Deckbox (8103)<br>
-	RX from AUV HUB (8101)<br>
+	RX from Deckbox (8103)
+	RX from AUV HUB (8101)
 
 
 
