@@ -17,6 +17,18 @@ log_file logFile;
 
 /*function declerations */
 
+auv_rx_socket input_hub, input_deckbox;
+
+
+void initDevices(){
+
+
+	input_hub.init(HUB_IP, HUB_PORT_RX, MULTICASTGROUP); // setup hub socket
+	input_deckbox.init(DECKBOX_IP, DECKBOX_PORT_RX, MULTICASTGROUP);
+}
+
+
+
 
 void printHelp(){
 	std::cout << "AUV logger version: " << version_string << "\n";
@@ -51,6 +63,8 @@ void log(){
 
 	std::cout << "Writing file: '" << logFile.getName() << "'\n"; 
 	
+	initDevices();
+
 	/* test log */
 
 
@@ -59,12 +73,10 @@ void log(){
 	logFile.log("test");
 	logFile.log("test");
 	
-
-	auv_rx_socket hubSocket;
-	hubSocket.init(AUVHUBIP, AUVHUBPORT, AUVHUBGROUP); // setup hub socket
+	
 	std::string hub_socket_str;
 	while (1){	
-		hub_socket_str = hubSocket.rec(0); 
+		hub_socket_str = input_hub.rec(0); 
 		logFile.log(hub_socket_str); // rec. data from hub socket
 
 

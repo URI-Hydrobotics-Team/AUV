@@ -1,8 +1,14 @@
 std::string version_string = "alpha 0";
 
-#define SOCKET_TIMEOUT 100000
+/* CONFIG */
 #define LOG_DIR "log"
-/* connections */
-#define AUVHUBIP "127.0.0.1"
-#define AUVHUBPORT 8100
-#define AUVHUBGROUP "224.0.0.10"
+
+/* NETWORK */
+#define SOCKET_TIMEOUT 100000
+#define MULTICASTGROUP "224.0.0.10"
+
+/* CONNETIONS */
+#define HUB_IP "127.0.0.1"
+#define HUB_PORT_RX 8101
+#define DECKBOX_IP "127.0.0.1"
+#define DECKBOX_PORT_RX 8103

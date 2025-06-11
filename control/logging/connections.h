@@ -33,7 +33,7 @@ class auv_rx_socket{
 	char* rec(int print){
 
 	
-		recvlen = recvfrom(fd,rx_buffer, 256, 0, (struct sockaddr *)&remote_addr, &addrlen);
+		recvlen = recvfrom(fd, rx_buffer, 256, 0, (struct sockaddr *)&remote_addr, &addrlen);
 		if (recvlen > 0) {
 			/* 
 			define how the message is handled 

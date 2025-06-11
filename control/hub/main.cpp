@@ -3,28 +3,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <arpa/inet.h>
 #include <time.h>
+#include <sys/types.h>
 
-
-#include "connections.h"
 #include "config.h"
+#include "connections.h"
 #include "sensors.h"
 
 std::string mode, arg1, arg2; //arguments
 char status_string[256];
 
-auv_tx_socket outputSocket;
+/* define devices here */
+auv_tx_socket output_deckbox, output_log; //tx devices
+auv_rx_socket input_deckbox; //rx devices
+
+
+
 
 /*
 	Initial implementation:
 	while other sources (sensors, pico, etc.) are in the works, this program will primaraly handle transmitting status data
 
 */
+
+
+
+void initDevices(){
+
+	// NOTE: multicasting will be removed soon as it is useless in this implementation
+		
+	/* initalize devices */
+	output_deckbox.init(DECKBOX_PORT_TX, MULTICASTGROUP); 
+	output_log.init(LOG_PORT_TX, MULTICASTGROUP); 
+	input_deckbox.init(DECKBOX_IP, DECKBOX_PORT_RX, MULTICASTGROUP);
+
+}
+
+
+
 
 
 
@@ -43,8 +59,8 @@ void printHelp(){
 
 void sendLeakAlert(){
 
-	outputSocket.transmit("!ALR Leak Detected");
-
+	output_deckbox.transmit("!ALR Leak Detected");
+	output_log.transmit("!ALR Leak Detected");
 }
 
 
@@ -74,9 +90,13 @@ void updateStatus(){
 void sendStatus(){
 	std::cout << "sending status\n";
 	updateStatus();
-	outputSocket.transmit(status_string);
-
+	output_deckbox.transmit(status_string);
+	output_log.transmit(status_string);
 }
+
+
+
+
 
 
 void resetClock(){
@@ -93,14 +113,10 @@ double returnTimeStamp(){
 }
 
 void mainLoop(){
-	//setup port for outputSocket
-	outputSocket.init(std::stoi(arg1), MULTICASTGROUP); 
-
-
-	
-	resetClock();
+	initDevices();	// setup and bind socket devices
+	resetClock(); // set stopwatch
 	while (1){
-		/* we call this "the loop" */
+		/* "we call this the loop" */
 		/* code */
 		
 		if (returnTimeStamp() > STATUS_INTERVAL){
@@ -144,6 +160,7 @@ int main(int argc, char *argv[]){
 	}
 
 
-	outputSocket.closefd();
+	output_deckbox.closefd();
+	output_log.closefd();
 	return 0;
 }
