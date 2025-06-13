@@ -11,12 +11,23 @@
 #include "sensors.h"
 
 std::string mode, arg1, arg2; //arguments
-char status_string[256];
+char status_str[256]; std::string status_string;
 
 /* define devices here */
 auv_tx_socket output_deckbox, output_log; //tx devices
 auv_rx_socket input_deckbox; //rx devices
 
+clock_t stopwatch;	
+
+void printHelp(){
+	std::cout << "HUB version: " << version_string << "\n";
+	std::cout << "\nUSAGE:\n";
+	std::cout << "\t\tauv-hub <mode> <arguments>\n"; 
+	
+	std::cout << "\tModes: help, run\n";
+	std::cout << "\trun:\n";	
+
+}
 
 
 
@@ -40,23 +51,6 @@ void initDevices(){
 }
 
 
-
-
-
-
-clock_t stopwatch;	
-
-
-void printHelp(){
-	std::cout << "HUB version: " << version_string << "\n";
-	std::cout << "\nUSAGE:\n";
-	std::cout << "\t\tauv-hub <mode> <arguments>\n"; 
-	
-	std::cout << "\tModes: help, run\n";
-	std::cout << "\trun:\n";	
-
-}
-
 void sendLeakAlert(){
 
 	output_deckbox.transmit("!ALR Leak Detected");
@@ -67,21 +61,30 @@ void sendLeakAlert(){
 
 
 
+void sendTestString(){
+
+	output_deckbox.transmit("!HUB message avaliable");
+	output_log.transmit("!HUB message avaliable");
+
+
+
+}
+
 void updateStatus(){
 
 	/*
 		update status string
-		currently very crude
-		a proper messaging format is in the works
+		acts as a keep alive
 	*/
 	time_t rawTime = time(NULL);
 	char *time_str = ctime(&rawTime);
 	time_str[strlen(time_str) - 1] = '\0'; //add terminating character
-	strncpy(status_string, "!HUB message avaliable", strlen("!HUB message avaliable"));
 
-	//strncpy(status_string, time_str, sizeof(time_str));
+	status_string = "";	
+	status_string += "!HUB STS ";
+	status_string += time_str;
+	
 
-	status_string[strlen(status_string) - 1] = '\0'; //add terminating character
 	std::cout << "status string: " << status_string << '\n';
 
 }
@@ -90,8 +93,8 @@ void updateStatus(){
 void sendStatus(){
 	std::cout << "sending status\n";
 	updateStatus();
-	output_deckbox.transmit(status_string);
-	output_log.transmit(status_string);
+	output_deckbox.transmit(status_string.c_str());
+	output_log.transmit(status_string.c_str());
 }
 
 
@@ -117,12 +120,17 @@ void mainLoop(){
 	resetClock(); // set stopwatch
 	while (1){
 		/* "we call this the loop" */
-		/* code */
-		
+
+		/* check sensors */
+
+		/*rec. from sockets */
+
+		/* broadcast on sockets */
+	
 		if (returnTimeStamp() > STATUS_INTERVAL){
+			/*send status string */
 			resetClock();
-			//updateStatus();
-			sendStatus(); //defualts to sending every 100ms 
+			sendStatus(); 		
 		}
 		
 		

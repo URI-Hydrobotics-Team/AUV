@@ -17,10 +17,12 @@ Each message is a chracter string starting with the character '!'. Then a 3 char
 	!LOG ALR large log size<br> 
 	!DBX CMD thrust vect 20,40,60<br>
 In practice, these messages are likely going to be heavily abreviated in order to save message space
-### Terminology
-Broadcaster: a server program that broadcasts data over a socket (e.g.) 
-
-
+### Message TYPEs
+	ERR	error<br>
+	ALR	alarm<br>
+	STS	status<br>
+	CMD 	command<br>
+	TEL	telemetry (raw data from sensors)<br>
 ## Input and Output
 Data enters the "hub" from "sources" (sensors, etc.). Input can be gathered from GPIO, sockets, etc.
 
