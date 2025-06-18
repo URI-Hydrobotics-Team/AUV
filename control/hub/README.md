@@ -1,5 +1,5 @@
-# AUV-hub
-A program that runs on the Raspberry Pi and interfaces with sensors and the microcontroller.
+# auv-hub
+A program that runs on the Raspberry Pi (Primary Processor) and interfaces with sensors and the microcontroller.
 
 
 ## Communication Overview
@@ -10,19 +10,19 @@ Input from other sources such as the deckbox are recieved via socket connections
 
 ## Socket Structure
 All sockets used for communication are connectionless, of the datagram type (UDP), and use the internet doman.<br>
-Each message is a chracter string starting with the character '!'. Then a 3 character ID is next (e.g. "!HUB") which is used to designate the sender. Then a ' ' character is appened along with another 3 characters for message TYPE. FInally another space is appended along with the contents of the message. Messages can be up to 256 bytes long.
+Each message is a character string starting with the character '!'. Then a 3 character ID is next (e.g. "!HUB") which is used to designate the sender. Then a ' ' character is appended along with another 3 characters for message TYPE. Finally another space is appended along with the contents of the message. Messages can be up to 256 bytes long.
 ### Example Messages (for demonstration purposes)
-	!HUB ERR failed to initialize sensors<br>
-	!HUB ALR leak detected<br>
-	!LOG ALR large log size<br> 
-	!DBX CMD thrust vect 20,40,60<br>
+	!HUB ERR failed to initialize sensors
+	!HUB ALR leak detected
+	!LOG ALR large log size 
+	!DBX CMD thrust vect 20,40,60
 In practice, these messages are likely going to be heavily abreviated in order to save message space
 ### Message TYPEs
-	ERR	error<br>
-	ALR	alarm<br>
-	STS	status<br>
-	CMD 	command<br>
-	TEL	telemetry (raw data from sensors)<br>
+	ERR	error
+	ALR	alarm
+	STS	status
+	CMD 	command
+	TEL	telemetry (raw data from sensors)
 ## Input and Output
 Data enters the "hub" from "sources" (sensors, etc.). Input can be gathered from GPIO, sockets, etc.
 
@@ -45,14 +45,14 @@ The Hub manages communications with devices such as:<br>
 
 
 ## Summary
-A summary of the typical operations managed my this program include:<br>
-- Recieving sensor input from driver programs<br>
-- Broadcasting periodic data such as the AUV's status on an interval<br>
-- Broadacasting "continous" data such a location and velocity on a more often interval<br>
-- Broadcasting emergancy messages such as if a leak has occured when needed<br>
-- Recieving commands and controller input from the deckbox<br>
-- Translating controller input into velocity vectors<br>
-- Receiving input from PID loops<br>
+A summary of the typical operations managed my this program include:
+- Recieving sensor input from driver programs
+- Broadcasting periodic data such as the AUV's status on an interval
+- Broadacasting "continous" data such a location and velocity on a more often interval
+- Broadcasting emergancy messages such as if a leak has occured when needed
+- Recieving commands and controller input from the deckbox
+- Translating controller input into velocity vectors
+- Receiving input from PID loops
  
 
 
@@ -64,6 +64,7 @@ A summary of the typical operations managed my this program include:<br>
 
 ## Compilation
 ### Dependecies
+- standard C/C++ libraries
 - wiringpi>
 - adafruit sensor library
 
