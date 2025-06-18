@@ -1,9 +1,44 @@
 #include "detection.h"
 #include <iostream>
 #include <chrono>
+#include <thread>
+#include <gst/gst.h>
+#include <gst/rtsp-server/rtsp-server.h>
 
 
 int main() {
+    // Initialize the gstreamer object
+    gst_init(nullptr, nullptr);
+    GstRTSPServer *server;
+    GMainLoop *loop;
+    GstRTSPMediaFactory *factory;
+    GstRTSPMountPoints *mounts;
+
+    // Create a new server
+    server = gst_rtsp_server_new();
+    // Create a loop that the server will run in
+    loop = g_main_loop_new(NULL, false);
+    factory = gst_rtsp_media_factory_new();
+    gst_rtsp_media_factory_set_launch(factory, "( udpsrc port=5000 ! queue ! application/x-rtp,encoding-name=H264 ! rtpjitterbuffer ! rtph264depay ! h264parse ! queue ! rtph264pay name=pay0 pt=96 )");
+    mounts = gst_rtsp_server_get_mount_points(server);
+    gst_rtsp_mount_points_add_factory(mounts, "/cam1", factory);
+
+    // factory = gst_rtsp_media_factory_new();
+    // gst_rtsp_media_factory_set_launch(factory, "( udpsrc port=5001 ! queue ! application/x-rtp,encoding-name=H264 ! rtpjitterbuffer ! rtph264depay ! h264parse ! queue ! rtph264pay name=pay0 pt=96 )");
+    // gst_rtsp_mount_points_add_factory(mounts, "/cam2", factory);
+
+    // factory = gst_rtsp_media_factory_new();
+    // gst_rtsp_media_factory_set_launch(factory, "( udpsrc port=5002 ! queue ! application/x-rtp,encoding-name=H264 ! rtpjitterbuffer ! rtph264depay ! h264parse ! queue ! rtph264pay name=pay0 pt=96 )");
+    // gst_rtsp_mount_points_add_factory(mounts, "/cam3", factory);
+
+    g_object_unref(mounts);
+
+    gst_rtsp_server_attach(server, NULL);
+
+    // Add a new thread to allow the server to run concurrently with the opencv process 
+    std::thread thread1(g_main_loop_run, loop);
+
+    
     cv::Mat frame;
     // cv::Mat frame1;
     // cv::Mat frame2;
@@ -15,6 +50,21 @@ int main() {
     // cam2.open(1);
     // cam3.open(2);
 
+    int w = cam.get(cv::CAP_PROP_FRAME_WIDTH);
+    int h = cam.get(cv::CAP_PROP_FRAME_HEIGHT);
+    float fps = cam.get(cv::CAP_PROP_FPS); 
+    cv::VideoWriter writer1("appsrc ! videoconvert ! video/x-raw,format=I420 ! x264enc key-int-max=30 insert-vui=1 tune=zerolatency ! h264parse ! rtph264pay ! udpsink host=127.0.0.1 port=5000", cv::CAP_GSTREAMER, fps, cv::Size(w, h), true);
+
+    // int w2 = cam2.get(cv::CAP_PROP_FRAME_WIDTH);
+    // int h2 = cam2.get(cv::CAP_PROP_FRAME_HEIGHT);
+    // float fps2 = cam.get(cv::CAP_PROP_FPS); 
+    // cv::VideoWriter writer2("appsrc ! videoconvert ! video/x-raw,format=I420 ! x264enc key-int-max=30 insert-vui=1 tune=zerolatency ! h264parse ! rtph264pay ! udpsink host=127.0.0.1 port=5001", cv::CAP_GSTREAMER, fps2, cv::Size(w2, h2), true);
+
+    // int w3 = cam3.get(cv::CAP_PROP_FRAME_WIDTH);
+    // int h3 = cam3.get(cv::CAP_PROP_FRAME_HEIGHT);
+    // float fps3 = cam3.get(cv::CAP_PROP_FPS); 
+    // cv::VideoWriter writer3("appsrc ! videoconvert ! video/x-raw,format=I420 ! x264enc key-int-max=30 insert-vui=1 tune=zerolatency ! h264parse ! rtph264pay ! udpsink host=127.0.0.1 port=5002", cv::CAP_GSTREAMER, fps, cv::Size(w, h), true);
+    
     std::vector<std::string> classes = {};
 
     std::string path = "model path";
@@ -29,9 +79,11 @@ int main() {
 
         if (frame.empty()) {
             std::cout << "ERROR! blank frame grabbed\n";
+            thread1.join();
             break;
         }
 
+        // Perform detection
         model.detect(frame);
         frame = model.draw_img(frame);
 

@@ -80,17 +80,14 @@ void detection_model::detect(cv::Mat frame) {
     cv::dnn::NMSBoxes(bounding_box, confidence, 0.4, 0.45, indices);
 
     cv::Rect2d n;
-    float area = 0;
+    // float area = 0;
     std::string object;
     for (int i : indices) {
-        if (bounding_box[i].width * bounding_box[i].height > area) {
-            n = bounding_box[i];
-            area = bounding_box[i].width * bounding_box[i].height;
-            object = detected_object[i];
-        }
+        n = bounding_box[i];
+        // area = bounding_box[i].width * bounding_box[i].height;
+        object = detected_object[i];
+        std::cout << "Object: " << object << " | " << "X offset: " << (n.x + n.width / 2) - center_x << " | " << "Y offset: " << center_y - (n.y + n.height / 2) << "\n";
     }
-
-    std::cout << "Object: " << object << " " << "X offset: " << (n.x + n.width / 2) - center_x << " " << "Y offset: " << center_y - (n.y + n.height / 2) << "\n";
 }
 
 std::vector<cv::Rect2d> detection_model::get_detection_coordinates() {
