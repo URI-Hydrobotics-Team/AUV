@@ -1,22 +1,29 @@
 #include "driver.h"
-
+#include <unistd.h>
 BNO055::BNO055(){    
     // Set up the IMU 
-    IMU = Adafruit_BNO055(1, BNO055_addr);
+    IMU = Adafruit_BNO055(55, BNO055_addr);
 
-    // Start up the IMU and check if it is set up correctly
-    if(!IMU.begin()){
-        std::cout << "Something is wrong when setting up the IMU";
-    }
+    //IMU = Adafruit_BNO055();
+    //gpioInitialise();
 
+    if (gpioInitialise() <0){
+		std::cout <<"Initialisation error of the GPIO \n Closing program..."<< std::endl;
+     }
+	
     // Initialize the I2C communication
     IMU._HandleBNO = i2cOpen(IMU._i2cChannel, BNO055_addr, 0);
 
+    // Start up the IMU and check if it is set up correctly
+    if(!IMU.begin()){
+        std::cout << "Something is wrong when setting up the IMU\n";
+    }
     // Wait some time to let the IMU to begin
-    delay(1000);
+    //usleep(1000000);
+    gpioSleep(PI_TIME_RELATIVE, 0, 1000);
 
     // Set the IMU to use the external crystal for more accurate result
-    IMU.setExtCrystalUse(true);
+    IMU.setExtCrystalUse(false);
 }
 
 void BNO055::IMU_calibration(){

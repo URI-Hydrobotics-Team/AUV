@@ -19,9 +19,9 @@ This program will define a class that we can then use with the AUV hub program t
 ## Usage
 
 ## Compilation and Installation
+Some modifications need to be made to the RPi_BNO055 library, the includes link to the wrong locations
 
 ## Dependencies
-
-This project uses the following library:
-
-* [**RPi_BNO055 library by CVino**](https://github.com/CVino/RPi_BNO055)
+- [**RPi_BNO055 library by CVino**](https://github.com/CVino/RPi_BNO055)
+- pigpio
+- standard C/C++ libraries

@@ -1,16 +1,15 @@
 #pragma once
-#include <wiringPi.h>
-#include <wiringPiI2C.h>
-#include "RPi_Sensor.h"
-#include "RPi_BNO055.h"
-#include "utilitiy/imumaths.h"
+#include <pigpio.h>
+#include "RPi_BNO055/RPi_Sensor.h"
+#include "RPi_BNO055/RPi_BNO055.h"
 #include <vector>
 #include <iostream>
 
 
-#define BNO055_addr 0x29
+#define BNO055_addr 0x28
 
 class BNO055{
+  private:
     // The IMU object
     Adafruit_BNO055 IMU;
 
@@ -22,7 +21,7 @@ class BNO055{
     imu::Quaternion Quaterion_Orientation;
 
     int8_t temperature;
-
+  public:
     // Constructor
     BNO055();
 
