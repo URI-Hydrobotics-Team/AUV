@@ -1,4 +1,4 @@
-# AUV-log (logging suite)
+# auv-log (logging suite)
 A program that listens to broadcasting sockets and logs data. Acts as a blackbox and is useful for debugging purposes.
 
 ## Overview
