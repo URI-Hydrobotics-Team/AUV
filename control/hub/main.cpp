@@ -9,6 +9,7 @@
 #include "config.h"
 #include "connections.h"
 #include "sensors.h"
+#include "jetson.h"
 
 std::string mode, arg1, arg2; //arguments
 char status_str[256]; std::string status_string;

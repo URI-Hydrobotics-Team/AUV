@@ -31,6 +31,8 @@ To avoid the complication of UDP multicast, we will just use seperate ports for 
 ### Logging
 	RX from Deckbox (8103)
 	RX from AUV HUB (8101)
-
-
+### Jetson
+	TX to Logging (8300)
+	TX to AUV HUB (8301)
+	RX from AUV HUB (8400)
 
