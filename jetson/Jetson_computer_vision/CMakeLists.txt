@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 project(Detection)
 
@@ -15,4 +15,4 @@ pkg_check_modules(GST_SERVER REQUIRED gstreamer-rtsp-server-1.0)
 include_directories( ${OpenCV_INCLUDE_DIRS} ${GSTREAMER_INCLUDE_DIRS} ${GSTREAMER_APP_INCLUDE_DIR} ${GSTREAMER_VIDEO_INCLUDE_DIR} ${GSTREAMER_SERVER_INCLUDE_DIR})
 
 add_executable(Detection main.cpp detection.cpp)
-target_link_libraries( Detection ${OpenCV_LIBS} ${GST_APP_LIBRARIES} ${GST_VIDEO_LIBRARIES} ${GST_SERVER_LIBRARIES})
+target_link_libraries( Detection ${OpenCV_LIBS} ${GST_APP_LIBRARIES} ${GST_VIDEO_LIBRARIES} ${GST_SERVER_LIBRARIES} pthread)
