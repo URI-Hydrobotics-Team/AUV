@@ -9,12 +9,18 @@ STOP_MICROSECS = 1500
 INITIALIZE_MICROSECS = 1500
 
 ### Thruster Setup ###
-BPH = PWM(Pin(16), 60) #Front-Left-Angular-Vertical
-BSH = PWM(Pin(20), 60) #Front-Right-Angular-Vertical
-SH = PWM(Pin(11), 60) #Back-Vertical
-Y = PWM(Pin(3), 60) #Front-Angular LR
-PS = PWM(Pin(7), 60) #Left-FB
-SS = PWM(Pin(26), 60) #Right-FB
+BPH = PWM(Pin(16)) #Bow-Port-Heave
+BPH.freq(60)
+BSH = PWM(Pin(20)) #Bow-Starboard-Heave
+BSH.freq(60)
+SH = PWM(Pin(11), 60) #Stern-Heave
+SH.freq(60)
+Y = PWM(Pin(3)) #Yaw
+Y.freq(60)
+PS = PWM(Pin(7)) #Port-Surge
+PS.freq(60)
+SS = PWM(Pin(26)) #Starboard-Surge
+SS.freq(60)
 
 thrusters = [BPH, BSH, SH, Y, PS, SS]
 thruster_values = []
@@ -34,13 +40,13 @@ def update_thruster_vals(thruster_pwms):
     PS.duty_ns(thruster_pwms[4] * 1000)
     SS.duty_ns(thruster_pwms[5] * 1000)
     print('Thruster PWM Values:', thruster_pwms)
-    sys.stdout.write('Thruster PWM Values:', thruster_pwms)
+    sys.stdout.write('Thrusters Updated\n')
     sys.stdout.flush()
 
 initialize_thrusters()
 
 while True:
-    #Example Bytestring: PWM,1500.0,1500.0,1500.0,1500.1500.0,1500.0
+    #Example Bytestring: PWM,1500,1500,1500,1500,1500,1500
     bytestring_command = sys.stdin.readline().strip()
 
     #parse into array to check the command
@@ -58,11 +64,13 @@ while True:
         
         thruster_values = list(map(int, thruster_values))
         
+        for val in thruster_values:
+            if not (MIN_MICROSECS <= val <= MAX_MICROSECS):
+                print(f"PWM {val} out of bounds!")
+                break
+        
         update_thruster_vals(thruster_values)    
     else:
         print("Invalid command: ", bytestring_command)
-        sys.stdout.write("Invalid command: ", bytestring_command)
+        sys.stdout.write('Invalid command: + {bytestring_command}\n')
         sys.stdout.flush()
-        
-        
-    time.sleep(0.01)

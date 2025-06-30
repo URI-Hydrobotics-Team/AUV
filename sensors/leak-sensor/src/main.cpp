@@ -10,11 +10,10 @@ int main() {
     while (1) {
         if (digitalRead(LEAK_PIN) == HIGH) {
             std::cout << "Leak detected!" << std::endl;
-            // TODO: Add code to handle leak detection (e.g., send alert, stop motors, etc.)
         } else {
             std::cout << "No leak detected." << std::endl;
         }
-        delay(1000); // Check every 1000 ms
+        delay(1000);
     }
     return 0;
 }
