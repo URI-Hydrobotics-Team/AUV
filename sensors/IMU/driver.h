@@ -23,7 +23,9 @@ class BNO055{
     int8_t temperature;
   public:
     // Constructor
-    BNO055();
+    //BNO055();
+    void init();
+    void cold_init();
 
     void IMU_calibration();
     imu::Vector<3> get_Euler_Orientation();

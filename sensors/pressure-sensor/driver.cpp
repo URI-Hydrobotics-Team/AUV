@@ -27,14 +27,10 @@ MS5837::MS5837() {
 	fluidDensity = 1029;
 }
 
-bool MS5837::begin(const int id) {
-	//return (init(wirePort));
-}
-
-bool MS5837::init(const int id) {
+bool MS5837::init() {
 	wiringPiSetupPinType(WPI_PIN_BCM);
 
-	fd = wiringPiI2CSetup(id);
+	fd = wiringPiI2CSetup(MS5837_ADDR);
 	if (fd == -1){
 		std::cout << "Could not open i2c device\n";
 	}	

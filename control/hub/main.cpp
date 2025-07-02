@@ -8,8 +8,12 @@
 
 #include "config.h"
 #include "connections.h"
-#include "sensors.h"
+#include "modules.h"
 #include "jetson.h"
+
+
+
+
 
 std::string mode, arg1, arg2; //arguments
 char status_str[256]; std::string status_string;
@@ -31,13 +35,25 @@ void printHelp(){
 }
 
 
+void initModules(){
 
-/*
-	Initial implementation:
-	while other sources (sensors, pico, etc.) are in the works, this program will primaraly handle transmitting status data
 
-*/
 
+}
+
+void sendThruster(){
+
+
+}
+
+void sendPump(){
+
+}
+
+void checkSesors(){
+
+
+}
 
 
 void initDevices(){
