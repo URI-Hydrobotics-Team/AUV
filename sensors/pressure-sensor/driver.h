@@ -34,7 +34,7 @@ class MS5837 {
 
 		uint8_t crc4(uint16_t n_prom[]);
 
-
+		char sendBuf[5],recvBuf[5]; //for i2c communication
 
 
 	public:
