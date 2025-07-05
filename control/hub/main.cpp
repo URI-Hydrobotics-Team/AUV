@@ -77,7 +77,7 @@ void sendPump(){
 void getSensors(){
 	sensor_pressure.read();
 	pressure = sensor_pressure.getPressure();
-	temperature = sensor_pressure.getPressure();
+	temperature = sensor_pressure.getTemperature();
 	depth = sensor_pressure.getDepth();
 	altitude = sensor_pressure.getAltitude();
 	leak_status = sensor_leak.probe();
