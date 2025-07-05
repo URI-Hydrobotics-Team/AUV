@@ -91,8 +91,9 @@ void getSensors(){
 
 void logPressure(){
 	std::string str = "!HUB STS ";
-	str += pressure; str += ' '; str += temperature; str += ' '; str += depth; str += ' '; str += altitude;
+	str += std::to_string(pressure); str += ' '; str += std::to_string(temperature); str += ' '; str += std::to_string(depth); str += ' '; str += std::to_string(altitude);
 	output_log.transmit(str.c_str());
+	//std::cout << str << '\n';
 }
 
 
@@ -181,7 +182,6 @@ void mainLoop(){
 
 		/* check sensors */
 		getSensors();
-		logPressure();		
 		/*rec. from sockets */
 
 		/* broadcast on sockets */
@@ -189,7 +189,10 @@ void mainLoop(){
 		if (returnTimeStamp() > STATUS_INTERVAL){
 			/*send status string */
 			resetClock();
-			sendStatus(); 		
+			sendStatus(); 
+			logPressure();	
+	
+			output_log.transmit("teststring");
 		}
 		
 		
