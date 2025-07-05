@@ -18,9 +18,29 @@
 std::string mode, arg1, arg2; //arguments
 char status_str[256]; std::string status_string;
 
-/* define devices here */
+/* define network connections here */
 auv_tx_socket output_deckbox, output_log; //tx devices
 auv_rx_socket input_deckbox; //rx devices
+
+/* define sensors here */
+
+//BNO055 sensor_imu; //using pigpio
+leak_sensor_t sensor_leak; //using WiringPi
+MS5837 sensor_pressure; //using bcm2835
+
+/* vars */
+//IMU
+/*
+imu::Vector<3> euler_orientation, angular_velocity, acceleration_vect, magnetic_field_strength, linerar_acceleration, gravity_vector;
+imu::Quaternion quaterion_orientation; 
+*/
+//leak 
+int leak_status; //1 = leak, 0 = no leak
+
+//pressure
+float pressure, temperature, depth, altitude;
+
+
 
 clock_t stopwatch;	
 
@@ -37,7 +57,9 @@ void printHelp(){
 
 void initModules(){
 
-
+	sensor_pressure.init();
+	sensor_leak.cold_init();
+	//sensor_imu.cold_init();
 
 }
 
@@ -48,11 +70,29 @@ void sendThruster(){
 
 void sendPump(){
 
+
+
 }
 
-void checkSesors(){
+void getSensors(){
+	sensor_pressure.read();
+	pressure = sensor_pressure.getPressure();
+	temperature = sensor_pressure.getPressure();
+	depth = sensor_pressure.getDepth();
+	altitude = sensor_pressure.getAltitude();
+	leak_status = sensor_leak.probe();
+	
+
+	/* read all necesarry data */
 
 
+
+}
+
+void logPressure(){
+	std::string str = "!HUB STS ";
+	str += pressure; str += ' '; str += temperature; str += ' '; str += depth; str += ' '; str += altitude;
+	output_log.transmit(str.c_str());
 }
 
 
@@ -133,13 +173,15 @@ double returnTimeStamp(){
 }
 
 void mainLoop(){
+	initModules();
 	initDevices();	// setup and bind socket devices
 	resetClock(); // set stopwatch
 	while (1){
 		/* "we call this the loop" */
 
 		/* check sensors */
-
+		getSensors();
+		logPressure();		
 		/*rec. from sockets */
 
 		/* broadcast on sockets */
