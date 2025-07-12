@@ -130,10 +130,11 @@ void initDevices(){
 }
 
 
-void sendLeakAlert(){
-
-	output_deckbox.transmit("!ALR Leak Detected");
-	output_log.transmit("!ALR Leak Detected");
+void checkLeak(){
+	if (leak_status){
+		output_deckbox.transmit("!ALR Leak Detected");
+		output_log.transmit("!ALR Leak Detected");
+	}
 }
 
 
@@ -212,8 +213,8 @@ void mainLoop(){
 			resetClock();
 			sendStatus(); 
 			logPressure();	
-	
-			output_log.transmit("teststring");
+			checkLeak();
+			//output_log.transmit("teststring");
 		}
 		
 		
