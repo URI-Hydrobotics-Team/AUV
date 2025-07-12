@@ -155,6 +155,8 @@ class auv_rx_socket{
     		if (setsockopt(fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*) &mreq, sizeof(mreq)) < 0){
         		perror("failed to seup multicastt");
     		}
+
+
 		/* bind the socket */
 
 		if (bind(fd, (struct sockaddr *)&my_addr, sizeof(my_addr)) < 0) {

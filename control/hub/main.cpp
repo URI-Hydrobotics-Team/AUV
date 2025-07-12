@@ -22,6 +22,11 @@ char status_str[256]; std::string status_string;
 auv_tx_socket output_deckbox, output_log; //tx devices
 auv_rx_socket input_deckbox; //rx devices
 
+/* PiPicoCommControl */
+
+PiPicoCommController thruster;
+
+
 /* define sensors here */
 
 //BNO055 sensor_imu; //using pigpio
@@ -31,7 +36,7 @@ MS5837 sensor_pressure; //using bcm2835
 /* vars */
 //IMU
 /*
-imu::Vector<3> euler_orientation, angular_velocity, acceleration_vect, magnetic_field_strength, linerar_acceleration, gravity_vector;
+imu::Vector<3> euler_orientation, angular_velocity, acceleration_vect, magnetic_field_strength, linear_acceleration, gravity_vector;
 imu::Quaternion quaterion_orientation; 
 */
 //leak 
@@ -40,6 +45,8 @@ int leak_status; //1 = leak, 0 = no leak
 //pressure
 float pressure, temperature, depth, altitude;
 
+//thrusters 
+std::vector<float> input_values;
 
 
 clock_t stopwatch;	
@@ -60,11 +67,14 @@ void initModules(){
 	sensor_pressure.init();
 	sensor_leak.cold_init();
 	//sensor_imu.cold_init();
+		
 
 }
 
-void sendThruster(){
-
+void sendThruster(pwm_values){
+	std::string pwm_command = thruster.encodeToCommand(pwm_values);
+	thruster.sendDataToPico(pwm_command, PICO_SERIAL_PORT);
+	
 
 }
 
@@ -81,9 +91,20 @@ void getSensors(){
 	depth = sensor_pressure.getDepth();
 	altitude = sensor_pressure.getAltitude();
 	leak_status = sensor_leak.probe();
+
+	/*
+	IMU data
+	euler_orientation = sensor_imu.get_Euler_Orientation();
+	quaterion_orientatio = sensor_imu.get_Quaterion_Orientation();
+	angular_velocity = sensor_imu.get_Angular_Velocity();
+	acceleration_vect = sensor_imu.get_Acceleration_Vector();
+	magnetic_field_strength = sensor_imu.get_Magnetic_Field_Strength();
+	linear_acceleration = sensor_imu.get_Linear_Acceleration();
+	gravity_vector = sensor_imu.get_Gravity_Vector();
 	
 
-	/* read all necesarry data */
+	*/	
+
 
 
 

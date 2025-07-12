@@ -39,7 +39,7 @@ Data leaves the hub via sockets and serial. This data includes values recieved f
 
 ### Other Devices
 The Hub manages communications with devices such as:<br>
-- Thrusters
+- Thrusters (Via PiPicoCommControl)
 - Claw Motor Driver
 - Torpedo Launcher
 
