@@ -62,7 +62,9 @@ A summary of the typical operations managed my this program include:
 - Implement leak sensor driver
 
 
+
 ## Compilation
+Depending on the intended platform, some modules and function calls should be commented out
 ### Dependecies
 - standard C/C++ libraries
 - wiringpi
