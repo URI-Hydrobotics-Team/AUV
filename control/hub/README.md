@@ -65,9 +65,9 @@ A summary of the typical operations managed my this program include:
 ## Compilation
 ### Dependecies
 - standard C/C++ libraries
-- wiringpi>
+- wiringpi
 - adafruit sensor library
-
+- libserialport-dev
 ## Usage and Integration
 
 

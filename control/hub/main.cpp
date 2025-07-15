@@ -10,13 +10,15 @@
 #include "connections.h"
 #include "modules.h"
 #include "jetson.h"
+#include "motion.h"
 
 
 
-
-
+/* system strings */
 std::string mode, arg1, arg2; //arguments
 char status_str[256]; std::string status_string;
+char input_str[256]; //from deckbox
+
 
 /* define network connections here */
 auv_tx_socket output_deckbox, output_log; //tx devices
@@ -71,7 +73,7 @@ void initModules(){
 
 }
 
-void sendThruster(pwm_values){
+void sendThruster(std::vector<int> pwm_values){
 	std::string pwm_command = thruster.encodeToCommand(pwm_values);
 	thruster.sendDataToPico(pwm_command, PICO_SERIAL_PORT);
 	

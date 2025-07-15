@@ -1,4 +1,4 @@
-#include "PiPicoCommController.h"
+#include "../include/PiPicoCommController.h"
 #include <iostream>
 #include <sstream>
 #include <libserialport.h>

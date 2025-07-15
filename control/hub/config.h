@@ -6,6 +6,7 @@
 #define DECKBOX_PORT_RX 8200
 #define DECKBOX_IP "127.0.0.1"
 #define LOG_PORT_TX 8101
+#define PICO_SERIAL_PORT "/dev/ttyACM0"
 
 
 /* NETWORK */
