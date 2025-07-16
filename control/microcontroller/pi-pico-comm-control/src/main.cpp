@@ -2,12 +2,35 @@
 #include <vector>
 #include <string>
 #include <cstdlib> // for std::stof
-#include "PiPicoCommController.h" // Ensure this header exists
+#include "PiPicoCommController.h"
 
 int main(int argc, char* argv[]) {
+    std::string serial_port = "/dev/ttyACM0";
+
+    // === Case 1: INIT MODE ===
+    if (argc >= 2 && std::string(argv[1]) == "init") {
+        if (argc == 3) {
+            serial_port = argv[2];
+        }
+
+        std::cout << "[Host] Sending initialization command to Pi Pico...\n";
+        std::string init_response = PiPicoCommController::sendAndReceive("INIT_THRUSTERS\n", serial_port);
+
+        if (init_response.find("THRUSTERS_INITIALIZED") != std::string::npos) {
+            std::cout << "[Host] Pico confirmed: " << init_response << "\n";
+            return 0;
+        } else {
+            std::cerr << "[Host] Error: Did not receive THRUSTERS_INITIALIZED\n";
+            std::cerr << "[Host] Received: " << init_response << "\n";
+            return 1;
+        }
+    }
+
+    // === Case 2: PWM MODE ===
     if (argc < 7 || argc > 8) {
-        std::cerr << "Usage: " << argv[0] << " thruster1 thruster2 thruster3 thruster4 thruster5 thruster6 [serial_port]\n";
-        std::cerr << "Each thruster value must be between -1.0 and 1.0.\n";
+        std::cerr << "Usage:\n";
+        std::cerr << "  " << argv[0] << " init [serial_port]                  -> Initialize thrusters\n";
+        std::cerr << "  " << argv[0] << " t1 t2 t3 t4 t5 t6 [serial_port]   -> Send PWM values\n";
         return 1;
     }
 
@@ -28,16 +51,15 @@ int main(int argc, char* argv[]) {
         input_values.push_back(val);
     }
 
-    // Use the provided serial port or default
-    std::string serial_port = (argc == 8) ? argv[7] : "/dev/ttyACM0";
+    if (argc == 8) {
+        serial_port = argv[7];
+    }
 
-    // Convert the input values to PWM
     std::vector<int> pwm_values = PiPicoCommController::convertToPWM(input_values);
-
-    // Format the PWM values as a command string
     std::string pwm_command = PiPicoCommController::encodeToCommand(pwm_values) + "\n";
 
-    PiPicoCommController::sendAndReceive(pwm_command, serial_port); 
+    std::string pwm_response = PiPicoCommController::sendAndReceive(pwm_command, serial_port);
+    std::cout << "[Host] Sent PWM command. Response: " << pwm_response << std::endl;
 
     return 0;
 }
