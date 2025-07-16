@@ -35,13 +35,9 @@ int main(int argc, char* argv[]) {
     std::vector<int> pwm_values = PiPicoCommController::convertToPWM(input_values);
 
     // Format the PWM values as a command string
-    std::string pwm_command = PiPicoCommController::encodeToCommand(pwm_values);
+    std::string pwm_command = PiPicoCommController::encodeToCommand(pwm_values) + "\n";
 
-    // Send the command to the Pi Pico over serial
-    PiPicoCommController::sendDataToPico(pwm_command, serial_port);
-
-    // Read and print the response from the Pico
-    PiPicoCommController::readResponseFromPico(serial_port);
+    PiPicoCommController::sendAndReceive(pwm_command, serial_port); 
 
     return 0;
 }

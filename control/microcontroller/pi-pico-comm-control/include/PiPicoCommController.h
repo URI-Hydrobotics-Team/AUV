@@ -15,11 +15,7 @@ public:
     // Format PWM values as a string like "PWM,1500,1500,1500,1500,1500,1500"
     static std::string encodeToCommand(const std::vector<int>& pwm_values);
 
-    // Send the PWM command to the Pi Pico over USB serial
-    static void sendDataToPico(const std::string& data, const std::string& port_name);
-
-    // Read the response from the Pico
-    static void readResponseFromPico(const std::string& port_name);
+    static void sendAndReceive(const std::string& data, const std::string& port_name);
 };
 
 #endif // PIPICOCOMMCONTROLLER_H
