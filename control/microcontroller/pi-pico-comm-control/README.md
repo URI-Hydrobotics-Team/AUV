@@ -1,4 +1,24 @@
 # Raspberry Pi Serial Communication Control
+By: Devin Hunsberger
+
+# How to setup
+
+Make a build directory
+
+```bash
+mkdir build
+cd build
+```
+
+```bash
+cmake
+```
+
+```bash
+make
+```
+
+
 
 ## Example Utilization
 
