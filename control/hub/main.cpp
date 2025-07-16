@@ -125,9 +125,9 @@ void initDevices(){
 	// NOTE: multicasting will be removed soon as it is useless in this implementation
 		
 	/* initalize devices */
-	output_deckbox.init(DECKBOX_PORT_TX, MULTICASTGROUP); 
-	output_log.init(LOG_PORT_TX, MULTICASTGROUP); 
-	input_deckbox.init(DECKBOX_IP, DECKBOX_PORT_RX, MULTICASTGROUP);
+	output_deckbox.init(LOG_IP, DECKBOX_PORT_TX); 
+	output_log.init(LOG_IP, LOG_PORT_TX); 
+	input_deckbox.init(DECKBOX_PORT_RX);
 
 }
 
@@ -205,7 +205,7 @@ void mainLoop(){
 		/* "we call this the loop" */
 
 		/* check sensors */
-		getSensors();
+		//getSensors();
 		/*rec. from sockets */
 		input_deckbox.rec(1);
 		/* broadcast on sockets */

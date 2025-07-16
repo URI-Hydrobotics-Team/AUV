@@ -21,23 +21,27 @@ void initStr(char *str, int len){
 class auv_tx_socket{
 
 	private:
-		char *server= "127.0.0.1";	/* change this to use a different server */
+		char server[32];	/* change this to use a different server */
 		struct sockaddr_in my_addr, remote_addr;
 		int port, fd, i, slen=sizeof(remote_addr);
 		char tx_buffer[256];
 
 	public:
-		void init(int port, const char *group){
-
+		void init(const char *host, int port){
+		strncpy(server, host, 32);
 		/* socket used to broadcast to others */
 		if ((fd=socket(AF_INET, SOCK_DGRAM, 0)) == - 1){
-			std::cout << "socket created\n";
+			std::cout << "Failed to create TX socket\n";
+		}else{
+			std::cout << "Created TX socket\n";
 		}
+
+
 		/* bind it to all local addresses and pick any port number */
 
 		memset((char *)&my_addr, 0, sizeof(my_addr));
 		my_addr.sin_family = AF_INET;
-		my_addr.sin_addr.s_addr = inet_addr(group);
+		my_addr.sin_addr.s_addr = inet_addr(server);
 		my_addr.sin_port = htons(0);
 
 
@@ -51,7 +55,9 @@ class auv_tx_socket{
 
 
 		if (bind(fd, (struct sockaddr *)&my_addr, sizeof(my_addr)) < 0) {
-			std::cout << "bind failed\n";
+			std::cout << "Failed to bind TX socket\n";
+		}else{
+			std::cout << "Bound TX socket\n";
 		}       
 
 
@@ -127,10 +133,12 @@ class auv_rx_socket{
 
 
 
-	void init(const char *host, int port, const char *group){
+	void init(int port){
 		/* Initialize a socket */
 		fd = socket(AF_INET, SOCK_DGRAM, 0);
-
+		if (fd < 0){
+			std::cout << "Failed to create RX socket\n";
+		}
 		//set fd to non blocking
 		int flags = fcntl(fd, F_GETFL, 0);
 		fcntl(fd, F_SETFL, flags | O_NONBLOCK);
@@ -144,9 +152,9 @@ class auv_rx_socket{
 
 		memset((char *)&my_addr, 0, sizeof(my_addr));
 		my_addr.sin_family = AF_INET;
-		my_addr.sin_addr.s_addr = inet_addr(host);
+		//my_addr.sin_addr.s_addr = inet_addr(host);
+		my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 		my_addr.sin_port = htons(port);
-		/* multicast support */
 		int reuse = 1;
     		if (setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, (const char*)&reuse, sizeof(reuse)) < 0){
         		perror("setsockopt(SO_REUSEPORT) failed");
@@ -154,23 +162,24 @@ class auv_rx_socket{
     		if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (const char*)&reuse, sizeof(reuse)) < 0){
         		perror("setsockopt(SO_REUSEADDR) failed");
 		}
-
+		/*
 		struct ip_mreq mreq;
    		mreq.imr_multiaddr.s_addr = inet_addr(group);
     		mreq.imr_interface.s_addr = inet_addr(host);
     		if (setsockopt(fd, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*) &mreq, sizeof(mreq)) < 0){
         		perror("failed to seup multicastt");
     		}
-
+		*/
 
 		/* bind the socket */
 
 		if (bind(fd, (struct sockaddr *)&my_addr, sizeof(my_addr)) < 0) {
 			//std::cout << "bind to " << host ":" << port << "failed\n";
-			std::cout << "failed to bind socket\n";
+			std::cout << "Failed to bind RX socket\n";
+		}else{
+			std::cout << "Bound RX socket\n";
 		}
 
-		std::cout << "Socket Initialized\n";
 	}
 
 
