@@ -3,7 +3,7 @@
  */
 
 /* DRIVERS */
-//#include "../../sensors/IMU/driver.h"
+#include "../../sensors/IMU/driver.h"
 #include "../../sensors/pressure-sensor/driver.h"
 #include "../../sensors/leak-sensor/driver.h"
 

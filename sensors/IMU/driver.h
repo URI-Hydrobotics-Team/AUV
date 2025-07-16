@@ -1,7 +1,7 @@
 #pragma once
 #include <pigpio.h>
-#include "RPi_BNO055/RPi_Sensor.h"
-#include "RPi_BNO055/RPi_BNO055.h"
+#include "../../lib/RPi_BNO055/RPi_Sensor.h"
+#include "../../lib/RPi_BNO055/RPi_BNO055.h"
 #include <vector>
 #include <iostream>
 

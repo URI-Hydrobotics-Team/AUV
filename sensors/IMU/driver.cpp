@@ -2,7 +2,7 @@
 #include <unistd.h>
 //BNO055::BNO055(){ 
 
-void BNO055::cold_init() 
+void BNO055::cold_init(){ 
     // Set up the IMU 
     IMU = Adafruit_BNO055(55, BNO055_addr);
 

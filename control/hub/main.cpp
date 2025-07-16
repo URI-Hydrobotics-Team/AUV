@@ -31,7 +31,7 @@ PiPicoCommController thruster;
 
 /* define sensors here */
 
-//BNO055 sensor_imu; //using pigpio
+BNO055 sensor_imu; //using pigpio
 leak_sensor_t sensor_leak; //using WiringPi
 MS5837 sensor_pressure; //using bcm2835
 
@@ -66,9 +66,9 @@ void printHelp(){
 
 void initModules(){
 
-	//sensor_pressure.init();
-	//sensor_leak.cold_init();
-	//sensor_imu.cold_init();
+	sensor_pressure.init();
+	sensor_leak.cold_init();
+	sensor_imu.cold_init();
 		
 
 }
@@ -205,7 +205,7 @@ void mainLoop(){
 		/* "we call this the loop" */
 
 		/* check sensors */
-		//getSensors();
+		getSensors();
 		/*rec. from sockets */
 		input_deckbox.rec(1);
 		/* broadcast on sockets */
