@@ -1,9 +1,9 @@
 #include <time.h>
 #include <iostream>
-#include <string>
+#include <cstring>
 
 #include "config.h"
-#include "connections.h"
+#include "../../lib/network/connections.h"
 #include "files.h"
 
 
@@ -22,8 +22,8 @@ auv_rx_socket input_hub, input_deckbox;
 
 void initDevices(){
 
-	input_hub.init(HUB_IP, HUB_PORT_RX, MULTICASTGROUP); // setup hub socket
-	input_deckbox.init(DECKBOX_IP, DECKBOX_PORT_RX, MULTICASTGROUP);
+	input_hub.init(HUB_PORT_RX); // setup hub socket
+	input_deckbox.init(DECKBOX_PORT_RX);
 }
 
 
