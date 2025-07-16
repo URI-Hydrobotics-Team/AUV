@@ -128,7 +128,7 @@ void MS5837::read() {
 	//_i2cPort->requestFrom(MS5837_ADDR,3);
 	D1_pres = 0;
 	D1_pres = recvBuf[0];
-	std::cout << D1_pres << '\n';
+//	std::cout << D1_pres << '\n';
 	D1_pres = (D1_pres << 8) | recvBuf[1];
 	D1_pres = (D1_pres << 8) | recvBuf[2];
 
@@ -144,7 +144,7 @@ void MS5837::read() {
 	D2_temp = recvBuf[0];
 	D2_temp = (D2_temp << 8) | recvBuf[1];
 	D2_temp = (D2_temp << 8) | recvBuf[2];
-	std:: cout << "D1_pres " << D1_pres << " D2_temp " << D2_temp << '\n';
+//	std:: cout << "D1_pres " << D1_pres << " D2_temp " << D2_temp << '\n';
 	calculate();
 }
 

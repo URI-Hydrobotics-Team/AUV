@@ -68,7 +68,7 @@ void initModules(){
 
 	sensor_pressure.init();
 	sensor_leak.cold_init();
-	sensor_imu.cold_init();
+	//sensor_imu.cold_init();
 		
 
 }
@@ -113,9 +113,10 @@ void getSensors(){
 }
 
 void logPressure(){
-	std::string str = "!HUB STS ";
+	std::string str = "!HSP ";
 	str += std::to_string(pressure); str += ' '; str += std::to_string(temperature); str += ' '; str += std::to_string(depth); str += ' '; str += std::to_string(altitude);
 	output_log.transmit(str.c_str());
+	output_deckbox.transmit(str.c_str());
 	//std::cout << str << '\n';
 }
 
@@ -125,7 +126,7 @@ void initDevices(){
 	// NOTE: multicasting will be removed soon as it is useless in this implementation
 		
 	/* initalize devices */
-	output_deckbox.init(LOG_IP, DECKBOX_PORT_TX); 
+	output_deckbox.init(DECKBOX_IP, DECKBOX_PORT_TX); 
 	output_log.init(LOG_IP, LOG_PORT_TX); 
 	input_deckbox.init(DECKBOX_PORT_RX);
 
@@ -205,12 +206,14 @@ void mainLoop(){
 		/* "we call this the loop" */
 
 		/* check sensors */
-		//getSensors();
 		/*rec. from sockets */
 		input_deckbox.rec(1);
+
 		/* broadcast on sockets */
 	
 		if (returnTimeStamp() > STATUS_INTERVAL){
+
+			getSensors(); //slow
 			/*send status string */
 			resetClock();
 			sendStatus(); 
