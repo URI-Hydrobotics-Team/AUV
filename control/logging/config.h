@@ -4,7 +4,8 @@ std::string version_string = "alpha 0";
 #define LOG_DIR "log"
 
 /* NETWORK */
-#define SOCKET_TIMEOUT 100000
+#define SOCKET_SLEEP 1000
+#define SOCKET_TIMEOUT 10000
 #define MULTICASTGROUP "224.0.0.10"
 
 /* CONNETIONS */

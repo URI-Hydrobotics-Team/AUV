@@ -1,6 +1,8 @@
 #include "driver.h"
 #include <unistd.h>
-BNO055::BNO055(){    
+//BNO055::BNO055(){ 
+
+void BNO055::cold_init(){ 
     // Set up the IMU 
     IMU = Adafruit_BNO055(55, BNO055_addr);
 
@@ -25,6 +27,28 @@ BNO055::BNO055(){
     // Set the IMU to use the external crystal for more accurate result
     IMU.setExtCrystalUse(false);
 }
+
+void BNO055::init(){
+    // Set up the IMU 
+    IMU = Adafruit_BNO055(55, BNO055_addr);
+	
+    // Initialize the I2C communication
+    IMU._HandleBNO = i2cOpen(IMU._i2cChannel, BNO055_addr, 0);
+
+    // Start up the IMU and check if it is set up correctly
+    if(!IMU.begin()){
+        std::cout << "Something is wrong when setting up the IMU\n";
+    }
+    // Wait some time to let the IMU to begin
+    //usleep(1000000);
+    gpioSleep(PI_TIME_RELATIVE, 0, 1000);
+
+    // Set the IMU to use the external crystal for more accurate result
+    IMU.setExtCrystalUse(false);
+
+}
+
+
 
 void BNO055::IMU_calibration(){
     uint8_t system, gyro, accel, magnetic;

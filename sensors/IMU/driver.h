@@ -1,7 +1,7 @@
 #pragma once
 #include <pigpio.h>
-#include "RPi_BNO055/RPi_Sensor.h"
-#include "RPi_BNO055/RPi_BNO055.h"
+#include "../../lib/RPi_BNO055/RPi_Sensor.h"
+#include "../../lib/RPi_BNO055/RPi_BNO055.h"
 #include <vector>
 #include <iostream>
 
@@ -23,7 +23,9 @@ class BNO055{
     int8_t temperature;
   public:
     // Constructor
-    BNO055();
+    //BNO055();
+    void init();
+    void cold_init();
 
     void IMU_calibration();
     imu::Vector<3> get_Euler_Orientation();

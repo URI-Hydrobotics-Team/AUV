@@ -12,7 +12,9 @@ detection_model::detection_model(std::string modelPath, std::vector<std::string>
     bounding_box.reserve(100);
 
 	// Load the model
-	model = cv::dnn::readNetFromONNX(modelPath);
+    model = cv::dnn::readNetFromONNX(modelPath);
+    // model.setPreferableBackend(cv::dnn::DNN_BACKEND_CUDA);
+    // model.setPreferableTarget(cv::dnn::DNN_TARGET_CUDA);
 }
 
 std::vector<cv::Mat> detection_model::get_model_output(cv::Mat blob) {
@@ -46,19 +48,27 @@ void detection_model::detect(cv::Mat frame) {
     int dimension = output[0].size[1];
     int detection_nums = output[0].size[2];
 
-	// Transpose thee output for easier interpretation
+	// Transpose the output for easier interpretation
 	cv::Mat transposed;
+    // cv::cuda::GpuMat gpu_output;
+    // cv::cuda::GpuMat gpu_transposed;
+    // gpu_output.upload(output[0]);
 	cv::transpose(output[0].reshape(1, dimension), transposed); 
+    // cv::cuda::transpose(gpu_output.reshape(1, dimension), gpu_transposed);
 
     //Loop through the transposed output to get the data of all the good detections
     cv::Mat access_row;
+    // cv::cuda::GpuMat gpu_access_row
     for (int i = 0; i < detection_nums; i++) {
         double max_conf;
         cv::Point conf_indx;
         access_row = transposed.row(i);
+        // gpu_access_row = gpu_transposed.row(i);
 
         //Find the class with the highest probability of a specific detection
         cv::minMaxLoc(access_row.colRange(4, dimension), nullptr, &max_conf, nullptr, &conf_indx);
+        // cv::cuda::minMaxLoc(gpu_access_row.colRange(4, dimension), nullptr, &max_conf, nullptr, &conf_indx);
+        // gpu_access_row.download(access_row);
 
         //If the probability is greater than or equal to 0.4, append all the data into the vectors 
         if (max_conf >= 0.4) {

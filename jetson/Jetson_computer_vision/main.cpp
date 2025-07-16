@@ -5,8 +5,7 @@
 #include <gst/gst.h>
 #include <gst/rtsp-server/rtsp-server.h>
 
-
-int main() {
+std::thread RTSP_server(){
     // Initialize the gstreamer object
     gst_init(nullptr, nullptr);
     GstRTSPServer *server;
@@ -19,7 +18,7 @@ int main() {
     // Create a loop that the server will run in
     loop = g_main_loop_new(NULL, false);
     factory = gst_rtsp_media_factory_new();
-    gst_rtsp_media_factory_set_launch(factory, "( udpsrc port=5000 ! queue ! application/x-rtp,encoding-name=H264 ! rtpjitterbuffer ! rtph264depay ! h264parse ! queue ! rtph264pay name=pay0 pt=96 )");
+    gst_rtsp_media_factory_set_launch(factory, "( udpsrc port=5000 ! queue ! application/x-rtp,encoding-name=H264 ! rtpjitterbuffer latency=0 ! rtph264depay ! h264parse ! queue ! rtph264pay name=pay0 pt=96 )");
     mounts = gst_rtsp_server_get_mount_points(server);
     gst_rtsp_mount_points_add_factory(mounts, "/cam1", factory);
 
@@ -37,6 +36,13 @@ int main() {
 
     // Add a new thread to allow the server to run concurrently with the opencv process 
     std::thread thread1(g_main_loop_run, loop);
+
+    return thread1;
+}
+
+int main() {
+    // Start the RTSP server
+    std::thread server_thread = RTSP_server();
 
     cv::Mat frame;
     // cv::Mat frame1;
@@ -69,17 +75,22 @@ int main() {
     std::string path = "/home/hydro/AUV/AUV/jetson/Jetson_computer_vision/testing_model.onnx";
     detection_model model(path, classes);
     std::cout << "Model is now running\n";
+
     while (true) {
         auto start = std::chrono::high_resolution_clock::now();
         cam.read(frame);
         // cam2.read(frame1);
         // cam3.read(frame2);
-        writer1.write(frame);
+
         if (frame.empty()) {
             std::cout << "ERROR! blank frame grabbed\n";
-            thread1.join();
+            server_thread.join();
             break;
         }
+
+        // Write the frame to a UDP port on the Jetson
+        writer1.write(frame);
+
         // Perform detection
         model.detect(frame);
         // frame = model.draw_img(frame);

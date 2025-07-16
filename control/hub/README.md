@@ -39,7 +39,7 @@ Data leaves the hub via sockets and serial. This data includes values recieved f
 
 ### Other Devices
 The Hub manages communications with devices such as:<br>
-- Thrusters
+- Thrusters (Via PiPicoCommControl)
 - Claw Motor Driver
 - Torpedo Launcher
 
@@ -62,12 +62,14 @@ A summary of the typical operations managed my this program include:
 - Implement leak sensor driver
 
 
+
 ## Compilation
+Depending on the intended platform, some modules and function calls should be commented out
 ### Dependecies
 - standard C/C++ libraries
-- wiringpi>
+- wiringpi
 - adafruit sensor library
-
+- libserialport-dev
 ## Usage and Integration
 
 
