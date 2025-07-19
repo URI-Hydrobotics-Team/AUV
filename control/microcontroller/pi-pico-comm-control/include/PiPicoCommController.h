@@ -15,7 +15,7 @@ public:
     // Format PWM values as a string like "PWM,1500,1500,1500,1500,1500,1500"
     static std::string encodeToCommand(const std::vector<int>& pwm_values);
 
-    static void sendAndReceive(const std::string& data, const std::string& port_name);
+    static std::string sendAndReceive(const std::string& data, const std::string& port_name);
 };
 
 #endif // PIPICOCOMMCONTROLLER_H

@@ -1,7 +1,6 @@
 # Control
 
-Acting directory for everything movement
-
+Acting directory for everything movement/autonomy
 
 ## Hub
 The central hub for managing all devices and connections onboard the AUV.

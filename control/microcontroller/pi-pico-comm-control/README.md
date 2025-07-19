@@ -36,7 +36,9 @@ rshell cp main.py /pyboard/
 Initialize the thrusters
 
 ```bash
+
 /PiPicoCommController init
+
 ```
 
 Default's to `/dev/ttyACM0`
