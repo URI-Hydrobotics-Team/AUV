@@ -26,7 +26,7 @@ auv_rx_socket input_deckbox; //rx devices
 
 /* PiPicoCommControl */
 
-PiPicoCommController thruster;
+PiPicoCommController thrusters;
 
 
 /* define sensors here */
@@ -69,14 +69,16 @@ void initModules(){
 	sensor_pressure.init();
 	sensor_leak.cold_init();
 	//sensor_imu.cold_init();
-		
+	thrusters.sendAndReceive("INIT_THRUSTERS\n", PICO_SERIAL_PORT);	
 
 }
 
-void sendThruster(std::vector<int> pwm_values){
-	std::string pwm_command = thruster.encodeToCommand(pwm_values);
-	thruster.sendDataToPico(pwm_command, PICO_SERIAL_PORT);
-	
+void updateThruster(const std::vector<float> &input_values){
+	std::vector<int> pwm_values = thrusters.convertToPWM(input_values);
+	std::string pwm_command = thrusters.encodeToCommand(pwm_values);
+	thrusters.sendAndReceive(pwm_command, PICO_SERIAL_PORT);
+	// print response
+	//std::cout << "PWM response: " << pwm_response;
 
 }
 
