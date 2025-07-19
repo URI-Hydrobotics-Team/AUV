@@ -7,7 +7,7 @@
 void test(){
 
 	MS5837 sensor;
-	sensor.init();
+	sensor.fullInit();
 
 	while(1){
 

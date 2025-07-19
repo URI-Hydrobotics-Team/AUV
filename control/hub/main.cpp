@@ -18,7 +18,7 @@
 std::string mode, arg1, arg2; //arguments
 char status_str[256]; std::string status_string;
 char input_str[256]; //from deckbox
-
+char controller_str[128];
 
 /* define network connections here */
 auv_tx_socket output_deckbox, output_log; //tx devices
@@ -37,10 +37,10 @@ MS5837 sensor_pressure; //using bcm2835
 
 /* vars */
 //IMU
-/*
+
 imu::Vector<3> euler_orientation, angular_velocity, acceleration_vect, magnetic_field_strength, linear_acceleration, gravity_vector;
 imu::Quaternion quaterion_orientation; 
-*/
+
 //leak 
 int leak_status; //1 = leak, 0 = no leak
 
@@ -48,7 +48,6 @@ int leak_status; //1 = leak, 0 = no leak
 float pressure, temperature, depth, altitude;
 
 //thrusters 
-std::vector<float> input_values;
 
 
 clock_t stopwatch;	
@@ -66,10 +65,10 @@ void printHelp(){
 
 void initModules(){
 
-	sensor_pressure.init();
+	sensor_pressure.fullInit();
 	sensor_leak.cold_init();
-	//sensor_imu.cold_init();
-	thrusters.sendAndReceive("INIT_THRUSTERS\n", PICO_SERIAL_PORT);	
+	sensor_imu.init();
+	//thrusters.sendAndReceive("INIT_THRUSTERS\n", PICO_SERIAL_PORT);	
 
 }
 
@@ -79,6 +78,37 @@ void updateThruster(const std::vector<float> &input_values){
 	thrusters.sendAndReceive(pwm_command, PICO_SERIAL_PORT);
 	// print response
 	//std::cout << "PWM response: " << pwm_response;
+}
+
+
+void testThrusters(){
+
+
+	/*
+		turn on thrusters based on buttons
+	*/
+
+	// 4 face buttons
+	if (controller_str[4] == '1'){
+		//on
+		updateThruster({0.5,0.5,0.5,0.5});
+			
+	}
+	if (controller_str[5] == '1'){
+		//off
+
+		updateThruster({0,0,0,0});
+	}
+	if (controller_str[7] == '1'){
+		
+	}
+
+	if (controller_str[7] == '1'){
+		
+	}
+
+
+	
 
 }
 
@@ -96,10 +126,10 @@ void getSensors(){
 	altitude = sensor_pressure.getAltitude();
 	leak_status = sensor_leak.probe();
 
-	/*
-	IMU data
+	
+	//IMU data
 	euler_orientation = sensor_imu.get_Euler_Orientation();
-	quaterion_orientatio = sensor_imu.get_Quaterion_Orientation();
+	quaterion_orientation = sensor_imu.get_Quaterion_Orientation();
 	angular_velocity = sensor_imu.get_Angular_Velocity();
 	acceleration_vect = sensor_imu.get_Acceleration_Vector();
 	magnetic_field_strength = sensor_imu.get_Magnetic_Field_Strength();
@@ -107,12 +137,59 @@ void getSensors(){
 	gravity_vector = sensor_imu.get_Gravity_Vector();
 	
 
-	*/	
+	
 
 
 
 
 }
+
+void logImu(){
+	/*
+	std::string str = "!HSI ";
+	str += std::to_string(euler_orientation.x); 
+	str += ' '; 
+	str += std::to_string(euler_orientation.y); 
+	str += ' '; 
+	str += std::to_string(euler_orientation.z); 
+	str += ' '; 
+	std::to_string(angular_velocity.x); 
+	str += ' '; 
+	std::to_string(angular_velocity.y); 
+	str += ' '; 
+	std::to_string(angular_velocity.z); 
+	str += ' '; 
+	str += std::to_string(acceleration_vect.x); 
+	str += ' '; 
+	str += std::to_string(acceleration_vect.y); 
+	str += ' '; 
+	str += std::to_string(acceleration_vect.z); 
+	str += ' '; 
+	str += std::to_string(magnetic_field_strength.x); 
+	str += ' '; 
+	str += std::to_string(magnetic_field_strength.y); 
+	str += ' '; 
+	str += std::to_string(magnetic_field_strength.z); 
+	str += ' '; 
+	str += std::to_string(linear_acceleration.x); 
+	str += ' '; 
+	str += std::to_string(linear_acceleration.y); 
+	str += ' '; 
+	str += std::to_string(linear_acceleration.z); 
+	str += ' '; 
+	std::to_string(gravity_vector.x);
+	str += ' '; 
+	std::to_string(gravity_vector.y);
+	str += ' '; 
+	std::to_string(gravity_vector.z);
+	std::cout << str << '\n';
+	*/
+
+}
+
+
+
+
 
 void logPressure(){
 	std::string str = "!HSP ";
@@ -143,6 +220,25 @@ void checkLeak(){
 }
 
 
+void processInput(){
+
+	if (input_str[0] == '!'){ //is legit
+
+		//DECKBOX CONTROLLER INPUT
+		if (input_str[1] == 'D' &&
+		    input_str[2] == 'C' &&
+	            input_str[3] == 'I'){
+
+			for (int i = 0; i < 12; i++){
+				//copy first 12 usable bytes
+				controller_str[i] = input_str[i+4];
+			}
+			std::cout << controller_str << '\n';
+		}
+
+	}
+
+}
 
 
 
@@ -209,8 +305,11 @@ void mainLoop(){
 
 		/* check sensors */
 		/*rec. from sockets */
-		input_deckbox.rec(1);
 
+		if (input_deckbox.probe() > 0){ //this is broken
+			strncpy(input_str, input_deckbox.rec(0), 256);
+		}
+		processInput();
 		/* broadcast on sockets */
 	
 		if (returnTimeStamp() > STATUS_INTERVAL){
@@ -220,7 +319,10 @@ void mainLoop(){
 			resetClock();
 			sendStatus(); 
 			logPressure();	
+			logImu();
 			checkLeak();
+			
+			//std::cout << " X: " << euler_orientation.x() << " Y: " << euler_orientation.y() << " Z: " << euler_orientation.z() << '\n';
 			//output_log.transmit("teststring");
 		}
 		

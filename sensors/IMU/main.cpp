@@ -6,6 +6,7 @@
 void test(){
 	std::cout << "BNO055 Demo\n";
 	BNO055 imu_module;
+	imu_module.cold_init();
 	int8_t temp = imu_module.get_temperature();
 	std::cout << (int)temp << '\n';
 	

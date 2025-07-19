@@ -1,9 +1,8 @@
 /*
 	URI hydrobotics MS5837 driver
-
+	PIGPIO version
 */
 
-//#include <wiringPi.h>
 #include <cstdint>
 
 #ifndef MS5837_H_BLUEROBOTICS
@@ -33,6 +32,7 @@ class MS5837 {
 		void calculate();
 
 		uint8_t crc4(uint16_t n_prom[]);
+
 		char sendBuf[5],recvBuf[5]; //for i2c communication
 
 
@@ -48,7 +48,8 @@ class MS5837 {
 		MS5837();
 
 		bool init();
-		bool fullInit();
+
+		bool cold_init();
 	/** Set model of MS5837 sensor. Valid options are MS5837::MS5837_30BA (default)
 	 * and MS5837::MS5837_02BA.
 	 */

@@ -1,8 +1,9 @@
 #include "driver.h"
-#include <wiringPi.h>
-#include <wiringPiI2C.h>
 #include <iostream>
 #include <cmath>
+#include <pigpio.h>
+#define MS5837_CONVERT_D1_2048    0x46
+#define MS5837_CONVERT_D2_2048    0x56
 
 const uint8_t MS5837_ADDR = 0x76;
 const uint8_t MS5837_RESET = 0x1E;
@@ -10,6 +11,7 @@ const uint8_t MS5837_ADC_READ = 0x00;
 const uint8_t MS5837_PROM_READ = 0xA0;
 const uint8_t MS5837_CONVERT_D1_8192 = 0x4A;
 const uint8_t MS5837_CONVERT_D2_8192 = 0x5A;
+
 
 const float MS5837::Pa = 100.0f;
 const float MS5837::bar = 0.001f;
@@ -25,29 +27,34 @@ const uint8_t MS5837_30BA26 = 0x1A; // Sensor version: From MS5837_30BA datashee
 
 MS5837::MS5837() {
 	fluidDensity = 1029;
+	std::cout << "Created Sensor\n";
+}
+
+bool MS5837::fullInit(){
+	if(gpioInitialise() == PI_INIT_FAILED){
+		std::cout << "Failed to init pigpio\n";
+		return false;
+	}
+	init();
 }
 
 bool MS5837::init() {
-	//wiringPiSetupPinType(WPI_PIN_BCM);
 
-	fd = wiringPiI2CSetup(MS5837_ADDR);
-	if (fd == -1){
-		std::cout << "Could not open i2c device\n";
-	}	
+	fd = i2cOpen(1, MS5837_ADDR, 0);
+	std::cout << "fd = " << fd << '\n';
+
 	// Reset the MS5837, per datasheet
-	wiringPiI2CWrite(fd, MS5837_RESET);
+	i2cWriteByte(fd, MS5837_RESET);	
 
 	// Wait for reset to complete
-	delay(10);
-
+	gpioDelay(1000*10);
 	// Read calibration values and CRC
 	for ( uint8_t i = 0 ; i < 7 ; i++ ) {
-		wiringPiI2CWrite(fd, MS5837_PROM_READ+i*2);
-
+		i2cWriteByte(fd, MS5837_PROM_READ+i*2);
 		uint8_t ret_val;
 		//get 2 bytes
-
-		C[i] = (wiringPiI2CRead(fd) << 8) | wiringPiI2CRead(fd);
+		i2cReadDevice(fd, recvBuf, 2);
+		C[i] = (recvBuf[0]  << 8) | recvBuf[1];
 	}
 
 	// Verify that data is correct with CRC
@@ -82,6 +89,8 @@ bool MS5837::init() {
 	// the sensor version is unrecognised.
 	// (The MS5637 has the same address as the MS5837 and will also pass the CRC check)
 	// (but will hopefully be unrecognised.)
+
+	std::cout << "Initalized Sensor\n";
 	return true;
 }
 
@@ -99,33 +108,32 @@ void MS5837::setFluidDensity(float density) {
 
 void MS5837::read() {
 	// Request D1 conversion
-	wiringPiI2CWrite(fd, MS5837_CONVERT_D1_8192);
+	i2cWriteByte(fd, MS5837_CONVERT_D1_2048);
 
-	delay(20); // Max conversion time per datasheet
 
-	wiringPiI2CWrite(fd, MS5837_ADC_READ);
+	gpioDelay(1000*20); // 
+
+	i2cWriteByte(fd, MS5837_ADC_READ);
+
+	i2cReadDevice(fd, recvBuf, 3);
 	//read 3 bytes
-	//_i2cPort->requestFrom(MS5837_ADDR,3);
 	D1_pres = 0;
-	D1_pres = wiringPiI2CRead(fd);
-	D1_pres = (D1_pres << 8) | wiringPiI2CRead(fd);
-	D1_pres = (D1_pres << 8) | wiringPiI2CRead(fd);
+	D1_pres = recvBuf[0];
+	D1_pres = (D1_pres << 8) | recvBuf[1];
+	D1_pres = (D1_pres << 8) | recvBuf[2];
+
 
 	// Request D2 conversion
-	wiringPiI2CWrite(fd, MS5837_CONVERT_D2_8192);
+	i2cWriteByte(fd, MS5837_CONVERT_D2_2048);
+	gpioDelay(1000*20); // Max conversion time per datasheet
 
-	delay(20); // Max conversion time per datasheet
+	i2cWriteByte(fd, MS5837_ADC_READ);
+	i2cReadDevice(fd, recvBuf, 3);
 
-	wiringPiI2CWrite(fd, MS5837_ADC_READ);
-
-//	_i2cPort->requestFrom(MS5837_ADDR,3);
-	
 	D2_temp = 0;
-
-	D2_temp = wiringPiI2CRead(fd);
-	D2_temp = (D2_temp << 8) | wiringPiI2CRead(fd);
-	D2_temp = (D2_temp << 8) | wiringPiI2CRead(fd);
-	std:: cout << "D1_pres " << D1_pres << " D2_temp " << D2_temp << '\n';
+	D2_temp = recvBuf[0];
+	D2_temp = (D2_temp << 8) | recvBuf[1];
+	D2_temp = (D2_temp << 8) | recvBuf[2];
 	calculate();
 }
 
