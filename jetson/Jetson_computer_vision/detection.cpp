@@ -13,8 +13,8 @@ detection_model::detection_model(std::string modelPath, std::vector<std::string>
 
 	// Load the model
     model = cv::dnn::readNetFromONNX(modelPath);
-    // model.setPreferableBackend(cv::dnn::DNN_BACKEND_CUDA);
-    // model.setPreferableTarget(cv::dnn::DNN_TARGET_CUDA);
+    model.setPreferableBackend(cv::dnn::DNN_BACKEND_CUDA);
+    model.setPreferableTarget(cv::dnn::DNN_TARGET_CUDA_FP16);
 }
 
 std::vector<cv::Mat> detection_model::get_model_output(cv::Mat blob) {
