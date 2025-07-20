@@ -9,12 +9,12 @@ STOP_MICROSECS = 1500
 INITIALIZE_MICROSECS = 1500
 
 ### Thruster Setup ###
-BPH = PWM(Pin(0), freq=50)  # Bow-Port-Heave
-BSH = PWM(Pin(2), freq=50)  # Bow-Starboard-Heave
-SH  = PWM(Pin(4), freq=50)  # Stern-Heave
-Y   = PWM(Pin(6), freq=50)  # Yaw
-PS  = PWM(Pin(8), freq=50)  # Port-Surge
-SS  = PWM(Pin(14), freq=50) # Starboard-Surge
+BPH = PWM(Pin(0), freq=400)  # Bow-Port-Heave
+BSH = PWM(Pin(2), freq=400)  # Bow-Starboard-Heave
+SH  = PWM(Pin(4), freq=400)  # Stern-Heave
+Y   = PWM(Pin(6), freq=400)  # Yaw
+PS  = PWM(Pin(8), freq=400)  # Port-Surge
+SS  = PWM(Pin(14), freq=400) # Starboard-Surge
 
 thrusters = [BPH, BSH, SH, Y, PS, SS]
 thruster_names = ['BPH', 'BSH', 'SH', 'Y', 'PS', 'SS']
