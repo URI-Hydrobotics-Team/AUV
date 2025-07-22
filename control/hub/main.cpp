@@ -19,6 +19,7 @@ std::string mode, arg1, arg2; //arguments
 char status_str[256]; std::string status_string;
 char input_str[256]; //from deckbox
 char controller_str[128];
+int sys_mode = 0;
 
 /* define network connections here */
 auv_tx_socket output_deckbox, output_log; //tx devices
@@ -245,17 +246,28 @@ void processInput(){
 
 	if (input_str[0] == '!'){ //is legit
 
-		//DECKBOX CONTROLLER INPUT
+		//DECKBOX COMMAND INPUT
 		if (input_str[1] == 'D' &&
 		    input_str[2] == 'C' &&
 	            input_str[3] == 'I'){
 
-			for (int i = 0; i < 15; i++){
-				//copy first 12 usable bytes
+			for (int i = 0; i < 124; i++){
+				//copy first 124 usable bytes
 				controller_str[i] = input_str[i+4];
 			}
-			//std::cout << controller_str << '\n';
+			//std::cout << input_str << '\n';
 		}
+		//DECKBOX COMMAND MODE
+		if (input_str[1] == 'D' &&
+		    input_str[2] == 'C' &&
+	            input_str[3] == 'M'){
+			
+			sys_mode = (input_str[5] - '0');
+			
+		}
+
+
+
 
 	}
 
@@ -337,7 +349,10 @@ void mainLoop(){
 			logPressure();	
 			logImu();
 			checkLeak();
-			std::cout << controller_str << '\n';	
+			if(sys_mode == 0){
+				std::cout << "[DEBUG] controller_str: ";
+				std::cout << controller_str << '\n';	
+			}
 		}		
 	}	
 }
