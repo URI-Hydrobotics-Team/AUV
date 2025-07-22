@@ -1,1 +1,1 @@
-g++ main.cpp ../../sensors/pressure-sensor/driver_pigpio.cpp ../microcontroller/pi-pico-comm-control/src/PiPicoCommController.cpp ../../lib/RPi_BNO055/RPi_BNO055.cpp ../../sensors/IMU/driver.cpp -o auv-hub -l bcm2835 -l wiringPi -l serialport -lpigpio -lrt
+g++ main.cpp ../../sensors/pressure-sensor/driver_pigpio.cpp ../microcontroller/pi-pico-comm-control/src/PiPicoCommController.cpp ../../lib/RPi_BNO055/RPi_BNO055.cpp ../../sensors/IMU/driver.cpp ../pid-controller/src/PIDController.cpp -o auv-hub -l bcm2835 -l wiringPi -l serialport -lpigpio -lrt

@@ -132,16 +132,14 @@ void testThrusters(){
 		
 		thrust_sw_delay = THRUST_SW_DELAY;
 	}
-
-
-	
-
 }
 
 void sendPump(){
-
-
-
+	/*
+		place holder function for pump driver
+		will likely not be implemented for 2025
+	
+	*/
 }
 
 void getSensors(){
@@ -150,6 +148,7 @@ void getSensors(){
 	temperature = sensor_pressure.getTemperature();
 	depth = sensor_pressure.getDepth();
 	altitude = sensor_pressure.getAltitude();
+
 	leak_status = sensor_leak.probe();
 
 	
@@ -162,12 +161,7 @@ void getSensors(){
 	linear_acceleration = sensor_imu.get_Linear_Acceleration();
 	gravity_vector = sensor_imu.get_Gravity_Vector();
 	
-
 	
-
-
-
-
 }
 
 void logImu(){
@@ -216,9 +210,6 @@ void logImu(){
 	output_deckbox.transmit(str.c_str());
 
 }
-
-
-
 
 
 void logPressure(){
@@ -276,9 +267,6 @@ void sendTestString(){
 
 	output_deckbox.transmit("!HUB message avaliable");
 	output_log.transmit("!HUB message avaliable");
-
-
-
 }
 
 void updateStatus(){
@@ -307,11 +295,6 @@ void sendStatus(){
 	output_log.transmit(status_string.c_str());
 }
 
-
-
-
-
-
 void resetClock(){
 
 	stopwatch = clock();
@@ -322,7 +305,6 @@ double returnTimeStamp(){
 	clock_t t = clock() - stopwatch;
 	
 	return ((double)t)/CLOCKS_PER_SEC;
-
 }
 
 void mainLoop(){
@@ -356,18 +338,9 @@ void mainLoop(){
 			logImu();
 			checkLeak();
 			std::cout << controller_str << '\n';	
-		}
-		
-		
+		}		
 	}	
-
-
-
-
-
 }
-
-
 
 int main(int argc, char *argv[]){
 

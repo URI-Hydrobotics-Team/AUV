@@ -12,5 +12,5 @@
 #include "../microcontroller/pi-pico-comm-control/include/PiPicoCommController.h"
 
 /* MISC. */
-
+#include "../pid-controller/include/PIDController.h"
 

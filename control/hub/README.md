@@ -39,10 +39,10 @@ Data leaves the hub via sockets and serial. This data includes values recieved f
 
 ### Other Devices
 The Hub manages communications with devices such as:<br>
-- Thrusters (Via PiPicoCommControl)
-- Claw Motor Driver
-- Torpedo Launcher
-
+- Thrusters (via PiPicoCommControl)
+- Claw Motor Driver (not implemented yet)
+- Torpedo Launcher (not implemented yet)
+- Controller input and telemetry (deckbox-cli)
 
 ## Summary
 A summary of the typical operations managed my this program include:
@@ -57,20 +57,21 @@ A summary of the typical operations managed my this program include:
 
 
 ## TODO
-- Implement IMU driver
-- Implement microcontroller driver
-- Implement leak sensor driver
-
+- PID controller integration
+- Position definitions
 
 
 ## Compilation
 Depending on the intended platform, some modules and function calls should be commented out
 ### Dependecies
 - standard C/C++ libraries
-- wiringpi
+- PIGPIO for drivers
 - adafruit sensor library
 - libserialport-dev
 ## Usage and Integration
-
+Must be run with root privileges
+```
+sudo ./auv-hub run
+```
 
 

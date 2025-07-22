@@ -1,8 +1,50 @@
+
+
+
 /*
 
 	auv-hub movement definitions
+	PID controller will be used to maintain each predefined movement
+
+
+	Basic movements:
+		- Dive
+		- Ascend
+		- Forward
+		- Backward
+		- Left strafe
+		- Right strafe
+		- Rotate (yaw)
+		- Rotate (roll)
+		- Rotate (pitch)
+		
+	Thrusters:
+		Bow-Port-Heave		(bph)
+		Bow-Starboard-Heave	(bsh)
+		Stern-Heave		(sh)
+		Yaw			(y)
+		Port-Surge		(ps)
+		Starboard-Surge 	(ss)
 
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class auv_motion{
@@ -15,42 +57,28 @@ class auv_motion{
 		velocity; //estmiated velocity
 
 		/* intended movement */
-		double thrustX, thrustY, thrustZ;
-
 
 		/*thruster values */
 
-		int thrusters[6];
+		double thrusters[6];
 
 	public:
 
 
-		void setHeading(double h){
+		void setMode(const char *mode, double rate){
 
 		}
 		
-		void setDepth(double d, double rd){
+		void updateParameters(double head, double dep, double rel_dep, double acc, double vel){
 
-		}
-	
-		void setVelocity(double v){
+		}	
 
-		}
-
-		void setAcceleration(double a){
-
-		}
-
-		void setThrust(double x, double y, double z){
+		void updateThrustes(double &bph, double &bsh, double &sh, double &y, double &ps, double &ss){
 
 
 		}
-
-		
 
 	
-
-
 
 
 
