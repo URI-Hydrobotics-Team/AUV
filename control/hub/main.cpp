@@ -49,7 +49,7 @@ int leak_status; //1 = leak, 0 = no leak
 float pressure, temperature, depth, altitude;
 
 //thrusters 
-
+float test_speed = 0;
 
 clock_t stopwatch;	
 
@@ -93,8 +93,8 @@ void testThrusters(){
 	// 4 face buttons
 	if (controller_str[4] == '1' && thrust_sw_delay == 0){
 		//on
-		updateThruster({0.1,0.1,0.1,0.1,0.1,0.1});
-		std::cout << "Thrusters 10%\n";	
+		updateThruster({test_speed,test_speed,test_speed,test_speed,test_speed,test_speed});
+		std::cout << "Thruster Speed: " << test_speed <<"\n";	
 		thrust_sw_delay = THRUST_SW_DELAY;
 	}
 	if (controller_str[5] == '1' && thrust_sw_delay == 0){
@@ -104,6 +104,25 @@ void testThrusters(){
 		std::cout << "Thrusters off\n";	
 		thrust_sw_delay = THRUST_SW_DELAY;
 	}
+
+	if (controller_str[10] == '1' && thrust_sw_delay == 0){
+		//test speed up
+		test_speed -= 0.01;
+		
+		thrust_sw_delay = THRUST_SW_DELAY;
+		std::cout << "Thruster Speed: " << test_speed <<"\n";	
+	}
+	if (controller_str[11] == '1' && thrust_sw_delay == 0){
+		//test speed up
+		test_speed += 0.01;
+		
+		thrust_sw_delay = THRUST_SW_DELAY;
+		std::cout << "Thruster Speed: " << test_speed <<"\n";	
+	}
+
+
+	
+
 	if (controller_str[7] == '1'){
 		
 		thrust_sw_delay = THRUST_SW_DELAY;
