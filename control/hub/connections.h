@@ -125,10 +125,10 @@ class auv_rx_socket{
 			}
 			shutdown(fd, 2);
 			usleep(SOCKET_SLEEP); //sleep for 100ms or so
-			return rx_buffer;
 			
 		}
 	
+			return rx_buffer;
 	
 	}
 

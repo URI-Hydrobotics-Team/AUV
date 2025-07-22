@@ -19,3 +19,4 @@
 /* CONFIG */
 std::string version_string = "AUV Hub Alpha";
 #define STATUS_INTERVAL 0.1000 //seconds
+#define THRUST_SW_DELAY 1000

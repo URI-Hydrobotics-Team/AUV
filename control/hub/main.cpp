@@ -40,6 +40,7 @@ MS5837 sensor_pressure; //using bcm2835
 
 imu::Vector<3> euler_orientation, angular_velocity, acceleration_vect, magnetic_field_strength, linear_acceleration, gravity_vector;
 imu::Quaternion quaterion_orientation; 
+int thrust_sw_delay = 0;
 
 //leak 
 int leak_status; //1 = leak, 0 = no leak
@@ -48,7 +49,7 @@ int leak_status; //1 = leak, 0 = no leak
 float pressure, temperature, depth, altitude;
 
 //thrusters 
-
+float test_speed = 0;
 
 clock_t stopwatch;	
 
@@ -68,8 +69,9 @@ void initModules(){
 	sensor_pressure.fullInit();
 	sensor_leak.cold_init();
 	sensor_imu.init();
-	//thrusters.sendAndReceive("INIT_THRUSTERS\n", PICO_SERIAL_PORT);	
-
+	thrusters.sendAndReceive("INIT_THRUSTERS\n", PICO_SERIAL_PORT);
+		
+	
 }
 
 void updateThruster(const std::vector<float> &input_values){
@@ -89,22 +91,46 @@ void testThrusters(){
 	*/
 
 	// 4 face buttons
-	if (controller_str[4] == '1'){
+	if (controller_str[4] == '1' && thrust_sw_delay == 0){
 		//on
-		updateThruster({0.5,0.5,0.5,0.5});
-			
+		updateThruster({test_speed,test_speed,test_speed,test_speed,test_speed,test_speed});
+		std::cout << "Thruster Speed: " << test_speed <<"\n";	
+		thrust_sw_delay = THRUST_SW_DELAY;
 	}
-	if (controller_str[5] == '1'){
+	if (controller_str[5] == '1' && thrust_sw_delay == 0){
 		//off
+		updateThruster({0.0,0.0,0.0,0.0,0.0,0.0});
 
-		updateThruster({0,0,0,0});
+		std::cout << "Thrusters off\n";	
+		thrust_sw_delay = THRUST_SW_DELAY;
 	}
+
+	if (controller_str[10] == '1' && thrust_sw_delay == 0){
+		//test speed up
+		test_speed -= 0.01;
+		
+		thrust_sw_delay = THRUST_SW_DELAY;
+		std::cout << "Thruster Speed: " << test_speed <<"\n";	
+	}
+	if (controller_str[11] == '1' && thrust_sw_delay == 0){
+		//test speed up
+		test_speed += 0.01;
+		
+		thrust_sw_delay = THRUST_SW_DELAY;
+		std::cout << "Thruster Speed: " << test_speed <<"\n";	
+	}
+
+
+	
+
 	if (controller_str[7] == '1'){
 		
+		thrust_sw_delay = THRUST_SW_DELAY;
 	}
 
 	if (controller_str[7] == '1'){
 		
+		thrust_sw_delay = THRUST_SW_DELAY;
 	}
 
 
@@ -145,45 +171,49 @@ void getSensors(){
 }
 
 void logImu(){
-	/*
+
+	
 	std::string str = "!HSI ";
-	str += std::to_string(euler_orientation.x); 
+	str += std::to_string(euler_orientation.x()); 
 	str += ' '; 
-	str += std::to_string(euler_orientation.y); 
+	str += std::to_string(euler_orientation.y()); 
 	str += ' '; 
-	str += std::to_string(euler_orientation.z); 
+	str += std::to_string(euler_orientation.z()); 
 	str += ' '; 
-	std::to_string(angular_velocity.x); 
+	str += std::to_string(angular_velocity.x()); 
 	str += ' '; 
-	std::to_string(angular_velocity.y); 
+	str += std::to_string(angular_velocity.y()); 
 	str += ' '; 
-	std::to_string(angular_velocity.z); 
+	str += std::to_string(angular_velocity.z()); 
 	str += ' '; 
-	str += std::to_string(acceleration_vect.x); 
+	str += std::to_string(acceleration_vect.x()); 
 	str += ' '; 
-	str += std::to_string(acceleration_vect.y); 
+	str += std::to_string(acceleration_vect.y()); 
 	str += ' '; 
-	str += std::to_string(acceleration_vect.z); 
+	str += std::to_string(acceleration_vect.z()); 
 	str += ' '; 
-	str += std::to_string(magnetic_field_strength.x); 
+	str += std::to_string(magnetic_field_strength.x()); 
 	str += ' '; 
-	str += std::to_string(magnetic_field_strength.y); 
+	str += std::to_string(magnetic_field_strength.y()); 
 	str += ' '; 
-	str += std::to_string(magnetic_field_strength.z); 
+	str += std::to_string(magnetic_field_strength.z()); 
 	str += ' '; 
-	str += std::to_string(linear_acceleration.x); 
+	str += std::to_string(linear_acceleration.x()); 
 	str += ' '; 
-	str += std::to_string(linear_acceleration.y); 
+	str += std::to_string(linear_acceleration.y()); 
 	str += ' '; 
-	str += std::to_string(linear_acceleration.z); 
+	str += std::to_string(linear_acceleration.z()); 
 	str += ' '; 
-	std::to_string(gravity_vector.x);
+	str += std::to_string(gravity_vector.x());
 	str += ' '; 
-	std::to_string(gravity_vector.y);
+	str += std::to_string(gravity_vector.y());
 	str += ' '; 
-	std::to_string(gravity_vector.z);
-	std::cout << str << '\n';
-	*/
+	str += std::to_string(gravity_vector.z());
+	str += ' '; //terminating space 
+	//std::cout << str << '\n';
+	//std::cout << angular_velocity.x() << ' ' << angular_velocity.y() << ' ' << angular_velocity.z() << '\n';
+	//output_log.transmit(str.c_str());
+	output_deckbox.transmit(str.c_str());
 
 }
 
@@ -193,7 +223,7 @@ void logImu(){
 
 void logPressure(){
 	std::string str = "!HSP ";
-	str += std::to_string(pressure); str += ' '; str += std::to_string(temperature); str += ' '; str += std::to_string(depth); str += ' '; str += std::to_string(altitude);
+	str += std::to_string(pressure); str += ' '; str += std::to_string(temperature); str += ' '; str += std::to_string(depth); str += ' '; str += std::to_string(altitude); str += ' ';
 	output_log.transmit(str.c_str());
 	output_deckbox.transmit(str.c_str());
 	//std::cout << str << '\n';
@@ -229,11 +259,11 @@ void processInput(){
 		    input_str[2] == 'C' &&
 	            input_str[3] == 'I'){
 
-			for (int i = 0; i < 12; i++){
+			for (int i = 0; i < 15; i++){
 				//copy first 12 usable bytes
 				controller_str[i] = input_str[i+4];
 			}
-			std::cout << controller_str << '\n';
+			//std::cout << controller_str << '\n';
 		}
 
 	}
@@ -264,9 +294,8 @@ void updateStatus(){
 	status_string = "";	
 	status_string += "!HUB STS ";
 	status_string += time_str;
-	
 
-	std::cout << "status string: " << status_string << '\n';
+	//std::cout << "status string: " << status_string << '\n';
 
 }
 
@@ -310,6 +339,11 @@ void mainLoop(){
 			strncpy(input_str, input_deckbox.rec(0), 256);
 		}
 		processInput();
+		testThrusters();
+
+		if (thrust_sw_delay > 0){
+			thrust_sw_delay -= 1;
+		}
 		/* broadcast on sockets */
 	
 		if (returnTimeStamp() > STATUS_INTERVAL){
@@ -321,9 +355,7 @@ void mainLoop(){
 			logPressure();	
 			logImu();
 			checkLeak();
-			
-			//std::cout << " X: " << euler_orientation.x() << " Y: " << euler_orientation.y() << " Z: " << euler_orientation.z() << '\n';
-			//output_log.transmit("teststring");
+			std::cout << controller_str << '\n';	
 		}
 		
 		
