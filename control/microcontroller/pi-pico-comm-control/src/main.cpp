@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <cstdlib> // for std::stof
-#include "PiPicoCommController.h"
+#include "../include/PiPicoCommController.h"
 
 int main(int argc, char* argv[]) {
     std::string serial_port = "/dev/ttyACM0";
