@@ -72,7 +72,7 @@ Depending on the intended platform, some modules and function calls should be co
 - adafruit sensor library
 - libserialport-dev
 ## Usage and Integration
-Must be run with root privileges
+Must be run with root privileges:<br>
 	sudo ./auv-hub run
 
 
