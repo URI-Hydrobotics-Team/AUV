@@ -3,20 +3,23 @@ A program that runs on the Raspberry Pi (Primary Processor) and interfaces with 
 
 
 ## Communication Overview
-
-The microcontroller (Pi Pico) running MicroPython will interface with the hub over serial via USB.<br>
-Inputs recieved from sensors connected to the Pi directly and the microcontroller will be agregated by this program and made avaliable to other software over a socket connection.<br>
-Input from other sources such as the deckbox are recieved via socket connections.
+Inputs recieved from sensors connected to the Pi directly and the microcontroller are agregated by this program and made avaliable to other software over a socket connections.<br>
+Input from other sources such as the deckbox are also recieved via socket connections.
 
 ## Socket Structure
 All sockets used for communication are connectionless, of the datagram type (UDP), and use the internet doman.<br>
-Each message is a character string starting with the character '!'. Then a single character ID is next (e.g. "!H") which is used to designate the sender. Then two more characters for TYPE and SUBTYPE. Finally a space is appended along with the contents of the message. Messages can be up to 256 bytes long.
+Each message is a character string starting with the '!'. A single character ID follows (e.g. "!H") designating the sender. Then two more characters for TYPE and SUBTYPE. Finally a space is appended along with the contents of the message. Standard practice limits message length to 256 bytes.
 ### Example Messages (for demonstration purposes)
 	!HSE failed to initialize sensors (HUB STATUS ERROR)
 	!HSA leak detected (HUB STATUS ALARM)
 	!LSN large log size (LOG STATS NOTIFICATION)
 	!DCI 1010110 (DECKBOX CONTROL INPUT)
-In practice, these messages are likely going to be heavily abreviated in order to save message space
+In practice, these messages are not as human readable.
+### Message IDs
+	H	hub
+	L	log
+	D	deckbox
+	J	jetson	
 ### Message TYPEs
 	E	error
 	A	alarm
@@ -52,7 +55,7 @@ A summary of the typical operations managed my this program include:
 - Broadcasting emergancy messages such as if a leak has occured when needed
 - Recieving commands and controller input from the deckbox
 - Translating controller input into velocity vectors
-- Receiving input from PID loops
+- Managing PID controllers
  
 
 
@@ -70,8 +73,6 @@ Depending on the intended platform, some modules and function calls should be co
 - libserialport-dev
 ## Usage and Integration
 Must be run with root privileges
-```
-sudo ./auv-hub run
-```
+	sudo ./auv-hub run
 
 
