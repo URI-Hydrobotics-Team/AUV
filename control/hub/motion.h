@@ -1,9 +1,7 @@
 
-
-
 /*
 
-	auv-hub movement definitions
+	auv-hub movement definitions and thruster control
 	PID controller will be used to maintain each predefined movement
 
 
@@ -77,9 +75,6 @@ class auv_motion{
 
 
 		}
-
-	
-
 
 
 };

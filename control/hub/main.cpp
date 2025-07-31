@@ -13,13 +13,16 @@
 #include "motion.h"
 
 
-
 /* system strings */
 std::string mode, arg1, arg2; //arguments
 char status_str[256]; std::string status_string;
 char input_str[256]; //from deckbox
 char controller_str[128];
 int sys_mode = 0;
+int verbose;
+
+/* core header files */
+#include "control.h"
 
 /* define network connections here */
 auv_tx_socket output_deckbox, output_log; //tx devices
@@ -27,7 +30,7 @@ auv_rx_socket input_deckbox; //rx devices
 
 /* PiPicoCommControl */
 
-PiPicoCommController thrusters;
+//PiPicoCommController thrusters;
 
 
 /* define sensors here */
@@ -41,7 +44,7 @@ MS5837 sensor_pressure; //using bcm2835
 
 imu::Vector<3> euler_orientation, angular_velocity, acceleration_vect, magnetic_field_strength, linear_acceleration, gravity_vector;
 imu::Quaternion quaterion_orientation; 
-int thrust_sw_delay = 0;
+//int thrust_sw_delay = 0;
 
 //leak 
 int leak_status; //1 = leak, 0 = no leak
@@ -49,8 +52,6 @@ int leak_status; //1 = leak, 0 = no leak
 //pressure
 float pressure, temperature, depth, altitude;
 
-//thrusters 
-float test_speed = 0;
 
 clock_t stopwatch;	
 
@@ -59,7 +60,7 @@ void printHelp(){
 	std::cout << "\nUSAGE:\n";
 	std::cout << "\t\tauv-hub <mode> <arguments>\n"; 
 	
-	std::cout << "\tModes: help, run\n";
+	std::cout << "\tModes: help, verbose, run\n";
 	std::cout << "\trun:\n";	
 
 }
@@ -72,75 +73,6 @@ void initModules(){
 	sensor_imu.init();
 	thrusters.sendAndReceive("INIT_THRUSTERS\n", PICO_SERIAL_PORT);
 		
-	
-}
-
-void updateThruster(const std::vector<float> &input_values){
-	std::vector<int> pwm_values = thrusters.convertToPWM(input_values);
-	std::string pwm_command = thrusters.encodeToCommand(pwm_values);
-	thrusters.sendAndReceive(pwm_command, PICO_SERIAL_PORT);
-	// print response
-	//std::cout << "PWM response: " << pwm_response;
-}
-
-
-void testThrusters(){
-
-
-	/*
-		turn on thrusters based on buttons
-	*/
-
-	// 4 face buttons
-	if (controller_str[4] == '1' && thrust_sw_delay == 0){
-		//on
-		updateThruster({test_speed,test_speed,test_speed,test_speed,test_speed,test_speed});
-		std::cout << "Thruster Speed: " << test_speed <<"\n";	
-		thrust_sw_delay = THRUST_SW_DELAY;
-	}
-	if (controller_str[5] == '1' && thrust_sw_delay == 0){
-		//off
-		updateThruster({0.0,0.0,0.0,0.0,0.0,0.0});
-
-		std::cout << "Thrusters off\n";	
-		thrust_sw_delay = THRUST_SW_DELAY;
-	}
-
-	if (controller_str[10] == '1' && thrust_sw_delay == 0){
-		//test speed up
-		test_speed -= 0.01;
-		
-		thrust_sw_delay = THRUST_SW_DELAY;
-		std::cout << "Thruster Speed: " << test_speed <<"\n";	
-	}
-	if (controller_str[11] == '1' && thrust_sw_delay == 0){
-		//test speed up
-		test_speed += 0.01;
-		
-		thrust_sw_delay = THRUST_SW_DELAY;
-		std::cout << "Thruster Speed: " << test_speed <<"\n";	
-	}
-
-
-	
-
-	if (controller_str[7] == '1'){
-		
-		thrust_sw_delay = THRUST_SW_DELAY;
-	}
-
-	if (controller_str[7] == '1'){
-		
-		thrust_sw_delay = THRUST_SW_DELAY;
-	}
-}
-
-void sendPump(){
-	/*
-		place holder function for pump driver
-		will likely not be implemented for 2025
-	
-	*/
 }
 
 void getSensors(){
@@ -262,15 +194,9 @@ void processInput(){
 		    input_str[2] == 'C' &&
 	            input_str[3] == 'M'){
 			
-			sys_mode = (input_str[5] - '0');
-			
+			sys_mode = (input_str[5] - '0');		
 		}
-
-
-
-
 	}
-
 }
 
 
@@ -301,7 +227,9 @@ void updateStatus(){
 
 
 void sendStatus(){
-	std::cout << "sending status\n";
+	if (verbose == 1){
+		std::cout << "sending status\n";
+	}
 	updateStatus();
 	output_deckbox.transmit(status_string.c_str());
 	output_log.transmit(status_string.c_str());
@@ -340,6 +268,8 @@ void mainLoop(){
 		}
 		/* broadcast on sockets */
 	
+		
+
 		if (returnTimeStamp() > STATUS_INTERVAL){
 
 			getSensors(); //slow
@@ -349,9 +279,13 @@ void mainLoop(){
 			logPressure();	
 			logImu();
 			checkLeak();
-			if(sys_mode == 0){
+			if(verbose == 1){
 				std::cout << "[DEBUG] controller_str: ";
-				std::cout << controller_str << '\n';	
+				std::cout << controller_str << '\n';
+	
+				std::cout << "[DEBUG] sys_mode: ";
+				std::cout << sys_mode << '\n';
+
 			}
 		}		
 	}	
@@ -375,9 +309,17 @@ int main(int argc, char *argv[]){
 	}
 
 
-	if (mode == "run"){
+	if (mode == "verbose"){
+		verbose = 1;
+		std::cout << "[DEBUG] Verbose Mode On\n";
 		mainLoop();
 		
+	}
+
+	if (mode == "run"){
+		/* production usage */
+		verbose = 0;
+		mainLoop();
 	}
 
 
