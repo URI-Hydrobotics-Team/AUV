@@ -9,7 +9,20 @@
 //thruster variables
 PiPicoCommController thrusters;
 int thrust_sw_delay = 0;
+
+//mode 0
 float test_speed = 0;
+
+//mode 1
+int thruster_toggle = 0;
+
+//program wide thrusters values
+//     0    1    2   3  4   5
+double bph, bsh, sh, y, ps, ss;
+
+
+
+
 
 
 /* thruster functions */
@@ -22,11 +35,138 @@ void updateThruster(const std::vector<float> &input_values){
 }
 
 
+
+
+void manualThrusters(){
+	/*
+		all thrusters can be independently controlled via controller input
+		Controls:
+			zero all: face 1
+			zero current: face 2
+			toggle thruster: face 3
+			throttle up: lt2
+			throttle down: lt1
+	*/
+
+	// face button 1 (zero all)
+	if (thrust_sw_delay == 0){
+
+		// face button 1 (zero all)
+		if (controller_str[4] == '1'){
+			bph = 0;
+			bsh = 0;
+			sh = 0;
+			y = 0;
+			ps = 0;
+			ss = 0;
+		}
+			
+		switch (thruster_toggle){
+			case 0:
+							
+				if (controller_str[5] == '1'){
+					bph = 0;
+				}
+				if (controller_str[10] == '1'){
+					bph -= 0.01;
+				}
+				if (controller_str[11] == '1'){
+					bph += 0.01;
+				}	
+
+				break;
+			case 1:
+							
+				if (controller_str[5] == '1'){
+					bsh = 0;
+				}
+				if (controller_str[10] == '1'){
+					bsh -= 0.01;
+				}
+				if (controller_str[11] == '1'){
+					bsh += 0.01;
+				}	
+
+				break;
+
+			case 2:
+							
+				if (controller_str[5] == '1'){
+					sh = 0;
+				}
+				if (controller_str[10] == '1'){
+					sh -= 0.01;
+				}
+				if (controller_str[11] == '1'){
+					sh += 0.01;
+				}	
+
+				break;
+			case 3:
+							
+				if (controller_str[5] == '1'){
+					y = 0;
+				}
+				if (controller_str[10] == '1'){
+					y -= 0.01;
+				}
+				if (controller_str[11] == '1'){
+					y += 0.01;
+				}	
+
+				break;
+			case 4:
+							
+				if (controller_str[5] == '1'){
+					ps = 0;
+				}
+				if (controller_str[10] == '1'){
+					ps -= 0.01;
+				}
+				if (controller_str[11] == '1'){
+					ps += 0.01;
+				}	
+
+				break;
+
+			case 5:
+							
+				if (controller_str[5] == '1'){
+					ss = 0;
+				}
+				if (controller_str[10] == '1'){
+					ss -= 0.01;
+				}
+				if (controller_str[11] == '1'){
+					ss += 0.01;
+				}	
+
+				break;
+
+		}
+
+
+
+
+		thrust_sw_delay = THRUST_SW_DELAY;
+	}
+
+	
+
+	updateThruster({bph,bsh,sh,y,ps,ss});
+}
+
+
+
+
+
+
 void testThrusters(){
 
 
 	/*
-		turn on thrusters based on controller input
+		turn on all thrusters based on controller input
+		should be rewritten like manualThrusters
 	*/
 
 	// 4 face buttons
@@ -45,7 +185,7 @@ void testThrusters(){
 	}
 
 	if (controller_str[10] == '1' && thrust_sw_delay == 0){
-		//test speed up
+		//test speed down
 		test_speed -= 0.01;
 		
 		thrust_sw_delay = THRUST_SW_DELAY;

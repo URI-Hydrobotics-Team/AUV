@@ -16,7 +16,7 @@
 		- Rotate (roll)
 		- Rotate (pitch)
 		
-	Thrusters:
+	Tardigrade Thrusters:
 		Bow-Port-Heave		(bph)
 		Bow-Starboard-Heave	(bsh)
 		Stern-Heave		(sh)
@@ -71,10 +71,16 @@ class auv_motion{
 
 		}	
 
+		/* not used for simplicity */ 
 		void updateThrustes(double &bph, double &bsh, double &sh, double &y, double &ps, double &ss){
-
-
+			thrusters[0] = bph;
+			thrusters[1] = bsh;
+			thrusters[2] = sh;
+			thrusters[3] = y;
+			thrusters[4] = ps;
+			thrusters[5] = ss; 
+			
 		}
 
-
+		
 };

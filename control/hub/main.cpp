@@ -28,10 +28,10 @@ int verbose;
 auv_tx_socket output_deckbox, output_log; //tx devices
 auv_rx_socket input_deckbox; //rx devices
 
-/* PiPicoCommControl */
 
-//PiPicoCommController thrusters;
+/* define an AUV motion object */
 
+auv_motion tardigrade;
 
 /* define sensors here */
 
@@ -97,10 +97,39 @@ void getSensors(){
 	
 }
 
+void logThrusters(){
+
+	std::string str = "!HST "; //HUB STATUS THRUSTERS
+	str += std::to_string(bph);
+	str += ' ';
+	str += std::to_string(bsh);
+	str += ' ' ;
+	str += std::to_string(sh);
+	str += ' ' ;
+	str += std::to_string(y);
+	str += ' ' ;
+	str += std::to_string(ps);
+	str += ' ' ;
+	str += std::to_string(ss);
+	str += ' ' ;
+	output_deckbox.transmit(str.c_str());
+	
+}
+
+void logThrusterToggle(){
+
+
+	std::string str = "!HSO "; //HUB STATUS OPTION
+	str += std::to_string(thruster_toggle);
+	
+	output_deckbox.transmit(str.c_str());
+}
+
+
 void logImu(){
 
 	
-	std::string str = "!HSI ";
+	std::string str = "!HSI "; //HUB STATUS IMU
 	str += std::to_string(euler_orientation.x()); 
 	str += ' '; 
 	str += std::to_string(euler_orientation.y()); 
@@ -168,8 +197,8 @@ void initDevices(){
 
 void checkLeak(){
 	if (leak_status){
-		output_deckbox.transmit("!ALR Leak Detected");
-		output_log.transmit("!ALR Leak Detected");
+		output_deckbox.transmit("!HAL");
+		output_log.transmit("!HAL");
 	}
 }
 
@@ -254,14 +283,28 @@ void mainLoop(){
 	while (1){
 		/* "we call this the loop" */
 
-		/* check sensors */
 		/*rec. from sockets */
 
 		if (input_deckbox.probe() > 0){ //this is broken
 			strncpy(input_str, input_deckbox.rec(0), 256);
 		}
 		processInput();
-		testThrusters();
+
+		/* control */
+		switch (sys_mode){
+
+			case 0:
+				
+				testThrusters();
+				break;
+
+			case 1:
+
+				manualThrusters();
+				logThrusterToggle();
+				break;
+		}	
+
 
 		if (thrust_sw_delay > 0){
 			thrust_sw_delay -= 1;
