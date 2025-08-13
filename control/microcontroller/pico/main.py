@@ -28,6 +28,14 @@ def initialize_thrusters():
         time.sleep(2)
     print('THRUSTERS_INITIALIZED')  # This will be captured by host
 
+def deinitialize_thrusters():
+    for thruster in thrusters:
+        print('De-Initializing Thruster:', thruster_names[thrusters.index(thruster)])
+        thruster.deinit()
+        thruster_values.append(0)
+        time.sleep(2)
+    print('THRUSTERS_DEINITIALIZED')  # This will be captured by host
+
 def update_thruster_vals(thruster_pwms):
     BPH.duty_ns(thruster_pwms[0] * 1000)
     BSH.duty_ns(thruster_pwms[1] * 1000)
@@ -56,7 +64,9 @@ while True:
     if bytestring_command == "INIT_THRUSTERS":
         print("Initialization command received")
         initialize_thrusters()
-
+    elif bytestring_command == "DEINIT_THRUSTERS":
+        print("Deinitialization command received")
+        deinitialize_thrusters()
     elif bytestring_command.startswith("PWM"):
         print("Submitting PWMs to Thrusters")
         thruster_values = words[1:]
