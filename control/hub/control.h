@@ -18,7 +18,7 @@ int thruster_toggle = 0;
 
 //program wide thrusters values
 //     0    1    2   3  4   5
-double bph, bsh, sh, y, ps, ss;
+float bph, bsh, sh, y, ps, ss;
 
 
 
@@ -48,7 +48,6 @@ void manualThrusters(){
 			throttle down: lt1
 	*/
 
-	// face button 1 (zero all)
 	if (thrust_sw_delay == 0){
 
 		// face button 1 (zero all)
@@ -61,6 +60,7 @@ void manualThrusters(){
 			ss = 0;
 		}
 			
+		// face button 2 (zero selected))
 		switch (thruster_toggle){
 			case 0:
 							
@@ -144,9 +144,16 @@ void manualThrusters(){
 				break;
 
 		}
+		//face button 3 (switch thrusters)
+		if (controller_str[6] == '1'){
+			thruster_toggle++;
 
+			if (thruster_toggle > 5){
+				thruster_toggle = 0;
+			}			
 
-
+		}
+	
 
 		thrust_sw_delay = THRUST_SW_DELAY;
 	}
