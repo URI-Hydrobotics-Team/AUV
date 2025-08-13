@@ -37,6 +37,19 @@ void updateThruster(const std::vector<float> &input_values){
 
 
 
+/*
+void doSomethingWithThrusters(){
+
+	//modify bph, bsh, sh, y, ps, ss
+	
+	updateThruster({bph,bsh,sh,y,ps,ss});
+
+}
+*/
+
+
+
+
 void manualThrusters(){
 	/*
 		all thrusters can be independently controlled via controller input
