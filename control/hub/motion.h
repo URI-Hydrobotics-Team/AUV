@@ -35,6 +35,17 @@
 */
 
 
+class vector_t{
+	//vector for 3d space
+
+	double x;
+	double y;
+	double z;	
+
+};
+
+
+
 /* missions_buffer functions */
 auv_mission missions_buffer[16];
 
@@ -46,6 +57,14 @@ void stop_all_missions(){
 	
 
 }
+
+void add_mission_to_buffer(auv_mission mission){
+
+
+
+}
+
+
 
 
 
@@ -71,6 +90,26 @@ class auv_mission{
 	
 	
 		//initialization and control loop functions;
+		void init(vector_t curr_pose, vector_t curr_posi, vector_t target_pose, vector_t target_posi){
+			curr_pose_r = curr_pose.x;
+			curr_pose_p = curr_pose.y;
+			curr_pose_y = curr_pose.z;
+
+			target_pose_r = target_pose.x;
+			target_pose_p = target_pose.y;
+			target_pose_y = target_pose.z;
+
+			curr_x = curr_posi.x;
+			curr_y = curr_posi.y;
+			curr_z = curr_posi.z;
+
+			target_x = target_posi.x;
+			target_y = target_posi.y;
+			target_z = target_posi.z;
+
+
+		}
+
 	
 		void update(){
 			if (is_active){
@@ -92,57 +131,3 @@ class auv_mission{
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class auv_motion{
-	private:
-		/* status */
-		double heading,  //current angle
-		depth,
-		relative_depth,
-		acceleration, // in m/s
-		velocity; //estmiated velocity
-
-		/* intended movement */
-
-		/*thruster values */
-
-		double thrusters[6];
-
-	public:
-
-
-		void setMode(const char *mode, double rate){
-
-		}
-		
-		void updateParameters(double head, double dep, double rel_dep, double acc, double vel){
-
-		}	
-
-		/* not used for simplicity */ 
-		void updateThrustes(double &bph, double &bsh, double &sh, double &y, double &ps, double &ss){
-			thrusters[0] = bph;
-			thrusters[1] = bsh;
-			thrusters[2] = sh;
-			thrusters[3] = y;
-			thrusters[4] = ps;
-			thrusters[5] = ss; 
-			
-		}
-
-		
-};
