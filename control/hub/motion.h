@@ -29,6 +29,32 @@
 
 
 
+/*
+	general movement class and functions for starting and mainting a "mission"
+	
+*/
+
+
+
+
+class auv_mission{
+
+	private:
+
+		// variables to hold: current pose, current position, target pose, target position
+
+
+
+	public:
+
+
+		//initialization and control loop functions;
+
+		
+
+
+};
+
 
 
 
