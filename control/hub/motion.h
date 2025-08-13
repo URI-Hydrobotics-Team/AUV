@@ -35,6 +35,19 @@
 */
 
 
+/* missions_buffer functions */
+auv_mission missions_buffer[16];
+
+void stop_all_missions(){
+	/* emergancy stop function, tied to missions_buffer for now */
+	for (int i = 0; i < 16; i++){
+		missions_buffer[i].stop();
+	}
+	
+
+}
+
+
 
 
 class auv_mission{
@@ -43,14 +56,37 @@ class auv_mission{
 
 		// variables to hold: current pose, current position, target pose, target position
 
+		double curr_pose_r, curr_pose_p, curr_pose_y;
+		double target_pose_r, target_pose_p, target_pose_y;
+		double curr_x, curr_y, curr_z;
+		double target_x, target_y, target_z;
+		
+
+		bool is_active = true; //set to false when target position and target pose are reached
+		int hold_pose_duration; //length to hold pose duration in seconds
+
 
 
 	public:
-
-
+	
+	
 		//initialization and control loop functions;
-
+	
+		void update(){
+			if (is_active){
+				//check sensors
+				//make adjustments
 		
+
+			}
+
+
+
+		}
+
+		void stop(){
+			is_active = false;
+		}	
 
 
 };
