@@ -10,7 +10,6 @@
 #include "connections.h"
 #include "modules.h"
 #include "jetson.h"
-#include "motion.h"
 
 
 /* system strings */
@@ -52,6 +51,22 @@ float pressure, temperature, depth, altitude;
 
 
 clock_t stopwatch;	
+
+void resetClock(){
+
+	stopwatch = clock();
+} 
+
+
+#include "motion.h"
+
+double returnTimeStamp(clock_t base){
+
+	clock_t t = clock() - base;
+	
+	return ((double)t)/CLOCKS_PER_SEC;
+}
+
 
 void printHelp(){
 	std::cout << "HUB version: " << version_string << "\n";
@@ -261,19 +276,6 @@ void sendStatus(){
 	output_deckbox.transmit(status_string.c_str());
 	output_log.transmit(status_string.c_str());
 }
-
-void resetClock(){
-
-	stopwatch = clock();
-} 
-
-double returnTimeStamp(){
-
-	clock_t t = clock() - stopwatch;
-	
-	return ((double)t)/CLOCKS_PER_SEC;
-}
-
 void mainLoop(){
 	initModules();
 	initDevices();	// setup and bind socket devices
@@ -301,6 +303,10 @@ void mainLoop(){
 				manualThrusters();
 				logThrusterToggle();
 				break;
+
+			case 5:
+				qualifcationy();
+				break;
 		}	
 
 
@@ -311,7 +317,7 @@ void mainLoop(){
 	
 		
 
-		if (returnTimeStamp() > STATUS_INTERVAL){
+		if (returnTimeStamp(stopwatch) > STATUS_INTERVAL){
 
 			getSensors(); //slow
 			/*send status string */
@@ -363,6 +369,11 @@ int main(int argc, char *argv[]){
 		mainLoop();
 	}
 
+	if (mode = "qualify"){
+		verbose = 0;
+		mode = 5;
+		mainLoop();
+	}
 
 	output_deckbox.closefd();
 	output_log.closefd();

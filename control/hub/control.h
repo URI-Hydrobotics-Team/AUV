@@ -48,6 +48,52 @@ void doSomethingWithThrusters(){
 */
 
 
+/* qualification for robo sub 2025 hardcoded*/
+
+clock_t qual_stopwatch;
+
+
+void qualification(){
+
+	double elasped_time = returnTimeStamp(qual_stopwatch);
+
+	/* 10 seconds before start 
+	*/
+
+	if (elasped_time => 10){
+		// start descending
+		//updateThruster({bph,bsh,sh,y,ps,ss});
+
+	}
+
+	if (elasped_time => 15){
+	/* then move forwared*/
+
+
+		//updateThruster({bph,bsh,sh,y,ps,ss});
+
+	}
+
+
+	if (elasped_time >= 35){
+		//stop after passing through the gate
+		//updateThruster({bph,bsh,sh,y,ps,ss});
+
+
+	}
+
+
+	if (elasped_time >= 40){
+		//re surface
+		//updateThruster({bph,bsh,sh,y,ps,ss});
+
+	}
+
+}
+
+
+
+
 
 
 void manualThrusters(){
