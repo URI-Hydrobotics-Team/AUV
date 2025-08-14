@@ -60,13 +60,13 @@ void qualification(){
 	/* 10 seconds before start 
 	*/
 
-	if (elasped_time => 10){
+	if (elasped_time => 10 && elasped_time < 15){
 		// start descending
 		//updateThruster({bph,bsh,sh,y,ps,ss});
 
 	}
 
-	if (elasped_time => 15){
+	if (elasped_time => 15 && elasped_time < 35){
 	/* then move forwared*/
 
 
@@ -75,7 +75,7 @@ void qualification(){
 	}
 
 
-	if (elasped_time >= 35){
+	if (elasped_time >= 35 && elasped_time < 40){
 		//stop after passing through the gate
 		//updateThruster({bph,bsh,sh,y,ps,ss});
 
@@ -87,6 +87,13 @@ void qualification(){
 		//re surface
 		//updateThruster({bph,bsh,sh,y,ps,ss});
 
+	}
+
+
+	if (elasped_time >= 50){
+		//stop
+		updateThruster({0,0,0,0,0,0});
+		
 	}
 
 }
