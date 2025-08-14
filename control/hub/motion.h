@@ -45,30 +45,6 @@ class vector_t{
 };
 
 
-
-/* missions_buffer functions */
-auv_mission missions_buffer[16];
-
-void stop_all_missions(){
-	/* emergancy stop function, tied to missions_buffer for now */
-	for (int i = 0; i < 16; i++){
-		missions_buffer[i].stop();
-	}
-	
-
-}
-
-void add_mission_to_buffer(auv_mission mission){
-
-
-
-}
-
-
-
-
-
-
 class auv_mission{
 
 	private:
@@ -129,5 +105,29 @@ class auv_mission{
 
 
 };
+
+
+
+/* missions_buffer functions */
+auv_mission missions_buffer[16];
+
+void stop_all_missions(){
+	/* emergancy stop function, tied to missions_buffer for now */
+	for (int i = 0; i < 16; i++){
+		missions_buffer[i].stop();
+	}
+	
+
+}
+
+void add_mission_to_buffer(auv_mission mission){
+
+
+
+}
+
+
+
+
 
 
