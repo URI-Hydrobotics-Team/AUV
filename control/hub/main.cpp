@@ -328,7 +328,7 @@ void mainLoop(){
 			logImu();
 			checkLeak();
 			if(verbose == 1){
-				std::cout << "[DEBUG] qual_stopwatch: " << returnTimeStamp(qual_stopwatch) << '\n;
+				std::cout << "[DEBUG] qual_stopwatch: " << std::to_string(returnTimeStamp(qual_stopwatch)) << '\n';
 				std::cout << "[DEBUG] controller_str: ";
 				std::cout << controller_str << '\n';
 	
