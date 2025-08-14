@@ -59,7 +59,7 @@ void qualification(){
 	/* 10 seconds before start 
 	*/
 
-	if (elasped_time >= 3 && elasped_time < 7){
+	if (elasped_time >= .3 && elasped_time < .7){
 		// start descending
 		bph = 0.25;
 		bsh = 0.25;
@@ -71,7 +71,7 @@ void qualification(){
 
 	}
 
-	if (elasped_time >= 7  && elasped_time < 12){
+	if (elasped_time >= .7  && elasped_time < 1.2){
 	/* then move forwared*/
 		ss = 0.5;
 		ps = 0.5;
@@ -85,7 +85,7 @@ void qualification(){
 	}
 
 
-	if (elasped_time >= 12 && elasped_time < 14){
+	if (elasped_time >= 1.2 && elasped_time < 1.4){
 		//stop after passing through the gate
 		bph = 0;
 		bsh = 0;
@@ -99,7 +99,7 @@ void qualification(){
 	}
 
 
-	if (elasped_time >= 14){
+	if (elasped_time >= 1.4){
 		//re surface
 		bph = -0.25;
 		bsh = -0.25;
@@ -112,7 +112,7 @@ void qualification(){
 	}
 
 
-	if (elasped_time >= 17){
+	if (elasped_time >= 1.7){
 		//stop
 		updateThruster({0,0,0,0,0,0});
 		
