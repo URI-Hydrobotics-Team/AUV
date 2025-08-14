@@ -21,7 +21,6 @@ int sys_mode = 0;
 int verbose;
 
 /* core header files */
-#include "control.h"
 
 /* define network connections here */
 auv_tx_socket output_deckbox, output_log; //tx devices
@@ -67,6 +66,7 @@ double returnTimeStamp(clock_t base){
 	return ((double)t)/CLOCKS_PER_SEC;
 }
 
+#include "control.h"
 
 void printHelp(){
 	std::cout << "HUB version: " << version_string << "\n";
@@ -306,7 +306,7 @@ void mainLoop(){
 				break;
 
 			case 5:
-				qualifcation();
+				qualification();
 				break;
 		}	
 
