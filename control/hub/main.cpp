@@ -305,7 +305,7 @@ void mainLoop(){
 				break;
 
 			case 5:
-				qualifcationy();
+				qualifcation();
 				break;
 		}	
 
