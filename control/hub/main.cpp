@@ -29,9 +29,7 @@ auv_tx_socket output_deckbox, output_log; //tx devices
 auv_rx_socket input_deckbox; //rx devices
 
 
-/* define an AUV motion object */
 
-auv_motion tardigrade;
 
 /* define sensors here */
 
