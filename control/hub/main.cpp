@@ -280,6 +280,7 @@ void mainLoop(){
 	initModules();
 	initDevices();	// setup and bind socket devices
 	resetClock(); // set stopwatch
+	qual_stopwatch = clock(); // reset qualification clock
 	while (1){
 		/* "we call this the loop" */
 
