@@ -52,7 +52,6 @@ void doSomethingWithThrusters(){
 
 clock_t qual_stopwatch;
 
-
 void qualification(){
 
 	double elasped_time = returnTimeStamp(qual_stopwatch);
@@ -60,46 +59,66 @@ void qualification(){
 	/* 10 seconds before start 
 	*/
 
-	if (elasped_time => 10 && elasped_time < 15){
+	if (elasped_time >= 3 && elasped_time < 7){
 		// start descending
-		//updateThruster({bph,bsh,sh,y,ps,ss});
+		bph = 0.25;
+		bsh = 0.25;
+		sh = 0.5;
+		y = 0;
+		ps = 0;
+		ss = 0;
+		updateThruster({bph,bsh,sh,y,ps,ss});
 
 	}
 
-	if (elasped_time => 15 && elasped_time < 35){
+	if (elasped_time >= 7  && elasped_time < 12){
 	/* then move forwared*/
+		ss = 0.5;
+		ps = 0.5;
+		sh = 0.02;
+		bph = 0.01;
+		bsh = 0.01;
+		y = 0;
 
-
-		//updateThruster({bph,bsh,sh,y,ps,ss});
+		updateThruster({bph,bsh,sh,y,ps,ss});
 
 	}
 
 
-	if (elasped_time >= 35 && elasped_time < 40){
+	if (elasped_time >= 12 && elasped_time < 14){
 		//stop after passing through the gate
-		//updateThruster({bph,bsh,sh,y,ps,ss});
+		bph = 0;
+		bsh = 0;
+		sh = 0;
+		y = 0;
+		ps = 0;
+		ss = 0;
+		updateThruster({bph,bsh,sh,y,ps,ss});
 
 
 	}
 
 
-	if (elasped_time >= 40){
+	if (elasped_time >= 14){
 		//re surface
-		//updateThruster({bph,bsh,sh,y,ps,ss});
+		bph = -0.25;
+		bsh = -0.25;
+		sh = -0.5;
+		y  = 0;
+		ps = 0;
+		ss = 0;
+		updateThruster({bph,bsh,sh,y,ps,ss});
 
 	}
 
 
-	if (elasped_time >= 50){
+	if (elasped_time >= 17){
 		//stop
 		updateThruster({0,0,0,0,0,0});
 		
 	}
 
 }
-
-
-
 
 
 

@@ -328,6 +328,7 @@ void mainLoop(){
 			logImu();
 			checkLeak();
 			if(verbose == 1){
+				std::cout << "[DEBUG] qual_stopwatch: " << returnTimeStamp(qual_stopwatch) << '\n;
 				std::cout << "[DEBUG] controller_str: ";
 				std::cout << controller_str << '\n';
 	
@@ -370,9 +371,9 @@ int main(int argc, char *argv[]){
 		mainLoop();
 	}
 
-	if (mode = "qualify"){
+	if (mode == "qualify"){
 		verbose = 0;
-		mode = 5;
+		sys_mode = 5;
 		mainLoop();
 	}
 
