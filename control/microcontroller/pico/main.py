@@ -31,7 +31,7 @@ def initialize_thrusters():
 def deinitialize_thrusters():
     for thruster in thrusters:
         print('De-Initializing Thruster:', thruster_names[thrusters.index(thruster)])
-        thruster.deinit()
+        thruster.duty_ns(0)
         thruster_values.append(0)
         time.sleep(2)
     print('THRUSTERS_DEINITIALIZED')  # This will be captured by host
