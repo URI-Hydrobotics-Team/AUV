@@ -29,58 +29,105 @@
 
 
 
+/*
+	general movement class and functions for starting and mainting a "mission"
+	
+*/
 
 
+class vector_t{
+	//vector for 3d space
+	public:
+	double x;
+	double y;
+	double z;	
+
+};
 
 
+class auv_mission{
 
-
-
-
-
-
-
-
-
-
-
-
-class auv_motion{
 	private:
-		/* status */
-		double heading,  //current angle
-		depth,
-		relative_depth,
-		acceleration, // in m/s
-		velocity; //estmiated velocity
 
-		/* intended movement */
+		// variables to hold: current pose, current position, target pose, target position
 
-		/*thruster values */
+		double curr_pose_r, curr_pose_p, curr_pose_y;
+		double target_pose_r, target_pose_p, target_pose_y;
+		double curr_x, curr_y, curr_z;
+		double target_x, target_y, target_z;
+		
 
-		double thrusters[6];
+		bool is_active = true; //set to false when target position and target pose are reached
+		int hold_pose_duration; //length to hold pose duration in seconds
+
+
 
 	public:
+	
+	
+		//initialization and control loop functions;
+		void init(vector_t curr_pose, vector_t curr_posi, vector_t target_pose, vector_t target_posi){
+			curr_pose_r = curr_pose.x;
+			curr_pose_p = curr_pose.y;
+			curr_pose_y = curr_pose.z;
 
+			target_pose_r = target_pose.x;
+			target_pose_p = target_pose.y;
+			target_pose_y = target_pose.z;
 
-		void setMode(const char *mode, double rate){
+			curr_x = curr_posi.x;
+			curr_y = curr_posi.y;
+			curr_z = curr_posi.z;
+
+			target_x = target_posi.x;
+			target_y = target_posi.y;
+			target_z = target_posi.z;
+
 
 		}
-		
-		void updateParameters(double head, double dep, double rel_dep, double acc, double vel){
 
+	
+		void update(){
+			if (is_active){
+				//check sensors
+				//make adjustments
+		
+
+			}
+
+
+
+		}
+
+		void stop(){
+			is_active = false;
 		}	
 
-		/* not used for simplicity */ 
-		void updateThrustes(double &bph, double &bsh, double &sh, double &y, double &ps, double &ss){
-			thrusters[0] = bph;
-			thrusters[1] = bsh;
-			thrusters[2] = sh;
-			thrusters[3] = y;
-			thrusters[4] = ps;
-			thrusters[5] = ss; 
-			
-		}
 
-		
 };
+
+
+
+/* missions_buffer functions */
+auv_mission missions_buffer[16];
+
+void stop_all_missions(){
+	/* emergancy stop function, tied to missions_buffer for now */
+	for (int i = 0; i < 16; i++){
+		missions_buffer[i].stop();
+	}
+	
+
+}
+
+void add_mission_to_buffer(auv_mission mission){
+
+
+
+}
+
+
+
+
+
+

@@ -37,6 +37,91 @@ void updateThruster(const std::vector<float> &input_values){
 
 
 
+/*
+void doSomethingWithThrusters(){
+
+	//modify bph, bsh, sh, y, ps, ss
+	
+	updateThruster({bph,bsh,sh,y,ps,ss});
+
+}
+*/
+
+
+/* qualification for robo sub 2025 hardcoded*/
+
+clock_t qual_stopwatch;
+
+void qualification(){
+
+	double elasped_time = returnTimeStamp(qual_stopwatch);
+
+	/* 10 seconds before start 
+	*/
+
+	if (elasped_time >= .3 && elasped_time < .7){
+		// start descending
+		bph = 0.25;
+		bsh = 0.25;
+		sh = 0.5;
+		y = 0;
+		ps = 0;
+		ss = 0;
+		updateThruster({bph,bsh,sh,y,ps,ss});
+
+	}
+
+	if (elasped_time >= .7  && elasped_time < 1.2){
+	/* then move forwared*/
+		ss = 0.5;
+		ps = 0.5;
+		sh = 0.02;
+		bph = 0.01;
+		bsh = 0.01;
+		y = 0;
+
+		updateThruster({bph,bsh,sh,y,ps,ss});
+
+	}
+
+
+	if (elasped_time >= 1.2 && elasped_time < 1.4){
+		//stop after passing through the gate
+		bph = 0;
+		bsh = 0;
+		sh = 0;
+		y = 0;
+		ps = 0;
+		ss = 0;
+		updateThruster({bph,bsh,sh,y,ps,ss});
+
+
+	}
+
+
+	if (elasped_time >= 1.4){
+		//re surface
+		bph = -0.25;
+		bsh = -0.25;
+		sh = -0.5;
+		y  = 0;
+		ps = 0;
+		ss = 0;
+		updateThruster({bph,bsh,sh,y,ps,ss});
+
+	}
+
+
+	if (elasped_time >= 1.7){
+		//stop
+		updateThruster({0,0,0,0,0,0});
+		
+	}
+
+}
+
+
+
 void manualThrusters(){
 	/*
 		all thrusters can be independently controlled via controller input
