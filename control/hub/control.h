@@ -59,7 +59,7 @@ void qualification(){
 	/* 10 seconds before start 
 	*/
 
-	if (elasped_time >= .3 && elasped_time < .7){
+	if (elasped_time >= 1 && elasped_time < 1.3){
 		// start descending
 		bph = 0.25;
 		bsh = 0.25;
@@ -71,7 +71,7 @@ void qualification(){
 
 	}
 
-	if (elasped_time >= .7  && elasped_time < 1.2){
+	if (elasped_time >= 1.3  && elasped_time < 1.6){
 	/* then move forwared*/
 		ss = 0.5;
 		ps = 0.5;
@@ -84,38 +84,47 @@ void qualification(){
 
 	}
 
+	if (elasped_time >= 1.2 && elasped_time < 2.2){
 
-	if (elasped_time >= 1.2 && elasped_time < 1.4){
-		//stop after passing through the gate
-		bph = 0;
-		bsh = 0;
-		sh = 0;
+		// flip AUV
+		bph = 0.25;
+		bsh = 0.25;
+		sh = -0.5;
 		y = 0;
 		ps = 0;
 		ss = 0;
+
 		updateThruster({bph,bsh,sh,y,ps,ss});
-
-
 	}
 
-
-	if (elasped_time >= 1.4){
-		//re surface
-		bph = -0.25;
-		bsh = -0.25;
-		sh = -0.5;
-		y  = 0;
-		ps = 0;
-		ss = 0;
-		updateThruster({bph,bsh,sh,y,ps,ss});
-
-	}
+	// if (elasped_time >= 1.2 && elasped_time < 1.4){
+	// 	//stop after passing through the gate
+	// 	bph = 0;
+	// 	bsh = 0;
+	// 	sh = 0;
+	// 	y = 0;
+	// 	ps = 0;
+	// 	ss = 0;
+	// 	updateThruster({bph,bsh,sh,y,ps,ss});
+	// }
 
 
-	if (elasped_time >= 1.7){
+	// if (elasped_time >= 1.4){
+	// 	//re surface
+	// 	bph = -0.25;
+	// 	bsh = -0.25;
+	// 	sh = -0.5;
+	// 	y  = 0;
+	// 	ps = 0;
+	// 	ss = 0;
+	// 	updateThruster({bph,bsh,sh,y,ps,ss});
+
+	// }
+
+
+	if (elasped_time >= 2.2){
 		//stop
 		updateThruster({0,0,0,0,0,0});
-		
 	}
 
 }
