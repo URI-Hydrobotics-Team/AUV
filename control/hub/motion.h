@@ -1,4 +1,4 @@
-
+#include "lib.h"
 /*
 
 	auv-hub movement definitions and thruster control
@@ -35,14 +35,6 @@
 */
 
 
-class vector_t{
-	//vector for 3d space
-	public:
-	double x;
-	double y;
-	double z;	
-
-};
 
 
 class auv_mission{

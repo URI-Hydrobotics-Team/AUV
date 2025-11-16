@@ -50,46 +50,49 @@ void doSomethingWithThrusters(){
 
 /* qualification for robo sub 2025 hardcoded*/
 
-clock_t qual_stopwatch;
 
-void qualification(){
-
-	double elasped_time = returnTimeStamp(qual_stopwatch);
+void qualification(int *step){
+	std::cout << "qualify\n";
+	int elasped_time = qual_stopwatch.getElaspedTimeMS();
 
 	/* 10 seconds before start 
 	*/
-
-	if (elasped_time >= 1 && elasped_time < 1.3){
+		
+	std::cout << "time: "<< elasped_time <<'\n';
+	if (elasped_time >= 1000 && elasped_time < 2000){
 		// start descending
-		bph = 0.25;
-		bsh = 0.25;
-		sh = 0.5;
-		y = 0;
-		ps = 0;
-		ss = 0;
-		updateThruster({bph,bsh,sh,y,ps,ss});
+		bph = 0.0;
+		bsh = 0.0;
+		sh = 0.0;
+		y = .5;
+		ps = -0.35;
+		ss = 0.35;
+		if (*step == 0){
+			updateThruster({bph,bsh,sh,y,ps,ss});
+		}
 
+		*step = 1;
 	}
 
-	if (elasped_time >= 1.3  && elasped_time < 1.6){
-	/* then move forwared*/
-		ss = 0.5;
-		ps = 0.5;
-		sh = 0.02;
-		bph = 0.01;
-		bsh = 0.01;
-		y = 0;
+	//if (elasped_time >= 2 && elasped_time < 2.4){
+	 /* then move forwared*/
+	//	ss = 0.5;
+	//	ps = 0.5;
+	//	sh = 0.2;
+	//	bph = 0.2;
+	//	bsh = 0.2;
+	//	y = 0;
 
-		updateThruster({bph,bsh,sh,y,ps,ss});
+//		updateThruster({bph,bsh,sh,y,ps,ss});
 
-	}
-
-	if (elasped_time >= 1.2 && elasped_time < 2.2){
+//	}
+/*
+	if (elasped_time >= 1.2 && elasped_time < 1.9){
 
 		// flip AUV
-		bph = 0.25;
-		bsh = 0.25;
-		sh = -0.5;
+		bph = 0.5;
+		bsh = 0.5;
+		sh = -1;
 		y = 0;
 		ps = 0;
 		ss = 0;
@@ -97,32 +100,31 @@ void qualification(){
 		updateThruster({bph,bsh,sh,y,ps,ss});
 	}
 
-	// if (elasped_time >= 1.2 && elasped_time < 1.4){
-	// 	//stop after passing through the gate
-	// 	bph = 0;
-	// 	bsh = 0;
-	// 	sh = 0;
-	// 	y = 0;
-	// 	ps = 0;
-	// 	ss = 0;
-	// 	updateThruster({bph,bsh,sh,y,ps,ss});
-	// }
+	if (elasped_time >= 1.9 && elasped_time < 2.1){
+		bph = 0.1;
+	 	bsh = 0.1;
+	 	sh = 0.2;
+	 	y = -0.1;
+	 	ps = 0.5;
+	 	ss = 0.5;
+	 	updateThruster({bph,bsh,sh,y,ps,ss});
+	 }
+*/
+/*
+	if (elasped_time >= .4 && elasped_time < 0.5){
+	 	//re surface(back)
+	 	bph = -0.25;
+	 	bsh = -0.25;
+	 	sh = -0.5;
+	 	y  = 0;
+	 	ps = -0.65;
+	 	ss = -0.5;
+	 	updateThruster({bph,bsh,sh,y,ps,ss});
 
+	 }
 
-	// if (elasped_time >= 1.4){
-	// 	//re surface
-	// 	bph = -0.25;
-	// 	bsh = -0.25;
-	// 	sh = -0.5;
-	// 	y  = 0;
-	// 	ps = 0;
-	// 	ss = 0;
-	// 	updateThruster({bph,bsh,sh,y,ps,ss});
-
-	// }
-
-
-	if (elasped_time >= 2.2){
+*/
+	if (elasped_time >= 2000){
 		//stop
 		updateThruster({0,0,0,0,0,0});
 	}

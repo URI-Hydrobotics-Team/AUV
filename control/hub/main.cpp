@@ -10,7 +10,45 @@
 #include "connections.h"
 #include "modules.h"
 #include "jetson.h"
+#include "log.h"
 
+class avoe_clock_t{
+
+
+	private:
+
+		clock_t timer;
+
+	public:
+
+
+
+
+		int getElaspedTimeMS(){
+			clock_t t = clock() - timer;
+			//return (t * 100000 / CLOCKS_PER_SEC);
+
+			return (t * 1000 / CLOCKS_PER_SEC);
+
+		}
+
+
+		void reset(){
+
+			timer = clock();
+		}
+
+		char* getTimeStr(){
+
+			char *time_str = ctime(&timer);
+			time_str[strlen(time_str) - 1] = 0;
+			return time_str;
+
+		}
+
+
+};
+avoe_clock_t qual_stopwatch;
 
 /* system strings */
 std::string mode, arg1, arg2; //arguments
@@ -19,8 +57,11 @@ char input_str[256]; //from deckbox
 char controller_str[128];
 int sys_mode = 0;
 int verbose;
-
+int qualify_step;
 /* core header files */
+//log stuff
+log_t test_log;
+
 
 /* define network connections here */
 auv_tx_socket output_deckbox, output_log; //tx devices
@@ -80,7 +121,7 @@ void printHelp(){
 
 
 void initModules(){
-
+	test_log.init();
 	sensor_pressure.fullInit();
 	sensor_leak.cold_init();
 	sensor_imu.init();
@@ -111,7 +152,6 @@ void getSensors(){
 }
 
 void logThrusters(){
-
 	std::string str = "!HST "; //HUB STATUS THRUSTERS
 	str += std::to_string(bph);
 	str += ' ';
@@ -141,7 +181,11 @@ void logThrusterToggle(){
 
 void logImu(){
 
-	
+	std::cout << "For seeing if the IMU is workking, comment out for deployment\n";
+	std::cout << "EULER ORIENTATION X: " << euler_orientation.x() << '\n';
+	std::cout << "EULER ORIENTATION Y: " << euler_orientation.y() << '\n';
+	std::cout << "EULER ORIENTATION Z: " << euler_orientation.z() << '\n';
+
 	std::string str = "!HSI "; //HUB STATUS IMU
 	str += std::to_string(euler_orientation.x()); 
 	str += ' '; 
@@ -182,6 +226,8 @@ void logImu(){
 	//std::cout << str << '\n';
 	//std::cout << angular_velocity.x() << ' ' << angular_velocity.y() << ' ' << angular_velocity.z() << '\n';
 	//output_log.transmit(str.c_str());
+
+	test_log.log(str.c_str());
 	output_deckbox.transmit(str.c_str());
 
 }
@@ -235,7 +281,6 @@ void processInput(){
 		if (input_str[1] == 'D' &&
 		    input_str[2] == 'C' &&
 	            input_str[3] == 'M'){
-			
 			sys_mode = (input_str[5] - '0');		
 		}
 	}
@@ -280,7 +325,7 @@ void mainLoop(){
 	initModules();
 	initDevices();	// setup and bind socket devices
 	resetClock(); // set stopwatch
-	qual_stopwatch = clock(); // reset qualification clock
+	//qual_stopwatch = clock(); // reset qualification clock
 	while (1){
 		/* "we call this the loop" */
 
@@ -306,7 +351,10 @@ void mainLoop(){
 				break;
 
 			case 5:
-				qualification();
+				qualification(&qualify_step);
+				break;
+			case 6:
+				updateThruster({0, 0, 0, 0, 0, 0});
 				break;
 		}	
 
@@ -328,7 +376,7 @@ void mainLoop(){
 			logImu();
 			checkLeak();
 			if(verbose == 1){
-				std::cout << "[DEBUG] qual_stopwatch: " << std::to_string(returnTimeStamp(qual_stopwatch)) << '\n';
+				//std::cout << "[DEBUG] qual_stopwatch: " << std::to_string(returnTimeStamp(qual_stopwatch)) << '\n';
 				std::cout << "[DEBUG] controller_str: ";
 				std::cout << controller_str << '\n';
 	
@@ -374,6 +422,13 @@ int main(int argc, char *argv[]){
 	if (mode == "qualify"){
 		verbose = 0;
 		sys_mode = 5;
+		qual_stopwatch.reset();
+		mainLoop();
+	}
+
+	if (mode == "stop"){
+		verbose = 0;
+		sys_mode = 6;
 		mainLoop();
 	}
 
