@@ -14,6 +14,7 @@
 void blink_test(){
 
 
+	gpioSetMode(GPIO_SWITCH, PI_PUD_UP);
 	short status = 0;
 
 	while(1){
@@ -44,6 +45,7 @@ void blink_test(){
 void switch_test(){
 
 	
+	gpioSetMode(GPIO_SWITCH, PI_PUD_UP);
 	while(1){
 
 		if (gpioRead(GPIO_SWITCH) == 0){
@@ -68,6 +70,34 @@ void switch_test(){
 
 
 
+void bluerobotics_switch_test(){
+
+	
+	gpioSetMode(GPIO_SWITCH, PI_PUD_UP);
+	while(1){
+
+
+		printf("%d\n", gpioRead(GPIO_SWITCH));
+
+		if (gpioRead(GPIO_SWITCH) == 0){
+
+
+			gpioWrite(GPIO_LED_BLUE, 1);
+
+		}else{
+
+
+			gpioWrite(GPIO_LED_BLUE, 0);
+		}
+
+
+		usleep(1000);
+
+
+	}
+}
+
+
 
 
 
@@ -76,10 +106,10 @@ int main(){
 
 	gpioInitialise();
 	gpioSetMode(GPIO_LED_BLUE, PI_OUTPUT);
-	gpioSetMode(GPIO_SWITCH, PI_PUD_UP);
 
-
-	switch_test();
+	gpioWrite(GPIO_LED_BLUE, 0);
+	bluerobotics_switch_test();
+	//switch_test();
 
 
 
